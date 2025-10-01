@@ -11,44 +11,103 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Email configuration with enhanced settings for cloud deployment
+// Enhanced Gmail SMTP configuration with detailed logging
 const transporter = nodemailer.createTransport({
-  service: config.email.service,
-  host: config.email.host,
-  port: config.email.port,
-  secure: config.email.secure,
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, // true for 465, false for other ports
   auth: {
     user: config.email.user,
     pass: config.email.pass
   },
   tls: {
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    ciphers: 'SSLv3'
   },
-  connectionTimeout: 60000, // 60 seconds
-  greetingTimeout: 30000, // 30 seconds
-  socketTimeout: 60000 // 60 seconds
+  // Reduced timeouts for faster failure detection
+  connectionTimeout: 15000, // 15 seconds
+  greetingTimeout: 10000,   // 10 seconds
+  socketTimeout: 15000,     // 15 seconds
+  // Additional debugging options
+  debug: true,
+  logger: true
 });
 
-// Smart email sending function with Gmail SMTP and console fallback
-const sendEmail = async (mailOptions) => {
-  // Method 1: Try Gmail SMTP
-  try {
-    console.log('Attempting to send via Gmail SMTP...');
-    await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully via Gmail SMTP');
-    return { success: true, method: 'Gmail SMTP' };
-  } catch (error) {
-    console.error('Gmail SMTP failed:', error.message);
+// Test Gmail connection on startup
+transporter.verify((error, success) => {
+  if (error) {
+    console.error('❌ Gmail SMTP Connection Test Failed:', error.message);
+    console.error('Error code:', error.code);
+    console.error('Error command:', error.command);
+    console.error('Full error:', error);
+  } else {
+    console.log('✅ Gmail SMTP Connection Test Successful');
+    console.log('Server is ready to send emails');
   }
+});
 
-  // Method 2: Log to console (fallback)
-  console.log('=== EMAIL FALLBACK - Gmail SMTP failed ===');
-  console.log('To:', mailOptions.to);
-  console.log('Subject:', mailOptions.subject);
-  console.log('Content preview:', mailOptions.html.substring(0, 200) + '...');
-  console.log('==========================================');
+// Enhanced email sending function with detailed Gmail SMTP logging
+const sendEmail = async (mailOptions) => {
+  console.log('📧 === EMAIL SENDING ATTEMPT ===');
+  console.log('📧 To:', mailOptions.to);
+  console.log('📧 Subject:', mailOptions.subject);
+  console.log('📧 From:', mailOptions.from);
+  console.log('📧 Gmail SMTP Config:');
+  console.log('📧   - Host: smtp.gmail.com');
+  console.log('📧   - Port: 587');
+  console.log('📧   - Secure: false');
+  console.log('📧   - User:', config.email.user);
+  console.log('📧   - Pass: [HIDDEN]');
+  console.log('📧   - Connection Timeout: 15s');
+  console.log('📧   - Greeting Timeout: 10s');
+  console.log('📧   - Socket Timeout: 15s');
   
-  return { success: false, method: 'console-log' };
+  try {
+    console.log('📧 Attempting Gmail SMTP connection...');
+    const startTime = Date.now();
+    
+    const result = await transporter.sendMail(mailOptions);
+    const endTime = Date.now();
+    
+    console.log('✅ Gmail SMTP SUCCESS!');
+    console.log('📧 Response ID:', result.messageId);
+    console.log('📧 Response:', result.response);
+    console.log('📧 Time taken:', (endTime - startTime) + 'ms');
+    console.log('📧 ================================');
+    
+    return { success: true, method: 'Gmail SMTP', messageId: result.messageId };
+  } catch (error) {
+    console.error('❌ Gmail SMTP FAILED!');
+    console.error('📧 Error Type:', error.name);
+    console.error('📧 Error Message:', error.message);
+    console.error('📧 Error Code:', error.code);
+    console.error('📧 Error Command:', error.command);
+    console.error('📧 Error Response:', error.response);
+    console.error('📧 Error Response Code:', error.responseCode);
+    console.error('📧 Full Error Object:', JSON.stringify(error, null, 2));
+    
+    // Check for specific error types
+    if (error.code === 'ECONNREFUSED') {
+      console.error('📧 DIAGNOSIS: Connection refused - Check if Gmail SMTP is blocked by firewall/proxy');
+    } else if (error.code === 'ETIMEDOUT') {
+      console.error('📧 DIAGNOSIS: Connection timeout - Network issue or Gmail server unreachable');
+    } else if (error.code === 'EAUTH') {
+      console.error('📧 DIAGNOSIS: Authentication failed - Check email/password or enable 2FA with app password');
+    } else if (error.code === 'ECONNRESET') {
+      console.error('📧 DIAGNOSIS: Connection reset - Network instability or Gmail server issue');
+    } else {
+      console.error('📧 DIAGNOSIS: Unknown error - Check logs above for details');
+    }
+    
+    console.log('📧 === FALLBACK TO CONSOLE LOG ===');
+    console.log('📧 To:', mailOptions.to);
+    console.log('📧 Subject:', mailOptions.subject);
+    console.log('📧 Content preview:', mailOptions.html.substring(0, 200) + '...');
+    console.log('📧 ================================');
+    
+    return { success: false, method: 'console-log', error: error.message };
+  }
 };
 
 // API Routes
@@ -215,6 +274,52 @@ app.post('/api/contact', async (req, res) => {
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
+});
+
+// Gmail SMTP connection test endpoint
+app.get('/api/test-email', async (req, res) => {
+  console.log('🧪 === GMAIL SMTP CONNECTION TEST ===');
+  
+  try {
+    // Test connection
+    console.log('🧪 Testing Gmail SMTP connection...');
+    await transporter.verify();
+    console.log('✅ Gmail SMTP connection verified successfully');
+    
+    // Test sending a simple email
+    const testMailOptions = {
+      from: config.email.user,
+      to: config.email.adminEmail,
+      subject: 'Gmail SMTP Test - Sea Waves Aqua Center',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #1e40af;">Gmail SMTP Test Successful!</h2>
+          <p>This is a test email to verify Gmail SMTP configuration.</p>
+          <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+          <p><strong>Server:</strong> Sea Waves Aqua Center</p>
+        </div>
+      `
+    };
+    
+    const result = await sendEmail(testMailOptions);
+    
+    res.json({
+      success: true,
+      message: 'Gmail SMTP test completed',
+      connectionTest: 'PASSED',
+      emailTest: result.success ? 'PASSED' : 'FAILED',
+      details: result
+    });
+    
+  } catch (error) {
+    console.error('❌ Gmail SMTP test failed:', error.message);
+    res.json({
+      success: false,
+      message: 'Gmail SMTP test failed',
+      error: error.message,
+      connectionTest: 'FAILED'
+    });
+  }
 });
 
 // Serve static files from the React app build directory
