@@ -4,6 +4,11 @@ import { Activity } from '../data/activities';
 import ImageGallery from './ImageGallery';
 import ContactForm from './ContactForm';
 import DivingSection from './DivingSection';
+import BoatTripsSection from './BoatTripsSection';
+import WaterSportsSection from './WaterSportsSection';
+import DolphinTripsSection from './DolphinTripsSection';
+import SpeedBoatsSection from './SpeedBoatsSection';
+import IslandTripsSection from './IslandTripsSection';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTranslatedActivities } from '../hooks/useTranslatedActivities';
 
@@ -45,9 +50,19 @@ const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, isOpen, onClo
 
           {/* Content */}
           <div className="p-6 max-h-[80vh] overflow-y-auto">
-            {/* Special Diving Section */}
+            {/* Activity Specific Sections */}
             {activity.id === 'diving' ? (
               <DivingSection />
+            ) : activity.id === 'boat-trips' ? (
+              <BoatTripsSection />
+            ) : activity.id === 'water-sports' ? (
+              <WaterSportsSection />
+            ) : activity.id === 'dolphin-trips' ? (
+              <DolphinTripsSection />
+            ) : activity.id === 'speed-boats' ? (
+              <SpeedBoatsSection />
+            ) : activity.id === 'island-trips' ? (
+              <IslandTripsSection />
             ) : (
               <>
                 {/* Image Gallery */}
@@ -67,8 +82,8 @@ const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, isOpen, onClo
               </>
             )}
 
-            {/* Details Grid - Only for non-diving activities */}
-            {activity.id !== 'diving' && (
+            {/* Details Grid - Only for activities without specific sections */}
+            {!['diving', 'boat-trips', 'water-sports', 'dolphin-trips', 'speed-boats', 'island-trips'].includes(activity.id) && (
               <>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                   {/* What's Included */}
