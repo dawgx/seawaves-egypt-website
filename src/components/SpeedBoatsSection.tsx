@@ -58,45 +58,34 @@ const SpeedBoatsSection: React.FC = () => {
         </div>
 
         {/* Speed Boat Program */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {speedBoatPrograms.map((program) => (
-            <div key={program.id} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              {/* Header */}
-              <div className={`bg-gradient-to-r ${program.color} p-6 text-white`}>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <div className="mr-4">
-                      {program.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold">{program.title}</h3>
-                      <p className="text-sm opacity-90">{program.schedule}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold">{program.price}</div>
-                    <div className="text-sm opacity-90">per person</div>
-                  </div>
+            <div key={program.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
+              {/* Gradient Header */}
+              <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
+                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute top-4 left-4 text-white">
+                  {program.icon}
+                </div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <div className="text-3xl font-bold">{program.price}</div>
+                  <div className="text-sm opacity-90">{program.schedule}</div>
                 </div>
               </div>
 
               {/* Content */}
               <div className="p-6">
-                <p className="text-gray-700 mb-6 leading-relaxed">
-                  {program.description}
-                </p>
-
+                <h3 className="text-xl font-bold text-gray-800 mb-3">{program.title}</h3>
+                <p className="text-gray-600 mb-4">{program.description}</p>
+                
                 {/* Features */}
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-800 mb-3">What's Included:</h4>
-                  <div className="grid grid-cols-2 gap-2">
-                    {program.features.map((feature, index) => (
-                      <div key={index} className="flex items-center text-sm text-gray-600">
-                        <Star className="h-4 w-4 text-red-500 mr-2 flex-shrink-0" />
-                        {feature}
-                      </div>
-                    ))}
-                  </div>
+                <div className="space-y-2 mb-6">
+                  {program.features.map((feature, index) => (
+                    <div key={index} className="flex items-center text-sm text-gray-700">
+                      <Star className="h-4 w-4 text-yellow-500 mr-2 flex-shrink-0" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
                 </div>
 
                 {/* Special Note */}
@@ -117,15 +106,10 @@ const SpeedBoatsSection: React.FC = () => {
                   </div>
                 )}
 
-                {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <button className="flex-1 bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-red-600 hover:to-orange-600 transition-all duration-200 transform hover:scale-105">
-                    BOOK NOW
-                  </button>
-                  <button className="flex-1 bg-gray-100 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-200 transition-colors duration-200">
-                    GALLERY
-                  </button>
-                </div>
+                {/* Book Button */}
+                <button className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-red-600 hover:to-orange-600 transition-all duration-200 transform hover:scale-105">
+                  Book Now
+                </button>
               </div>
             </div>
           ))}
