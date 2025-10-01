@@ -10,7 +10,5 @@ services:
         value: settlethailand@gmail.com
       - key: EMAIL_PASS
         value: xjeincwfnyvlcezi
-      - key: USE_SENDGRID
-        value: "false"
       - key: EMAIL_SERVICE
         value: "gmail"

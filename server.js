@@ -4,17 +4,6 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 const config = require('./backend/config.js');
 
-// Import SendGrid if available
-let sgMail = null;
-try {
-  sgMail = require('@sendgrid/mail');
-  if (config.email.sendgridApiKey) {
-    sgMail.setApiKey(config.email.sendgridApiKey);
-  }
-} catch (error) {
-  console.log('SendGrid not available:', error.message);
-}
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -40,27 +29,9 @@ const transporter = nodemailer.createTransport({
   socketTimeout: 60000 // 60 seconds
 });
 
-// Smart email sending function with multiple fallbacks
+// Smart email sending function with Gmail SMTP and console fallback
 const sendEmail = async (mailOptions) => {
-  // Method 1: Try SendGrid first (best for cloud)
-  if (config.email.useSendGrid && sgMail && config.email.sendgridApiKey) {
-    try {
-      console.log('Attempting to send via SendGrid...');
-      const msg = {
-        to: mailOptions.to,
-        from: config.email.user,
-        subject: mailOptions.subject,
-        html: mailOptions.html
-      };
-      await sgMail.send(msg);
-      console.log('Email sent successfully via SendGrid');
-      return { success: true, method: 'SendGrid' };
-    } catch (error) {
-      console.error('SendGrid failed:', error.message);
-    }
-  }
-
-  // Method 2: Try Gmail SMTP (works locally, often fails on cloud)
+  // Method 1: Try Gmail SMTP
   try {
     console.log('Attempting to send via Gmail SMTP...');
     await transporter.sendMail(mailOptions);
@@ -70,12 +41,12 @@ const sendEmail = async (mailOptions) => {
     console.error('Gmail SMTP failed:', error.message);
   }
 
-  // Method 3: Log to console (fallback)
-  console.log('=== EMAIL FALLBACK - All email methods failed ===');
+  // Method 2: Log to console (fallback)
+  console.log('=== EMAIL FALLBACK - Gmail SMTP failed ===');
   console.log('To:', mailOptions.to);
   console.log('Subject:', mailOptions.subject);
   console.log('Content preview:', mailOptions.html.substring(0, 200) + '...');
-  console.log('===============================================');
+  console.log('==========================================');
   
   return { success: false, method: 'console-log' };
 };
