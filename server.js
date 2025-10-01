@@ -433,8 +433,12 @@ app.get('/api/debug-images', (req, res) => {
 
 // Test image serving
 app.get('/api/test-image', (req, res) => {
-  const testImagePath = path.join(__dirname, 'public', 'images', 'founderimage.jpg');
   const fs = require('fs');
+  // Use the same smart path detection as the main image serving
+  const buildImagesPath = path.join(__dirname, 'build', 'images');
+  const publicImagesPath = path.join(__dirname, 'public', 'images');
+  const imagesDir = fs.existsSync(buildImagesPath) ? buildImagesPath : publicImagesPath;
+  const testImagePath = path.join(imagesDir, 'founderimage.jpg');
   
   if (fs.existsSync(testImagePath)) {
     res.setHeader('Content-Type', 'image/jpeg');
@@ -444,17 +448,22 @@ app.get('/api/test-image', (req, res) => {
     res.status(404).json({
       error: 'Test image not found',
       path: testImagePath,
+      imagesDir: imagesDir,
       exists: fs.existsSync(testImagePath),
-      publicExists: fs.existsSync(path.join(__dirname, 'public')),
-      imagesExists: fs.existsSync(path.join(__dirname, 'public', 'images'))
+      buildImagesExists: fs.existsSync(buildImagesPath),
+      publicImagesExists: fs.existsSync(publicImagesPath)
     });
   }
 });
 
 // Test specific diving image
 app.get('/api/test-diving-image', (req, res) => {
-  const testImagePath = path.join(__dirname, 'public', 'images', 'diving', '12.webp');
   const fs = require('fs');
+  // Use the same smart path detection as the main image serving
+  const buildImagesPath = path.join(__dirname, 'build', 'images');
+  const publicImagesPath = path.join(__dirname, 'public', 'images');
+  const imagesDir = fs.existsSync(buildImagesPath) ? buildImagesPath : publicImagesPath;
+  const testImagePath = path.join(imagesDir, 'diving', '12.webp');
   
   if (fs.existsSync(testImagePath)) {
     res.setHeader('Content-Type', 'image/webp');
@@ -464,8 +473,11 @@ app.get('/api/test-diving-image', (req, res) => {
     res.status(404).json({
       error: 'Diving image not found',
       path: testImagePath,
+      imagesDir: imagesDir,
       exists: fs.existsSync(testImagePath),
-      divingExists: fs.existsSync(path.join(__dirname, 'public', 'images', 'diving'))
+      divingExists: fs.existsSync(path.join(imagesDir, 'diving')),
+      buildImagesExists: fs.existsSync(buildImagesPath),
+      publicImagesExists: fs.existsSync(publicImagesPath)
     });
   }
 });
