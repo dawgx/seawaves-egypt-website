@@ -39,7 +39,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
     setSubmitStatus('idle');
 
     // Send to backend API (same service)
-    const apiUrl = process.env.REACT_APP_API_URL || '';
+    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
     
     try {
       const response = await fetch(`${apiUrl}/api/contact`, {
@@ -49,6 +49,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
         },
         body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const result = await response.json();
 
@@ -61,6 +65,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
     } catch (error) {
       console.error('Error submitting form:', error);
       console.error('API URL:', apiUrl);
+      console.error('Full error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        name: error instanceof Error ? error.name : 'Unknown',
+        stack: error instanceof Error ? error.stack : undefined
+      });
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
