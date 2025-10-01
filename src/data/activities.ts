@@ -6,41 +6,41 @@ import diving4 from '../assets/images/diving/intro-1738601436.jpg';
 import diving5 from '../assets/images/diving/large.jpg';
 import diving6 from '../assets/images/diving/scuba-divers-colorful-reef-swim-thru.jpg';
 
-// Import other images using require for folders with hyphens
-const dolphin1 = require('../assets/images/dolphin-trips/0+_DSC4970+1x.webp').default;
-const dolphin2 = require('../assets/images/dolphin-trips/common-bottlenose-dolphin-tursiops-truncatus-600nw-2462528295.webp').default;
-const dolphin3 = require('../assets/images/dolphin-trips/Dolphin-QuestWaikoloa-1.webp').default;
-const dolphin4 = require('../assets/images/dolphin-trips/images.jpg').default;
-const dolphin5 = require('../assets/images/dolphin-trips/swimgwithdolphinsbyisraelministry-1280x640.jpg').default;
-const dolphin6 = require('../assets/images/dolphin-trips/Underwater-Pod-08824_copyright-Dolphin-Safari.webp').default;
+// Import other images using require for folders with spaces
+const dolphin1 = require('../assets/images/dolphin trips/0+_DSC4970+1x.webp').default;
+const dolphin2 = require('../assets/images/dolphin trips/common-bottlenose-dolphin-tursiops-truncatus-600nw-2462528295.webp').default;
+const dolphin3 = require('../assets/images/dolphin trips/Dolphin-QuestWaikoloa-1.webp').default;
+const dolphin4 = require('../assets/images/dolphin trips/images.jpg').default;
+const dolphin5 = require('../assets/images/dolphin trips/swimgwithdolphinsbyisraelministry-1280x640.jpg').default;
+const dolphin6 = require('../assets/images/dolphin trips/Underwater-Pod-08824_copyright-Dolphin-Safari.webp').default;
 
-const island1 = require('../assets/images/island-tour/0c.jpg').default;
-const island2 = require('../assets/images/island-tour/5b.jpg').default;
-const island3 = require('../assets/images/island-tour/99.jpg').default;
-const island4 = require('../assets/images/island-tour/d5.jpg').default;
-const island5 = require('../assets/images/island-tour/da.jpg').default;
-const island6 = require('../assets/images/island-tour/el8lmmqhhlklotkzels2.jpg').default;
+const island1 = require('../assets/images/island tour/0c.jpg').default;
+const island2 = require('../assets/images/island tour/5b.jpg').default;
+const island3 = require('../assets/images/island tour/99.jpg').default;
+const island4 = require('../assets/images/island tour/d5.jpg').default;
+const island5 = require('../assets/images/island tour/da.jpg').default;
+const island6 = require('../assets/images/island tour/el8lmmqhhlklotkzels2.jpg').default;
 
-const boat1 = require('../assets/images/boat-trips/602f36_171baf9b8d634445b107cf1f0483c098~mv2.avif').default;
-const boat2 = require('../assets/images/boat-trips/92e6991d-881d-49f1-b72c-66fb1223f52c_experience-the-ultimate-full-day-boat-trip-in-hurghada-xlarge.webp').default;
-const boat3 = require('../assets/images/boat-trips/hnCTnWMSyFw-Copy-860x420.jpg').default;
-const boat4 = require('../assets/images/boat-trips/images.jpg').default;
-const boat5 = require('../assets/images/boat-trips/mahmya-island.jpg').default;
-const boat6 = require('../assets/images/boat-trips/WhatsAppImage2024-08-08at2.56.06PM-287668.webp').default;
+const boat1 = require('../assets/images/boat trips/602f36_171baf9b8d634445b107cf1f0483c098~mv2.avif').default;
+const boat2 = require('../assets/images/boat trips/92e6991d-881d-49f1-b72c-66fb1223f52c_experience-the-ultimate-full-day-boat-trip-in-hurghada-xlarge.webp').default;
+const boat3 = require('../assets/images/boat trips/hnCTnWMSyFw-Copy-860x420.jpg').default;
+const boat4 = require('../assets/images/boat trips/images.jpg').default;
+const boat5 = require('../assets/images/boat trips/mahmya-island.jpg').default;
+const boat6 = require('../assets/images/boat trips/WhatsAppImage2024-08-08at2.56.06PM-287668.webp').default;
 
-const speed1 = require('../assets/images/speed-boats/03.jpg').default;
-const speed2 = require('../assets/images/speed-boats/2.jpg').default;
-const speed3 = require('../assets/images/speed-boats/201821142043159.jpg').default;
-const speed4 = require('../assets/images/speed-boats/caption.jpg').default;
-const speed5 = require('../assets/images/speed-boats/SPEED-BOAT-HURGHADA-4-_5_11zon.jpg').default;
-const speed6 = require('../assets/images/speed-boats/Speed-Boat-Hurghada-Dream-5-870x555.jpg').default;
+const speed1 = require('../assets/images/speed boats/03.jpg').default;
+const speed2 = require('../assets/images/speed boats/2.jpg').default;
+const speed3 = require('../assets/images/speed boats/201821142043159.jpg').default;
+const speed4 = require('../assets/images/speed boats/caption.jpg').default;
+const speed5 = require('../assets/images/speed boats/SPEED-BOAT-HURGHADA-4-_5_11zon.jpg').default;
+const speed6 = require('../assets/images/speed boats/Speed-Boat-Hurghada-Dream-5-870x555.jpg').default;
 
-const water1 = require('../assets/images/water-sports/01d385afd9ae219a54206b5a8d948e409e86d7cdf4b9b92d5ba985a455664df7.avif').default;
-const water2 = require('../assets/images/water-sports/1635332376water-activities-in-hurghada-06.jpg').default;
-const water3 = require('../assets/images/water-sports/79.jpg').default;
-const water4 = require('../assets/images/water-sports/gsgiendy6ogammokktbc.jpg').default;
-const water5 = require('../assets/images/water-sports/kkkfbptmfqzvv5rijmgs.jpg').default;
-const water6 = require('../assets/images/water-sports/lxe73ankpaouulwnzoh4.jpg').default;
+const water1 = require('../assets/images/water sports/01d385afd9ae219a54206b5a8d948e409e86d7cdf4b9b92d5ba985a455664df7.avif').default;
+const water2 = require('../assets/images/water sports/1635332376water-activities-in-hurghada-06.jpg').default;
+const water3 = require('../assets/images/water sports/79.jpg').default;
+const water4 = require('../assets/images/water sports/gsgiendy6ogammokktbc.jpg').default;
+const water5 = require('../assets/images/water sports/kkkfbptmfqzvv5rijmgs.jpg').default;
+const water6 = require('../assets/images/water sports/lxe73ankpaouulwnzoh4.jpg').default;
 
 export interface Activity {
   id: string;
