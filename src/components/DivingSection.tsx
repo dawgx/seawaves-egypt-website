@@ -123,10 +123,15 @@ const DivingSection: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Book Button */}
-                <button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105">
-                  Book Now
-                </button>
+                {/* Action Buttons */}
+                <div className="flex gap-3">
+                  <button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105">
+                    BOOK NOW
+                  </button>
+                  <button className="flex-1 bg-gray-100 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-200 transition-colors duration-200">
+                    GALLERY
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -160,9 +165,14 @@ const DivingSection: React.FC = () => {
                   {course.level}
                 </div>
               </div>
-              <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-200">
-                Learn More
-              </button>
+              <div className="flex gap-3">
+                <button className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-200">
+                  LEARN MORE
+                </button>
+                <button className="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg font-semibold hover:bg-gray-200 transition-colors duration-200">
+                  GALLERY
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -186,9 +196,14 @@ const DivingSection: React.FC = () => {
                 <span className="text-xl font-bold text-purple-600">{dive.price}</span>
               </div>
               <p className="text-gray-600 mb-4 text-sm">{dive.description}</p>
-              <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200">
-                Book Now
-              </button>
+              <div className="flex gap-3">
+                <button className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200">
+                  BOOK NOW
+                </button>
+                <button className="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg font-semibold hover:bg-gray-200 transition-colors duration-200">
+                  GALLERY
+                </button>
+              </div>
             </div>
           ))}
         </div>
