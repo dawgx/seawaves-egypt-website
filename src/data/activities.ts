@@ -97,12 +97,12 @@ This is more than just a boat trip – it's a life-changing encounter with one o
       'Trip may be cancelled due to weather conditions'
     ],
     images: [
-      '/images/dolphin trips/0+_DSC4970+1x.webp',
-      '/images/dolphin trips/common-bottlenose-dolphin-tursiops-truncatus-600nw-2462528295.webp',
-      '/images/dolphin trips/Dolphin-QuestWaikoloa-1.webp',
-      '/images/dolphin trips/images.jpg',
-      '/images/dolphin trips/swimgwithdolphinsbyisraelministry-1280x640.jpg',
-      '/images/dolphin trips/Underwater-Pod-08824_copyright-Dolphin-Safari.webp'
+      dolphin1,
+      dolphin2,
+      dolphin3,
+      dolphin4,
+      dolphin5,
+      dolphin6
     ],
     icon: 'Fish'
   },
@@ -146,12 +146,12 @@ Enjoy a delicious lunch on the beach, take Instagram-worthy photos, and simply u
       'Limited shade on islands - bring hat'
     ],
     images: [
-      '/images/island tour/0c.jpg',
-      '/images/island tour/5b.jpg',
-      '/images/island tour/99.jpg',
-      '/images/island tour/d5.jpg',
-      '/images/island tour/da.jpg',
-      '/images/island tour/el8lmmqhhlklotkzels2.jpg'
+      island1,
+      island2,
+      island3,
+      island4,
+      island5,
+      island6
     ],
     icon: 'MapPin'
   },
@@ -194,12 +194,12 @@ Whether you're celebrating a special occasion, looking for a romantic getaway, o
       'Group discounts available'
     ],
     images: [
-      '/images/boat trips/602f36_171baf9b8d634445b107cf1f0483c098~mv2.avif',
-      '/images/boat trips/92e6991d-881d-49f1-b72c-66fb1223f52c_experience-the-ultimate-full-day-boat-trip-in-hurghada-xlarge.webp',
-      '/images/boat trips/hnCTnWMSyFw-Copy-860x420.jpg',
-      '/images/boat trips/images.jpg',
-      '/images/boat trips/mahmya-island.jpg',
-      '/images/boat trips/WhatsAppImage2024-08-08at2.56.06PM-287668.webp'
+      boat1,
+      boat2,
+      boat3,
+      boat4,
+      boat5,
+      boat6
     ],
     icon: 'Anchor'
   },
@@ -241,12 +241,12 @@ We offer various routes including coastal tours, island hopping, and custom adve
       'Hold on tight - it\'s a wild ride!'
     ],
     images: [
-      '/images/speed boats/03.jpg',
-      '/images/speed boats/2.jpg',
-      '/images/speed boats/201821142043159.jpg',
-      '/images/speed boats/caption.jpg',
-      '/images/speed boats/SPEED-BOAT-HURGHADA-4-_5_11zon.jpg',
-      '/images/speed boats/Speed-Boat-Hurghada-Dream-5-870x555.jpg'
+      speed1,
+      speed2,
+      speed3,
+      speed4,
+      speed5,
+      speed6
     ],
     icon: 'Zap'
   },
@@ -288,12 +288,12 @@ All activities are supervised by certified instructors who prioritize your safet
       'Combination packages offer better value'
     ],
     images: [
-      '/images/water sports/01d385afd9ae219a54206b5a8d948e409e86d7cdf4b9b92d5ba985a455664df7.avif',
-      '/images/water sports/1635332376water-activities-in-hurghada-06.jpg',
-      '/images/water sports/79.jpg',
-      '/images/water sports/gsgiendy6ogammokktbc.jpg',
-      '/images/water sports/kkkfbptmfqzvv5rijmgs.jpg',
-      '/images/water sports/lxe73ankpaouulwnzoh4.jpg'
+      water1,
+      water2,
+      water3,
+      water4,
+      water5,
+      water6
     ],
     icon: 'Activity'
   }

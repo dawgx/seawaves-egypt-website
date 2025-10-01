@@ -1,6 +1,7 @@
 import React from 'react';
 import { Heart, Users, Award } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import founderImage from '../assets/images/founderimage.jpg';
 
 const About: React.FC = () => {
   const { t } = useLanguage();
@@ -24,7 +25,7 @@ const About: React.FC = () => {
             <div className="flex items-center mb-6">
               <div className="w-20 h-20 rounded-full overflow-hidden mr-6 shadow-lg">
                 <img 
-                  src="/images/founderimage.jpg" 
+                  src={founderImage} 
                   alt="Ahmed Hassan - Founder of Sea Waves Aqua Center"
                   className="w-full h-full object-cover"
                 />
