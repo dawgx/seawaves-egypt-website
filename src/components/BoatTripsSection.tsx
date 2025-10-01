@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Anchor, Fish, Sunset, Eye, Submarine } from 'lucide-react';
+import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Anchor, Fish, Sunset, Eye, Ship } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const BoatTripsSection: React.FC = () => {
@@ -57,7 +57,7 @@ const BoatTripsSection: React.FC = () => {
       title: 'Submarine Trip',
       price: '€40',
       schedule: 'Everyday (9:00-13:00)',
-      icon: <Submarine className="h-8 w-8" />,
+      icon: <Ship className="h-8 w-8" />,
       description: 'In a submarine boat you will enjoy watching all kinds of Red Sea marine life: beautiful coral reefs, colorful fish and descend to depths of up to 22 meters.',
       features: ['22m Depth', 'Marine Life Viewing', 'Coral Reefs', 'Underwater Adventure'],
       color: 'from-indigo-500 to-purple-500',
