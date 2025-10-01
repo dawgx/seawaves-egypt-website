@@ -34,12 +34,22 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
     }
   });
 
+  // Debug form errors
+  React.useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      console.log('❌ Form validation errors:', errors);
+    }
+  }, [errors]);
+
   const onSubmit = async (data: ContactFormData) => {
+    console.log('🚀 Form submission started');
+    console.log('📝 Form data:', data);
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     // Send to backend API (same service)
     const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+    console.log('🌐 API URL:', apiUrl);
     
     try {
       const response = await fetch(`${apiUrl}/api/contact`, {
@@ -103,7 +113,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={(e) => {
+        console.log('📋 Form submit event triggered');
+        handleSubmit(onSubmit)(e);
+      }} className="space-y-6">
         {/* Full Name */}
         <div>
           <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
