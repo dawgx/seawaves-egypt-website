@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
 const sgMail = require('@sendgrid/mail');
 const path = require('path');
 const fs = require('fs');
@@ -29,53 +28,17 @@ if (config.email.sendgrid.apiKey) {
   sgMail.setApiKey(config.email.sendgrid.apiKey);
   console.log('✅ SendGrid initialized successfully');
 } else {
-  console.log('⚠️  SendGrid API key not found - using Gmail SMTP fallback');
+  console.log('⚠️  SendGrid API key not found - emails will be logged to console only');
 }
 
-// Enhanced Gmail SMTP configuration with detailed logging
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: config.email.user,
-    pass: config.email.pass
-  },
-  tls: {
-    rejectUnauthorized: false,
-    ciphers: 'SSLv3'
-  },
-  // Reduced timeouts for faster failure detection
-  connectionTimeout: 15000, // 15 seconds
-  greetingTimeout: 10000,   // 10 seconds
-  socketTimeout: 15000,     // 15 seconds
-  // Additional debugging options
-  debug: true,
-  logger: true
-});
-
-// Test Gmail connection on startup
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ Gmail SMTP Connection Test Failed:', error.message);
-    console.error('Error code:', error.code);
-    console.error('Error command:', error.command);
-    console.error('Full error:', error);
-  } else {
-    console.log('✅ Gmail SMTP Connection Test Successful');
-    console.log('Server is ready to send emails');
-  }
-});
-
-// Smart email sending function - SendGrid first, Gmail SMTP fallback
+// Email sending function - SendGrid only
 const sendEmail = async (mailOptions) => {
   console.log('📧 === EMAIL SENDING ATTEMPT ===');
   console.log('📧 To:', mailOptions.to);
   console.log('📧 Subject:', mailOptions.subject);
   console.log('📧 From:', mailOptions.from);
   
-  // Method 1: Try SendGrid (cloud-friendly)
+  // Try SendGrid
   if (config.email.sendgrid.apiKey) {
     try {
       console.log('📧 Attempting SendGrid API...');
@@ -106,42 +69,10 @@ const sendEmail = async (mailOptions) => {
       console.error('📧 Response:', error.response?.body);
     }
   } else {
-    console.log('📧 SendGrid API key not available, trying Gmail SMTP...');
+    console.log('📧 SendGrid API key not available');
   }
   
-  // Method 2: Try Gmail SMTP (may be blocked by hosting)
-  try {
-    console.log('📧 Attempting Gmail SMTP connection...');
-    console.log('📧 Gmail SMTP Config:');
-    console.log('📧   - Host: smtp.gmail.com');
-    console.log('📧   - Port: 587');
-    console.log('📧   - Secure: false');
-    console.log('📧   - User:', config.email.gmail.user);
-    console.log('📧   - Pass: [HIDDEN]');
-    
-    const startTime = Date.now();
-    const result = await transporter.sendMail(mailOptions);
-    const endTime = Date.now();
-    
-    console.log('✅ Gmail SMTP SUCCESS!');
-    console.log('📧 Response ID:', result.messageId);
-    console.log('📧 Response:', result.response);
-    console.log('📧 Time taken:', (endTime - startTime) + 'ms');
-    console.log('📧 ================================');
-    
-    return { success: true, method: 'Gmail SMTP', messageId: result.messageId };
-  } catch (error) {
-    console.error('❌ Gmail SMTP FAILED!');
-    console.error('📧 Error Type:', error.name);
-    console.error('📧 Error Message:', error.message);
-    console.error('📧 Error Code:', error.code);
-    
-    if (error.code === 'ETIMEDOUT') {
-      console.error('📧 DIAGNOSIS: Gmail SMTP blocked by hosting provider - Use SendGrid instead');
-    }
-  }
-  
-  // Method 3: Console fallback
+  // Console fallback
   console.log('📧 === FALLBACK TO CONSOLE LOG ===');
   console.log('📧 To:', mailOptions.to);
   console.log('📧 Subject:', mailOptions.subject);
@@ -166,7 +97,7 @@ app.post('/api/contact', async (req, res) => {
 
     // Email content
     const mailOptions = {
-      from: config.email.sendgrid.from || config.email.gmail.user,
+      from: config.email.sendgrid.from,
       to: config.email.adminEmail,
       subject: `New Inquiry for ${activityName} - Sea Waves Aqua Center`,
       html: `
@@ -238,7 +169,7 @@ app.post('/api/contact', async (req, res) => {
     
     // Send confirmation email to customer
     const confirmationMailOptions = {
-      from: config.email.sendgrid.from || config.email.gmail.user,
+      from: config.email.sendgrid.from,
       to: email,
       subject: 'Thank you for your inquiry - Sea Waves Aqua Center',
       html: `
