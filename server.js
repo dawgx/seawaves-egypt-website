@@ -327,6 +327,20 @@ app.get('/api/test', (req, res) => {
   });
 });
 
+// Test endpoint to serve index.html directly
+app.get('/test-index', (req, res) => {
+  const indexPath = path.join(__dirname, 'build', 'index.html');
+  console.log('🧪 Test endpoint - serving index.html directly');
+  console.log('🧪 Index path:', indexPath);
+  console.log('🧪 Index exists:', fs.existsSync(indexPath));
+  
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).json({ error: 'index.html not found', path: indexPath });
+  }
+});
+
 // React build check endpoint
 app.get('/api/check-react', (req, res) => {
   const buildDir = path.join(__dirname, 'build');
@@ -652,7 +666,13 @@ app.get('/api/test-admin-email', async (req, res) => {
 });
 
 // Serve static files from the React app build directory
-app.use(express.static(path.join(__dirname, 'build')));
+const buildDir = path.join(__dirname, 'build');
+console.log('📁 Setting up static file serving from:', buildDir);
+console.log('📁 Build directory exists:', fs.existsSync(buildDir));
+if (fs.existsSync(buildDir)) {
+  console.log('📁 Build directory contents:', fs.readdirSync(buildDir));
+}
+app.use(express.static(buildDir));
 
 // Serve images from build directory (production) or public directory (development)
 let imageDir = fs.existsSync(path.join(__dirname, 'build', 'images')) 
@@ -736,6 +756,8 @@ app.get('*', (req, res) => {
   console.log('🌐 Serving React app for:', req.url);
   console.log('🌐 Index file path:', indexPath);
   console.log('🌐 Index file exists:', fs.existsSync(indexPath));
+  console.log('🌐 Request headers:', req.headers);
+  console.log('🌐 User agent:', req.get('User-Agent'));
   
   if (fs.existsSync(indexPath)) {
     console.log('🌐 Sending React app to client...');
