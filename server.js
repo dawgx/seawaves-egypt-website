@@ -306,6 +306,31 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
+// React build check endpoint
+app.get('/api/check-react', (req, res) => {
+  const buildDir = path.join(__dirname, 'build');
+  const indexPath = path.join(buildDir, 'index.html');
+  const staticDir = path.join(buildDir, 'static');
+  
+  res.json({
+    buildDir: {
+      path: buildDir,
+      exists: fs.existsSync(buildDir),
+      contents: fs.existsSync(buildDir) ? fs.readdirSync(buildDir) : []
+    },
+    indexHtml: {
+      path: indexPath,
+      exists: fs.existsSync(indexPath),
+      size: fs.existsSync(indexPath) ? fs.statSync(indexPath).size : 0
+    },
+    staticDir: {
+      path: staticDir,
+      exists: fs.existsSync(staticDir),
+      contents: fs.existsSync(staticDir) ? fs.readdirSync(staticDir) : []
+    }
+  });
+});
+
 // Simple directory check endpoint
 app.get('/api/check-dirs', (req, res) => {
   const fs = require('fs');
@@ -681,7 +706,23 @@ function getContentType(filePath) {
 
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  const indexPath = path.join(__dirname, 'build', 'index.html');
+  console.log('🌐 Serving React app for:', req.url);
+  console.log('🌐 Index file path:', indexPath);
+  console.log('🌐 Index file exists:', fs.existsSync(indexPath));
+  
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    console.error('❌ React build index.html not found!');
+    res.status(404).json({
+      error: 'React app not built properly',
+      indexPath: indexPath,
+      buildDir: path.join(__dirname, 'build'),
+      buildExists: fs.existsSync(path.join(__dirname, 'build')),
+      buildContents: fs.existsSync(path.join(__dirname, 'build')) ? fs.readdirSync(path.join(__dirname, 'build')) : []
+    });
+  }
 });
 
 app.listen(PORT, () => {
