@@ -65,11 +65,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
       }
 
       const result = await response.json();
+      console.log('📨 API Response:', result);
 
       if (result.success) {
+        console.log('✅ Form submission successful');
         setSubmitStatus('success');
         reset();
       } else {
+        console.log('❌ Form submission failed:', result.message);
         throw new Error(result.message || 'Failed to send message');
       } 
     } catch (error) {
@@ -107,9 +110,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
       {submitStatus === 'error' && (
         <div className="mb-6 p-4 bg-error-red/10 border border-error-red/20 rounded-lg flex items-center">
           <AlertCircle className="h-5 w-5 text-error-red mr-3" />
-          <p className="text-error-red font-medium">
-            {t('contact.errorMessage')}
-          </p>
+          <div>
+            <p className="text-error-red font-medium">
+              {t('contact.errorMessage')}
+            </p>
+            <p className="text-error-red text-sm mt-1">
+              Please try again or contact us directly at settlethailand@gmail.com
+            </p>
+          </div>
         </div>
       )}
 

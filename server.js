@@ -249,13 +249,22 @@ app.post('/api/contact', async (req, res) => {
     console.log('Confirmation email status:', confirmationEmailResult.success ? 'Sent' : 'Failed');
     console.log('========================');
 
-    // Always return success to user
-    res.json({ 
-      success: true, 
-      message: adminEmailResult.success ? 'Email sent successfully!' : 'Inquiry received! We will contact you soon.',
-      emailStatus: adminEmailResult.success ? 'sent' : 'logged',
-      method: adminEmailResult.method || 'console-log'
-    });
+    // Return success only if admin email was sent successfully
+    if (adminEmailResult.success) {
+      res.json({ 
+        success: true, 
+        message: 'Email sent successfully!',
+        emailStatus: 'sent',
+        method: adminEmailResult.method
+      });
+    } else {
+      res.status(500).json({ 
+        success: false, 
+        message: 'Failed to send email. Please try again or contact us directly.',
+        emailStatus: 'failed',
+        method: adminEmailResult.method || 'console-log'
+      });
+    }
 
   } catch (error) {
     console.error('Error sending email:', error);
