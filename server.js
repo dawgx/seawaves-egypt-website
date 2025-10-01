@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const path = require('path');
 const config = require('./backend/config.js');
 
@@ -10,6 +11,14 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Initialize SendGrid
+if (config.email.sendgrid.apiKey) {
+  sgMail.setApiKey(config.email.sendgrid.apiKey);
+  console.log('✅ SendGrid initialized successfully');
+} else {
+  console.log('⚠️  SendGrid API key not found - using Gmail SMTP fallback');
+}
 
 // Enhanced Gmail SMTP configuration with detailed logging
 const transporter = nodemailer.createTransport({
@@ -47,26 +56,58 @@ transporter.verify((error, success) => {
   }
 });
 
-// Enhanced email sending function with detailed Gmail SMTP logging
+// Smart email sending function - SendGrid first, Gmail SMTP fallback
 const sendEmail = async (mailOptions) => {
   console.log('📧 === EMAIL SENDING ATTEMPT ===');
   console.log('📧 To:', mailOptions.to);
   console.log('📧 Subject:', mailOptions.subject);
   console.log('📧 From:', mailOptions.from);
-  console.log('📧 Gmail SMTP Config:');
-  console.log('📧   - Host: smtp.gmail.com');
-  console.log('📧   - Port: 587');
-  console.log('📧   - Secure: false');
-  console.log('📧   - User:', config.email.user);
-  console.log('📧   - Pass: [HIDDEN]');
-  console.log('📧   - Connection Timeout: 15s');
-  console.log('📧   - Greeting Timeout: 10s');
-  console.log('📧   - Socket Timeout: 15s');
   
+  // Method 1: Try SendGrid (cloud-friendly)
+  if (config.email.sendgrid.apiKey) {
+    try {
+      console.log('📧 Attempting SendGrid API...');
+      const startTime = Date.now();
+      
+      const sendGridMessage = {
+        to: mailOptions.to,
+        from: {
+          email: config.email.sendgrid.from,
+          name: config.email.sendgrid.fromName
+        },
+        subject: mailOptions.subject,
+        html: mailOptions.html
+      };
+      
+      const result = await sgMail.send(sendGridMessage);
+      const endTime = Date.now();
+      
+      console.log('✅ SendGrid SUCCESS!');
+      console.log('📧 Response:', result[0].statusCode);
+      console.log('📧 Time taken:', (endTime - startTime) + 'ms');
+      console.log('📧 ================================');
+      
+      return { success: true, method: 'SendGrid', statusCode: result[0].statusCode };
+    } catch (error) {
+      console.error('❌ SendGrid FAILED!');
+      console.error('📧 Error:', error.message);
+      console.error('📧 Response:', error.response?.body);
+    }
+  } else {
+    console.log('📧 SendGrid API key not available, trying Gmail SMTP...');
+  }
+  
+  // Method 2: Try Gmail SMTP (may be blocked by hosting)
   try {
     console.log('📧 Attempting Gmail SMTP connection...');
-    const startTime = Date.now();
+    console.log('📧 Gmail SMTP Config:');
+    console.log('📧   - Host: smtp.gmail.com');
+    console.log('📧   - Port: 587');
+    console.log('📧   - Secure: false');
+    console.log('📧   - User:', config.email.gmail.user);
+    console.log('📧   - Pass: [HIDDEN]');
     
+    const startTime = Date.now();
     const result = await transporter.sendMail(mailOptions);
     const endTime = Date.now();
     
@@ -82,32 +123,20 @@ const sendEmail = async (mailOptions) => {
     console.error('📧 Error Type:', error.name);
     console.error('📧 Error Message:', error.message);
     console.error('📧 Error Code:', error.code);
-    console.error('📧 Error Command:', error.command);
-    console.error('📧 Error Response:', error.response);
-    console.error('📧 Error Response Code:', error.responseCode);
-    console.error('📧 Full Error Object:', JSON.stringify(error, null, 2));
     
-    // Check for specific error types
-    if (error.code === 'ECONNREFUSED') {
-      console.error('📧 DIAGNOSIS: Connection refused - Check if Gmail SMTP is blocked by firewall/proxy');
-    } else if (error.code === 'ETIMEDOUT') {
-      console.error('📧 DIAGNOSIS: Connection timeout - Network issue or Gmail server unreachable');
-    } else if (error.code === 'EAUTH') {
-      console.error('📧 DIAGNOSIS: Authentication failed - Check email/password or enable 2FA with app password');
-    } else if (error.code === 'ECONNRESET') {
-      console.error('📧 DIAGNOSIS: Connection reset - Network instability or Gmail server issue');
-    } else {
-      console.error('📧 DIAGNOSIS: Unknown error - Check logs above for details');
+    if (error.code === 'ETIMEDOUT') {
+      console.error('📧 DIAGNOSIS: Gmail SMTP blocked by hosting provider - Use SendGrid instead');
     }
-    
-    console.log('📧 === FALLBACK TO CONSOLE LOG ===');
-    console.log('📧 To:', mailOptions.to);
-    console.log('📧 Subject:', mailOptions.subject);
-    console.log('📧 Content preview:', mailOptions.html.substring(0, 200) + '...');
-    console.log('📧 ================================');
-    
-    return { success: false, method: 'console-log', error: error.message };
   }
+  
+  // Method 3: Console fallback
+  console.log('📧 === FALLBACK TO CONSOLE LOG ===');
+  console.log('📧 To:', mailOptions.to);
+  console.log('📧 Subject:', mailOptions.subject);
+  console.log('📧 Content preview:', mailOptions.html.substring(0, 200) + '...');
+  console.log('📧 ================================');
+  
+  return { success: false, method: 'console-log' };
 };
 
 // API Routes
@@ -276,48 +305,45 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
-// Gmail SMTP connection test endpoint
+// Email service test endpoint (SendGrid + Gmail SMTP)
 app.get('/api/test-email', async (req, res) => {
-  console.log('🧪 === GMAIL SMTP CONNECTION TEST ===');
+  console.log('🧪 === EMAIL SERVICE TEST ===');
+  
+  const testMailOptions = {
+    from: config.email.sendgrid.from || config.email.gmail.user,
+    to: config.email.adminEmail,
+    subject: 'Email Service Test - Sea Waves Aqua Center',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #1e40af;">Email Service Test Successful!</h2>
+        <p>This is a test email to verify email configuration.</p>
+        <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+        <p><strong>Server:</strong> Sea Waves Aqua Center</p>
+        <p><strong>Service:</strong> SendGrid (primary) / Gmail SMTP (fallback)</p>
+      </div>
+    `
+  };
   
   try {
-    // Test connection
-    console.log('🧪 Testing Gmail SMTP connection...');
-    await transporter.verify();
-    console.log('✅ Gmail SMTP connection verified successfully');
-    
-    // Test sending a simple email
-    const testMailOptions = {
-      from: config.email.user,
-      to: config.email.adminEmail,
-      subject: 'Gmail SMTP Test - Sea Waves Aqua Center',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #1e40af;">Gmail SMTP Test Successful!</h2>
-          <p>This is a test email to verify Gmail SMTP configuration.</p>
-          <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
-          <p><strong>Server:</strong> Sea Waves Aqua Center</p>
-        </div>
-      `
-    };
-    
     const result = await sendEmail(testMailOptions);
     
     res.json({
-      success: true,
-      message: 'Gmail SMTP test completed',
-      connectionTest: 'PASSED',
-      emailTest: result.success ? 'PASSED' : 'FAILED',
-      details: result
+      success: result.success,
+      message: result.success ? 'Email test completed successfully' : 'Email test failed',
+      service: result.method,
+      details: result,
+      sendgridAvailable: !!config.email.sendgrid.apiKey,
+      gmailAvailable: !!config.email.gmail.user
     });
     
   } catch (error) {
-    console.error('❌ Gmail SMTP test failed:', error.message);
+    console.error('❌ Email test failed:', error.message);
     res.json({
       success: false,
-      message: 'Gmail SMTP test failed',
+      message: 'Email test failed',
       error: error.message,
-      connectionTest: 'FAILED'
+      sendgridAvailable: !!config.email.sendgrid.apiKey,
+      gmailAvailable: !!config.email.gmail.user
     });
   }
 });
