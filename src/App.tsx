@@ -12,10 +12,6 @@ import { Activity } from './data/activities';
 
 function App() {
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
-  
-  // Debug logging
-  console.log('🚀 App component is rendering');
-  console.log('🚀 React version:', React.version);
 
   // Add scroll animations
   useEffect(() => {
@@ -50,11 +46,6 @@ function App() {
   return (
     <LanguageProvider>
       <div className="App">
-        {/* Debug Test */}
-        <div style={{background: 'red', color: 'white', padding: '20px', textAlign: 'center'}}>
-          🚀 REACT APP IS LOADING - If you see this, React is working!
-        </div>
-        
         {/* Header */}
         <Header />
 

@@ -675,57 +675,9 @@ if (fs.existsSync(buildDir)) {
 app.use(express.static(buildDir));
 
 // Serve images from build directory (production) or public directory (development)
-let imageDir = fs.existsSync(path.join(__dirname, 'build', 'images')) 
+const imageDir = fs.existsSync(path.join(__dirname, 'build', 'images')) 
   ? path.join(__dirname, 'build', 'images')
   : path.join(__dirname, 'public', 'images');
-
-// Fallback: If neither exists, try to copy from src/assets to build/images
-if (!fs.existsSync(imageDir)) {
-  console.log('⚠️  No images directory found, attempting to create from src/assets...');
-  const srcImagesDir = path.join(__dirname, 'src', 'assets', 'images');
-  const buildImagesDir = path.join(__dirname, 'build', 'images');
-  
-  if (fs.existsSync(srcImagesDir)) {
-    console.log('📁 Copying images from src/assets to build/images...');
-    try {
-      // Create build/images directory
-      if (!fs.existsSync(path.join(__dirname, 'build'))) {
-        fs.mkdirSync(path.join(__dirname, 'build'), { recursive: true });
-      }
-      if (!fs.existsSync(buildImagesDir)) {
-        fs.mkdirSync(buildImagesDir, { recursive: true });
-      }
-      
-      // Copy images
-      function copyDir(src, dest) {
-        const entries = fs.readdirSync(src, { withFileTypes: true });
-        for (let entry of entries) {
-          const srcPath = path.join(src, entry.name);
-          const destPath = path.join(dest, entry.name);
-          if (entry.isDirectory()) {
-            if (!fs.existsSync(destPath)) {
-              fs.mkdirSync(destPath, { recursive: true });
-            }
-            copyDir(srcPath, destPath);
-          } else {
-            fs.copyFileSync(srcPath, destPath);
-          }
-        }
-      }
-      
-      copyDir(srcImagesDir, buildImagesDir);
-      imageDir = buildImagesDir;
-      console.log('✅ Images copied successfully from src/assets!');
-    } catch (error) {
-      console.error('❌ Failed to copy images:', error.message);
-      // Don't crash the server, just log the error
-      imageDir = path.join(__dirname, 'public', 'images'); // fallback to public
-    }
-  } else {
-    console.log('⚠️  src/assets/images not found, using public fallback');
-    imageDir = path.join(__dirname, 'public', 'images');
-  }
-}
 
 app.use('/images', express.static(imageDir, {
   setHeaders: (res, path) => {
