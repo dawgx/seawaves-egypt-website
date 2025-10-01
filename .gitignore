@@ -11,6 +11,12 @@ backend/node_modules/
 build/
 dist/
 
+# Keep public directory for React
+!public/
+!public/index.html
+!public/manifest.json
+!public/robots.txt
+
 # Logs
 *.log
 npm-debug.log*
