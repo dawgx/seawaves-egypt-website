@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, MapPin, Star, Waves, Sun, Users, Shield, MapPin as Island, Anchor } from 'lucide-react';
+import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Anchor } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const IslandTripsSection: React.FC = () => {
@@ -11,7 +11,7 @@ const IslandTripsSection: React.FC = () => {
       title: 'Orange Bay Island',
       price: '€40',
       schedule: '8:00 – 15:00 Private side (with shade) – Everyday',
-      icon: <Island className="h-8 w-8" />,
+      icon: <MapPin className="h-8 w-8" />,
       description: 'You will experience the flair of Caribbean beach. Relaxation at one of the most fantastic island in the Red Sea and 2 coral reef stops where you can experience the beauty of the underwater world.',
       features: ['Caribbean Beach Feel', '2 Coral Reef Stops', 'Equipment Included', 'Lunch & Drinks'],
       color: 'from-orange-500 to-yellow-500',
