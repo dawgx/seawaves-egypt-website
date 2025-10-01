@@ -681,6 +681,12 @@ app.use('/images', express.static(imageDir, {
   }
 }));
 
+// Add logging for image requests
+app.use('/images', (req, res, next) => {
+  console.log('🖼️  Image request:', req.url);
+  next();
+});
+
 // Helper function to get content type based on file extension
 function getContentType(filePath) {
   const ext = path.extname(filePath).toLowerCase();
