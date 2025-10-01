@@ -78,30 +78,41 @@ const sendEmail = async (mailOptions) => {
     }
   } else {
     console.log('📧 SendGrid API key not available');
+    
+    // Console fallback
+    console.log('📧 === FALLBACK TO CONSOLE LOG ===');
+    console.log('📧 To:', mailOptions.to);
+    console.log('📧 Subject:', mailOptions.subject);
+    console.log('📧 Content preview:', mailOptions.html.substring(0, 200) + '...');
+    console.log('📧 ================================');
+    
+    return { success: false, method: 'console-log' };
   }
-  
-  // Console fallback
-  console.log('📧 === FALLBACK TO CONSOLE LOG ===');
-  console.log('📧 To:', mailOptions.to);
-  console.log('📧 Subject:', mailOptions.subject);
-  console.log('📧 Content preview:', mailOptions.html.substring(0, 200) + '...');
-  console.log('📧 ================================');
-  
-  return { success: false, method: 'console-log' };
 };
 
 // API Routes
 app.post('/api/contact', async (req, res) => {
+  console.log('📧 === CONTACT FORM SUBMISSION ===');
+  console.log('📧 Request body:', req.body);
+  
   try {
     const { fullName, email, phone, preferredDate, numberOfPeople, message, activityName } = req.body;
 
     // Validate required fields
     if (!fullName || !email || !phone) {
+      console.log('❌ Missing required fields:', { fullName: !!fullName, email: !!email, phone: !!phone });
       return res.status(400).json({ 
         success: false, 
         message: 'Missing required fields' 
       });
     }
+
+    console.log('📧 Form validation passed');
+    console.log('📧 SendGrid config check:', {
+      apiKey: config.email.sendgrid.apiKey ? 'SET' : 'NOT SET',
+      from: config.email.sendgrid.from,
+      adminEmail: config.email.adminEmail
+    });
 
     // Email content
     const mailOptions = {
@@ -173,9 +184,12 @@ app.post('/api/contact', async (req, res) => {
     };
 
     // Send admin email using smart email function
+    console.log('📧 Attempting to send admin email...');
     const adminEmailResult = await sendEmail(mailOptions);
+    console.log('📧 Admin email result:', adminEmailResult);
     
     // Send confirmation email to customer
+    console.log('📧 Attempting to send confirmation email...');
     const confirmationMailOptions = {
       from: config.email.sendgrid.from,
       to: email,
@@ -222,6 +236,7 @@ app.post('/api/contact', async (req, res) => {
     };
 
     const confirmationEmailResult = await sendEmail(confirmationMailOptions);
+    console.log('📧 Confirmation email result:', confirmationEmailResult);
 
     // Log inquiry details for manual follow-up
     console.log('=== INQUIRY RECEIVED ===');
