@@ -666,33 +666,7 @@ app.get('/api/test-admin-email', async (req, res) => {
 });
 
 // Serve static files from the React app build directory
-const buildDir = path.join(__dirname, 'build');
-console.log('📁 Setting up static file serving from:', buildDir);
-console.log('📁 Build directory exists:', fs.existsSync(buildDir));
-if (fs.existsSync(buildDir)) {
-  console.log('📁 Build directory contents:', fs.readdirSync(buildDir));
-  const staticDir = path.join(buildDir, 'static');
-  if (fs.existsSync(staticDir)) {
-    console.log('📁 Static directory contents:', fs.readdirSync(staticDir));
-    const jsDir = path.join(staticDir, 'js');
-    const cssDir = path.join(staticDir, 'css');
-    if (fs.existsSync(jsDir)) {
-      console.log('📁 JS files:', fs.readdirSync(jsDir));
-    }
-    if (fs.existsSync(cssDir)) {
-      console.log('📁 CSS files:', fs.readdirSync(cssDir));
-    }
-  }
-}
-// Add logging middleware for static files
-app.use((req, res, next) => {
-  if (req.url.startsWith('/static/') || req.url.endsWith('.js') || req.url.endsWith('.css')) {
-    console.log('📄 Static file request:', req.url);
-  }
-  next();
-});
-
-app.use(express.static(buildDir));
+app.use(express.static(path.join(__dirname, 'build')));
 
 // Serve images from build directory (production) or public directory (development)
 const imageDir = fs.existsSync(path.join(__dirname, 'build', 'images')) 
@@ -724,40 +698,11 @@ function getContentType(filePath) {
 
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, 'build', 'index.html');
-  console.log('🌐 Serving React app for:', req.url);
-  console.log('🌐 Index file path:', indexPath);
-  console.log('🌐 Index file exists:', fs.existsSync(indexPath));
-  console.log('🌐 Request headers:', req.headers);
-  console.log('🌐 User agent:', req.get('User-Agent'));
-  
-  if (fs.existsSync(indexPath)) {
-    console.log('🌐 Sending React app to client...');
-    res.sendFile(indexPath, (err) => {
-      if (err) {
-        console.error('❌ Error sending React app:', err);
-        res.status(500).json({ error: 'Failed to serve React app', details: err.message });
-      } else {
-        console.log('✅ React app sent successfully');
-      }
-    });
-  } else {
-    console.error('❌ React build index.html not found!');
-    res.status(404).json({
-      error: 'React app not built properly',
-      indexPath: indexPath,
-      buildDir: path.join(__dirname, 'build'),
-      buildExists: fs.existsSync(path.join(__dirname, 'build')),
-      buildContents: fs.existsSync(path.join(__dirname, 'build')) ? fs.readdirSync(path.join(__dirname, 'build')) : []
-    });
-  }
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  console.log(`🌐 Server started successfully`);
-  console.log(`📁 Image directory: ${imageDir}`);
-  console.log(`📁 Image directory exists: ${fs.existsSync(imageDir)}`);
 }).on('error', (error) => {
   console.error('❌ Server startup error:', error);
   process.exit(1);
