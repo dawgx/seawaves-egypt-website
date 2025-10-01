@@ -9,6 +9,17 @@ const config = require('./backend/config.js');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Add error handling for uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught Exception:', error);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -677,7 +688,12 @@ if (!fs.existsSync(imageDir)) {
       console.log('✅ Images copied successfully from src/assets!');
     } catch (error) {
       console.error('❌ Failed to copy images:', error.message);
+      // Don't crash the server, just log the error
+      imageDir = path.join(__dirname, 'public', 'images'); // fallback to public
     }
+  } else {
+    console.log('⚠️  src/assets/images not found, using public fallback');
+    imageDir = path.join(__dirname, 'public', 'images');
   }
 }
 
@@ -727,4 +743,10 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  console.log(`🌐 Server started successfully`);
+  console.log(`📁 Image directory: ${imageDir}`);
+  console.log(`📁 Image directory exists: ${fs.existsSync(imageDir)}`);
+}).on('error', (error) => {
+  console.error('❌ Server startup error:', error);
+  process.exit(1);
 });
