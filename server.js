@@ -317,6 +317,16 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
+// Simple test endpoint
+app.get('/api/test', (req, res) => {
+  res.json({ 
+    message: 'API is working',
+    timestamp: new Date().toISOString(),
+    url: req.url,
+    method: req.method
+  });
+});
+
 // React build check endpoint
 app.get('/api/check-react', (req, res) => {
   const buildDir = path.join(__dirname, 'build');
@@ -728,7 +738,15 @@ app.get('*', (req, res) => {
   console.log('🌐 Index file exists:', fs.existsSync(indexPath));
   
   if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
+    console.log('🌐 Sending React app to client...');
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error('❌ Error sending React app:', err);
+        res.status(500).json({ error: 'Failed to serve React app', details: err.message });
+      } else {
+        console.log('✅ React app sent successfully');
+      }
+    });
   } else {
     console.error('❌ React build index.html not found!');
     res.status(404).json({
