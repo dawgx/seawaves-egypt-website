@@ -9,13 +9,13 @@ const SpeedBoatsSection: React.FC = () => {
     {
       id: 'speed-boats',
       title: 'Speed Boats',
-      price: '€40 per person (minimum 3pax)',
+      price: '€40 per person (min 3 people)',
       schedule: 'Everyday from 8:30 till 12:30',
       icon: <Zap className="h-8 w-8" />,
       description: 'Enjoy our Fast Boats and explore the Beauty of the Red Sea. Book now and have a wonderful experience with our trips. Enjoy the crystal clear water of the Red Sea with the maximum speed.',
       features: ['Fast Boats', 'Crystal Clear Water', 'Maximum Speed', 'Private Tours'],
       color: 'from-red-500 to-orange-500',
-      note: 'Amazing and action packed adventure. Dolphin Spotting, Snorkeling, Islands, all in one Private Tour is waiting for you! We have 4 boat with different motor speed 140 hp, 200 hp, 250 hp, 500 hp. Boats are selected depending on the number of the people.',
+      note: 'Amazing and action packed adventure. Dolphin Spotting, Snorkeling, Islands, all in one Private Tour is waiting for you! We have 4 boats with different motor speeds: 140 hp, 200 hp, 250 hp, 500 hp. Boats are selected depending on the number of people.',
       special: 'Choose One Of Our Popular Tours Or Plan Your Own!'
     }
   ];
