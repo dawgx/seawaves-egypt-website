@@ -101,7 +101,7 @@ const BoatTripsSection: React.FC = () => {
                   {program.icon}
                 </div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <div className="text-3xl font-bold">{program.price}</div>
+                  <div className="text-3xl font-bold">{program.contact ? 'Contact Us' : program.price}</div>
                   <div className="text-sm opacity-90">{program.schedule}</div>
                 </div>
               </div>
@@ -132,7 +132,7 @@ const BoatTripsSection: React.FC = () => {
 
                 {/* Book Button */}
                 <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-cyan-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105">
-                  Book Now
+                  {program.contact ? 'Contact Us' : 'Book Now'}
                 </button>
               </div>
             </div>
