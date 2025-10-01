@@ -40,7 +40,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
 
     try {
       // Send to backend API
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://seawaves-backend.onrender.com';
       const response = await fetch(`${apiUrl}/api/contact`, {
         method: 'POST',
         headers: {
@@ -59,6 +59,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
       }
     } catch (error) {
       console.error('Error submitting form:', error);
+      console.error('API URL:', apiUrl);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
