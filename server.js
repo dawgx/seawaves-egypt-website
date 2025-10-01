@@ -6,6 +6,9 @@ const PORT = process.env.PORT || 3000;
 // Serve static files from the React app build directory
 app.use(express.static(path.join(__dirname, 'build')));
 
+// Serve images from public directory
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
+
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
