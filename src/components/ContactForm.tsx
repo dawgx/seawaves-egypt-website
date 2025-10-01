@@ -61,7 +61,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
         reset();
       } else {
         throw new Error(result.message || 'Failed to send message');
-      }
+      } 
     } catch (error) {
       console.error('Error submitting form:', error);
       console.error('API URL:', apiUrl);

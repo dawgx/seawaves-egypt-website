@@ -6,38 +6,64 @@ export const getActivityTranslations = (language: string) => {
       diving: {
         id: 'diving',
         name: 'Diving',
-        shortDescription: 'Explore the magnificent coral reefs and marine life of the Red Sea',
-        fullDescription: `Dive into the crystal-clear waters of the Red Sea and discover one of the world's most spectacular underwater ecosystems. Our professional diving guides will take you to the best coral reef sites where you'll encounter vibrant coral formations, tropical fish, and maybe even dolphins or sea turtles.
+        shortDescription: 'Professional diving experiences in the Red Sea with certified instructors',
+        fullDescription: `Discover the underwater world of the Red Sea with our comprehensive diving programs. From full-day trips to specialized courses, we offer everything for divers of all levels.
 
-Whether you're a beginner or an experienced diver, we have programs suitable for all levels. Our PADI-certified instructors ensure your safety while providing an unforgettable underwater adventure.
+**FULL DAY TRIPS - €48**
+Departing daily at 8:30 AM from our private marina, our comfortable and luxurious dive boats take you to magnificent dive spots in a safe and peaceful environment. Choose between 2 dives or join our half-day trips with one dive. Return around 4 PM.
 
-The Red Sea is renowned for its exceptional visibility, warm waters, and diverse marine life, making it one of the top diving destinations in the world. Experience the magic of floating weightlessly among colorful coral gardens and schools of exotic fish.
+**HALF DAY TRIPS - €35**
+Perfect for those who want great dives without spending all day on board! Choose between morning trips (9:30 AM - 12:30 PM) or afternoon trips (1:30 PM - 4:30 PM) to Hurghada's most splendid reefs.
 
-Join us for this incredible journey beneath the waves and create memories that will last a lifetime.`,
-        duration: '4-5 hours',
+**SUNSET DIVING - €35**
+Experience the Red Sea at its most beautiful with sunset dives. Enjoy empty dive spots and reefs as the sunlight changes from golden to red. Departure between 3-5 PM depending on season.
+
+**NIGHT DIVING - €35**
+Discover a completely different underwater world! Watch fish sleep, corals feed at night, and experience an explosion of colors with underwater torch lights. Perfect for first-time night divers with our experienced instructors.
+
+**WRECK DIVING - €220**
+Explore beautiful wrecks including El Mina, Balena, Abu Nuhas, and Salem Express. Early morning departure with possibility for three dives and dolphin encounters at Abu Nuhas.
+
+**DIVING COURSES**
+- Scuba Diving Course: €205
+- Open Water Diver: €305
+- Advanced Open Water: €225
+- Rescue Diver: €350
+- Divemaster: €785
+
+**INTRODUCTORY DIVES**
+- Pool Intro: €28
+- Shore Intro: €39
+- Boat Intro (1 dive): €50
+- Boat Intro (2 dives): €75
+- Sunset Intro: €50
+
+All prices include guide, 12L tanks, boat trip, weights & weight belt. Equipment rental available for €20/day.`,
+        duration: 'Various (Half day to Full day)',
         included: [
-          'Full diving equipment (mask, fins, wetsuit, tank)',
-          'Professional PADI-certified guide',
-          'Hotel pickup & drop-off',
-          'Refreshments and snacks',
+          'Professional PADI-certified guides',
+          'Full diving equipment (12L tanks, weights, weight belt)',
+          'Boat transportation to dive sites',
           'Safety briefing and instruction',
-          'Underwater photography tips'
+          'Dive planning and supervision',
+          'Underwater photography guidance'
         ],
         toBring: [
           'Swimsuit',
           'Towel',
           'Sunscreen (reef-safe)',
+          'Diving certification & log book',
           'Underwater camera (optional)',
-          'Certification card (if certified)',
           'Comfortable clothing for boat ride'
         ],
-        meetingPoint: 'Marina Boulevard, Hurghada Marina',
+        meetingPoint: 'Private Marina, directly in front of Dive Club',
         importantInfo: [
           'Minimum age: 10 years (with guardian)',
-          'Basic swimming skills required',
+          'Diving certification required for advanced dives',
           'Medical clearance may be required',
           'Weather conditions may affect schedule',
-          'Maximum depth: 12m for beginners, 30m for certified divers'
+          'Equipment rental available for €20/day',
+          'PADI/SSI Manual and certification fees not included'
         ],
         images: [],
         icon: 'Waves'
@@ -87,38 +113,64 @@ This is more than just a boat trip – it's a life-changing encounter with one o
       diving: {
         id: 'diving',
         name: 'Duiken',
-        shortDescription: 'Verken de prachtige koraalriffen en het zeeleven van de Rode Zee',
-        fullDescription: `Duik in de kristalheldere wateren van de Rode Zee en ontdek een van 's werelds meest spectaculaire onderwaterecosystemen. Onze professionele duikgidsen brengen je naar de beste koraalriflocaties waar je levendige koraalformaties, tropische vissen en misschien zelfs dolfijnen of zeeschildpadden zult tegenkomen.
+        shortDescription: 'Professionele duikervaringen in de Rode Zee met gecertificeerde instructeurs',
+        fullDescription: `Ontdek de onderwaterwereld van de Rode Zee met onze uitgebreide duikprogramma's. Van volledige dagtochten tot gespecialiseerde cursussen, we bieden alles voor duikers van alle niveaus.
 
-Of je nu een beginner of ervaren duiker bent, we hebben programma's geschikt voor alle niveaus. Onze PADI-gecertificeerde instructeurs zorgen voor je veiligheid terwijl ze een onvergetelijk onderwateravontuur bieden.
+**VOLLEDIGE DAGTOCHTEN - €48**
+Vertrek dagelijks om 8:30 uur vanaf onze privé-marina. Onze comfortabele en luxueuze duikboten brengen je naar prachtige duiklocaties in een veilige en vredige omgeving. Kies tussen 2 duiken of sluit je aan bij onze halve dagtochten met één duik. Terugkeer rond 16:00 uur.
 
-De Rode Zee staat bekend om zijn uitzonderlijke zichtbaarheid, warme wateren en diverse zeeleven, waardoor het een van de top duikbestemmingen ter wereld is. Ervaar de magie van gewichtloos zweven tussen kleurrijke koraaltuinen en scholen exotische vissen.
+**HALVE DAGTOCHTEN - €35**
+Perfect voor degenen die geweldige duiken willen zonder de hele dag aan boord te zijn! Kies tussen ochtendtochten (9:30-12:30) of middagtochten (13:30-16:30) naar Hurghada's prachtigste riffen.
 
-Sluit je aan bij ons voor deze ongelooflijke reis onder de golven en creëer herinneringen die een leven lang meegaan.`,
-        duration: '4-5 uur',
+**ZONSONDERGANG DUiken - €35**
+Ervaar de Rode Zee op zijn mooist met zonsondergang duiken. Geniet van lege duiklocaties en riffen terwijl het zonlicht verandert van goud naar rood. Vertrek tussen 15:00-17:00 afhankelijk van het seizoen.
+
+**NACHTDUiken - €35**
+Ontdek een compleet andere onderwaterwereld! Kijk hoe vissen slapen, koralen 's nachts eten, en ervaar een explosie van kleuren met onderwaterzaklampen. Perfect voor eerste keer nachtduikers met onze ervaren instructeurs.
+
+**WRAAKDUiken - €220**
+Verken prachtige wrakken inclusief El Mina, Balena, Abu Nuhas en Salem Express. Vroege ochtendvertrek met mogelijkheid voor drie duiken en dolfijnontmoetingen bij Abu Nuhas.
+
+**DUIKCURSUSSEN**
+- Scuba Diving Cursus: €205
+- Open Water Diver: €305
+- Advanced Open Water: €225
+- Rescue Diver: €350
+- Divemaster: €785
+
+**INTRODUCTIE DUiken**
+- Zwembad Intro: €28
+- Strand Intro: €39
+- Boot Intro (1 duik): €50
+- Boot Intro (2 duiken): €75
+- Zonsondergang Intro: €50
+
+Alle prijzen inclusief gids, 12L tanks, boottocht, gewichten & gewichtsriem. Uitrusting verhuur beschikbaar voor €20/dag.`,
+        duration: 'Verschillend (Halve dag tot Volledige dag)',
         included: [
-          'Volledige duikuitrusting (masker, vinnen, wetsuit, tank)',
-          'Professionele PADI-gecertificeerde gids',
-          'Hotel ophaal- en afzetdienst',
-          'Verfrissingen en snacks',
+          'Professionele PADI-gecertificeerde gidsen',
+          'Volledige duikuitrusting (12L tanks, gewichten, gewichtsriem)',
+          'Boottransport naar duiklocaties',
           'Veiligheidsbriefing en instructie',
-          'Onderwaterfotografie tips'
+          'Duikplanning en supervisie',
+          'Onderwaterfotografie begeleiding'
         ],
         toBring: [
           'Zwemkleding',
           'Handdoek',
           'Zonnebrandcrème (rifveilig)',
+          'Duikcertificaat & logboek',
           'Onderwatercamera (optioneel)',
-          'Certificaat (indien gecertificeerd)',
           'Comfortabele kleding voor bootrit'
         ],
-        meetingPoint: 'Marina Boulevard, Hurghada Marina',
+        meetingPoint: 'Privé Marina, direct voor Dive Club',
         importantInfo: [
           'Minimumleeftijd: 10 jaar (met voogd)',
-          'Basiszwemvaardigheden vereist',
+          'Duikcertificaat vereist voor gevorderde duiken',
           'Medische goedkeuring kan vereist zijn',
           'Weersomstandigheden kunnen planning beïnvloeden',
-          'Maximale diepte: 12m voor beginners, 30m voor gecertificeerde duikers'
+          'Uitrusting verhuur beschikbaar voor €20/dag',
+          'PADI/SSI Handboek en certificeringskosten niet inbegrepen'
         ],
         images: [],
         icon: 'Waves'
@@ -1263,6 +1315,73 @@ Slut dig til os for en dag fuld af action og sjov på vandet og opdag, hvorfor D
           'Погодные условия могут повлиять на расписание',
           'Использование оборудования безопасности обязательно',
           'Возможна отмена при плохой погоде'
+        ],
+        images: [],
+        icon: 'Waves'
+      }
+    },
+    ar: {
+      diving: {
+        id: 'diving',
+        name: 'الغوص',
+        shortDescription: 'تجارب غوص مهنية في البحر الأحمر مع مدربين معتمدين',
+        fullDescription: `اكتشف عالم البحر الأحمر تحت الماء مع برامج الغوص الشاملة لدينا. من رحلات اليوم الكامل إلى الدورات المتخصصة، نقدم كل شيء للغواصين من جميع المستويات.
+
+**رحلات اليوم الكامل - 48 يورو**
+ننطلق يومياً في الساعة 8:30 صباحاً من مرسانا الخاص، تأخذك قوارب الغوص المريحة والفاخرة إلى مواقع غوص رائعة في بيئة آمنة وهادئة. اختر بين غطستين أو انضم إلى رحلات نصف اليوم بغطسة واحدة. العودة حوالي الساعة 4 مساءً.
+
+**رحلات نصف اليوم - 35 يورو**
+مثالية لمن يريد غطسات رائعة دون قضاء اليوم كله على متن القارب! اختر بين رحلات الصباح (9:30-12:30) أو رحلات بعد الظهر (13:30-16:30) إلى أجمل الشعاب المرجانية في الغردقة.
+
+**الغوص عند الغروب - 35 يورو**
+اختبر البحر الأحمر في أجمل حالاته مع غطسات الغروب. استمتع بمواقع غوص فارغة وشعاب مرجانية بينما يتغير ضوء الشمس من الذهبي إلى الأحمر. المغادرة بين 15:00-17:00 حسب الموسم.
+
+**الغوص الليلي - 35 يورو**
+اكتشف عالماً تحت الماء مختلفاً تماماً! شاهد الأسماك وهي نائمة، والشعاب المرجانية تتغذى ليلاً، واختبر انفجاراً من الألوان مع أضواء الشعلة تحت الماء. مثالي للغواصين الليليين لأول مرة مع مدربينا ذوي الخبرة.
+
+**غوص الحطام - 220 يورو**
+استكشف حطام جميل بما في ذلك المينا، بالينا، أبو نحاس، وسالم إكسبريس. مغادرة مبكرة مع إمكانية ثلاث غطسات ومواجهات مع الدلافين في أبو نحاس.
+
+**دورات الغوص**
+- دورة الغوص بالأسكوبا: 205 يورو
+- غواص المياه المفتوحة: 305 يورو
+- غواص المياه المفتوحة المتقدم: 225 يورو
+- غواص الإنقاذ: 350 يورو
+- مدرب الغوص: 785 يورو
+
+**الغطسات التمهيدية**
+- مقدمة في المسبح: 28 يورو
+- مقدمة من الشاطئ: 39 يورو
+- مقدمة بالقارب (غطسة واحدة): 50 يورو
+- مقدمة بالقارب (غطستان): 75 يورو
+- مقدمة عند الغروب: 50 يورو
+
+جميع الأسعار تشمل المرشد، خزانات 12 لتر، رحلة القارب، الأوزان وحزام الأوزان. إيجار المعدات متاح مقابل 20 يورو/يوم.`,
+        duration: 'متنوع (نصف يوم إلى يوم كامل)',
+        included: [
+          'مرشدون معتمدون من PADI',
+          'معدات غوص كاملة (خزانات 12 لتر، أوزان، حزام أوزان)',
+          'نقل بالقارب إلى مواقع الغوص',
+          'إحاطة أمنية وتعليمات',
+          'تخطيط الغوص والإشراف',
+          'إرشاد التصوير تحت الماء'
+        ],
+        toBring: [
+          'ملابس السباحة',
+          'منشفة',
+          'واقي الشمس (آمن للشعاب)',
+          'شهادة الغوص وسجل الغطسات',
+          'كاميرا تحت الماء (اختياري)',
+          'ملابس مريحة لرحلة القارب'
+        ],
+        meetingPoint: 'المرسى الخاص، مباشرة أمام نادي الغوص',
+        importantInfo: [
+          'الحد الأدنى للعمر: 10 سنوات (مع وصي)',
+          'شهادة الغوص مطلوبة للغطسات المتقدمة',
+          'قد تكون هناك حاجة لفحص طبي',
+          'الظروف الجوية قد تؤثر على الجدولة',
+          'إيجار المعدات متاح مقابل 20 يورو/يوم',
+          'دليل PADI/SSI ورسوم الشهادة غير مشمولة'
         ],
         images: [],
         icon: 'Waves'

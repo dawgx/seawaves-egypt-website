@@ -60,38 +60,64 @@ export const activities: Activity[] = [
   {
     id: 'diving',
     name: 'Diving',
-    shortDescription: 'Explore the magnificent coral reefs and marine life of the Red Sea',
-    fullDescription: `Dive into the crystal-clear waters of the Red Sea and discover one of the world's most spectacular underwater ecosystems. Our professional diving guides will take you to the best coral reef sites where you'll encounter vibrant coral formations, tropical fish, and maybe even dolphins or sea turtles.
+    shortDescription: 'Professional diving experiences in the Red Sea with certified instructors',
+    fullDescription: `Discover the underwater world of the Red Sea with our comprehensive diving programs. From full-day trips to specialized courses, we offer everything for divers of all levels.
 
-Whether you're a beginner or an experienced diver, we have programs suitable for all levels. Our PADI-certified instructors ensure your safety while providing an unforgettable underwater adventure.
+**FULL DAY TRIPS - €48**
+Departing daily at 8:30 AM from our private marina, our comfortable and luxurious dive boats take you to magnificent dive spots in a safe and peaceful environment. Choose between 2 dives or join our half-day trips with one dive. Return around 4 PM.
 
-The Red Sea is renowned for its exceptional visibility, warm waters, and diverse marine life, making it one of the top diving destinations in the world. Experience the magic of floating weightlessly among colorful coral gardens and schools of exotic fish.
+**HALF DAY TRIPS - €35**
+Perfect for those who want great dives without spending all day on board! Choose between morning trips (9:30 AM - 12:30 PM) or afternoon trips (1:30 PM - 4:30 PM) to Hurghada's most splendid reefs.
 
-Join us for this incredible journey beneath the waves and create memories that will last a lifetime.`,
-    duration: '4-5 hours',
+**SUNSET DIVING - €35**
+Experience the Red Sea at its most beautiful with sunset dives. Enjoy empty dive spots and reefs as the sunlight changes from golden to red. Departure between 3-5 PM depending on season.
+
+**NIGHT DIVING - €35**
+Discover a completely different underwater world! Watch fish sleep, corals feed at night, and experience an explosion of colors with underwater torch lights. Perfect for first-time night divers with our experienced instructors.
+
+**WRECK DIVING - €220**
+Explore beautiful wrecks including El Mina, Balena, Abu Nuhas, and Salem Express. Early morning departure with possibility for three dives and dolphin encounters at Abu Nuhas.
+
+**DIVING COURSES**
+- Scuba Diving Course: €205
+- Open Water Diver: €305
+- Advanced Open Water: €225
+- Rescue Diver: €350
+- Divemaster: €785
+
+**INTRODUCTORY DIVES**
+- Pool Intro: €28
+- Shore Intro: €39
+- Boat Intro (1 dive): €50
+- Boat Intro (2 dives): €75
+- Sunset Intro: €50
+
+All prices include guide, 12L tanks, boat trip, weights & weight belt. Equipment rental available for €20/day.`,
+    duration: 'Various (Half day to Full day)',
     included: [
-      'Full diving equipment (mask, fins, wetsuit, tank)',
-      'Professional PADI-certified guide',
-      'Hotel pickup & drop-off',
-      'Refreshments and snacks',
+      'Professional PADI-certified guides',
+      'Full diving equipment (12L tanks, weights, weight belt)',
+      'Boat transportation to dive sites',
       'Safety briefing and instruction',
-      'Underwater photography tips'
+      'Dive planning and supervision',
+      'Underwater photography guidance'
     ],
     toBring: [
       'Swimsuit',
       'Towel',
       'Sunscreen (reef-safe)',
+      'Diving certification & log book',
       'Underwater camera (optional)',
-      'Certification card (if certified)',
       'Comfortable clothing for boat ride'
     ],
-    meetingPoint: 'Marina Boulevard, Hurghada Marina',
+    meetingPoint: 'Private Marina, directly in front of Dive Club',
     importantInfo: [
       'Minimum age: 10 years (with guardian)',
-      'Basic swimming skills required',
+      'Diving certification required for advanced dives',
       'Medical clearance may be required',
       'Weather conditions may affect schedule',
-      'Maximum depth: 12m for beginners, 30m for certified divers'
+      'Equipment rental available for €20/day',
+      'PADI/SSI Manual and certification fees not included'
     ],
     images: [
       diving1,
