@@ -39,7 +39,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
     setSubmitStatus('idle');
 
     // Send to backend API
-    const apiUrl = process.env.REACT_APP_API_URL || 'https://seawaves-backend.onrender.com';
+    const apiUrl = process.env.REACT_APP_API_URL || 'https://seawaves-egypt-website-1.onrender.com';
     
     try {
       const response = await fetch(`${apiUrl}/api/contact`, {
