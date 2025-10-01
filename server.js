@@ -445,6 +445,25 @@ app.get('/api/test-image', (req, res) => {
   }
 });
 
+// Test specific diving image
+app.get('/api/test-diving-image', (req, res) => {
+  const testImagePath = path.join(__dirname, 'public', 'images', 'diving', '12.webp');
+  const fs = require('fs');
+  
+  if (fs.existsSync(testImagePath)) {
+    res.setHeader('Content-Type', 'image/webp');
+    res.setHeader('Cache-Control', 'public, max-age=31536000');
+    res.sendFile(testImagePath);
+  } else {
+    res.status(404).json({
+      error: 'Diving image not found',
+      path: testImagePath,
+      exists: fs.existsSync(testImagePath),
+      divingExists: fs.existsSync(path.join(__dirname, 'public', 'images', 'diving'))
+    });
+  }
+});
+
 // Test admin email specifically
 app.get('/api/test-admin-email', async (req, res) => {
   console.log('🧪 === ADMIN EMAIL TEST ===');
