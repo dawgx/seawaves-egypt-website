@@ -85,11 +85,11 @@ const WaterSportsSection: React.FC = () => {
                 {/* Gradient Header */}
                 <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
                   <div className="absolute inset-0 bg-black/20"></div>
-                  <div className="absolute top-4 left-4 text-white">
+                  <div className="absolute top-4 right-4 text-white">
                     {program.icon}
                   </div>
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <div className="text-3xl font-bold">{program.price}</div>
+                  <div className="absolute bottom-4 left-4 text-white pr-16">
+                    <div className="text-2xl font-bold leading-tight">{program.price}</div>
                     <div className="text-sm opacity-90">{program.schedule}</div>
                   </div>
                 </div>
@@ -143,11 +143,11 @@ const WaterSportsSection: React.FC = () => {
                 {/* Gradient Header */}
                 <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
                   <div className="absolute inset-0 bg-black/20"></div>
-                  <div className="absolute top-4 left-4 text-white">
+                  <div className="absolute top-4 right-4 text-white">
                     {program.icon}
                   </div>
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <div className="text-3xl font-bold">{program.price}</div>
+                  <div className="absolute bottom-4 left-4 text-white pr-16">
+                    <div className="text-2xl font-bold leading-tight">{program.price}</div>
                     <div className="text-sm opacity-90">{program.schedule}</div>
                   </div>
                 </div>
