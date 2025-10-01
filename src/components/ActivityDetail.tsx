@@ -61,7 +61,7 @@ const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, isOpen, onClo
               <DolphinTripsSection />
             ) : activity.id === 'speed-boats' ? (
               <SpeedBoatsSection />
-            ) : activity.id === 'island-trips' ? (
+            ) : activity.id === 'island-tours' ? (
               <IslandTripsSection />
             ) : (
               <>
@@ -83,7 +83,7 @@ const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, isOpen, onClo
             )}
 
             {/* Details Grid - Only for activities without specific sections */}
-            {!['diving', 'boat-trips', 'water-sports', 'dolphin-trips', 'speed-boats', 'island-trips'].includes(activity.id) && (
+            {!['diving', 'boat-trips', 'water-sports', 'dolphin-trips', 'speed-boats', 'island-tours'].includes(activity.id) && (
               <>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                   {/* What's Included */}
