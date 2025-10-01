@@ -377,7 +377,10 @@ app.get('/api/debug-email', (req, res) => {
 // Debug endpoint to check image serving
 app.get('/api/debug-images', (req, res) => {
   const fs = require('fs');
-  const imagesPath = path.join(__dirname, 'public', 'images');
+  // Check both possible image locations
+  const publicImagesPath = path.join(__dirname, 'public', 'images');
+  const buildImagesPath = path.join(__dirname, 'build', 'images');
+  const imagesPath = fs.existsSync(buildImagesPath) ? buildImagesPath : publicImagesPath;
   
   try {
     const imageFiles = [];
@@ -412,11 +415,12 @@ app.get('/api/debug-images', (req, res) => {
       buildPath: path.join(__dirname, 'build'),
       buildImagesExists: fs.existsSync(path.join(__dirname, 'build', 'images')),
       publicImagesExists: fs.existsSync(path.join(__dirname, 'public', 'images')),
+      usingBuildImages: fs.existsSync(buildImagesPath),
       totalImages: imageFiles.length,
       sampleImages: imageFiles.slice(0, 10),
-      directories: fs.readdirSync(imagesPath).filter(item => 
+      directories: fs.existsSync(imagesPath) ? fs.readdirSync(imagesPath).filter(item => 
         fs.statSync(path.join(imagesPath, item)).isDirectory()
-      )
+      ) : []
     });
   } catch (error) {
     res.json({
@@ -552,8 +556,12 @@ app.get('/api/test-admin-email', async (req, res) => {
 // Serve static files from the React app build directory
 app.use(express.static(path.join(__dirname, 'build')));
 
-// Serve images from public directory
-app.use('/images', express.static(path.join(__dirname, 'public', 'images'), {
+// Serve images from build directory (production) or public directory (development)
+const imageDir = fs.existsSync(path.join(__dirname, 'build', 'images')) 
+  ? path.join(__dirname, 'build', 'images')
+  : path.join(__dirname, 'public', 'images');
+
+app.use('/images', express.static(imageDir, {
   setHeaders: (res, path) => {
     // Set proper cache headers for images
     res.setHeader('Cache-Control', 'public, max-age=31536000'); // 1 year

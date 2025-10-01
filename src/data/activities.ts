@@ -94,12 +94,12 @@ Join us for this incredible journey beneath the waves and create memories that w
       'Maximum depth: 12m for beginners, 30m for certified divers'
     ],
     images: [
-      '/images/diving/12.webp',
-      '/images/diving/beautiful-coral-scuba-diver.webp',
-      '/images/diving/divers-fukui-point-bunaken.jpg',
-      '/images/diving/intro-1738601436.jpg',
-      '/images/diving/large.jpg',
-      '/images/diving/scuba-divers-colorful-reef-swim-thru.jpg'
+      diving1,
+      diving2,
+      diving3,
+      diving4,
+      diving5,
+      diving6
     ],
     icon: 'Waves'
   },
