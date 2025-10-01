@@ -27,8 +27,13 @@ app.use(express.json());
 if (config.email.sendgrid.apiKey) {
   sgMail.setApiKey(config.email.sendgrid.apiKey);
   console.log('✅ SendGrid initialized successfully');
+  console.log('📧 SendGrid From:', config.email.sendgrid.from);
+  console.log('📧 Admin Email:', config.email.adminEmail);
 } else {
   console.log('⚠️  SendGrid API key not found - emails will be logged to console only');
+  console.log('📧 Environment variables check:');
+  console.log('📧 SENDGRID_API_KEY:', process.env.SENDGRID_API_KEY ? 'SET' : 'NOT SET');
+  console.log('📧 SENDGRID_FROM:', process.env.SENDGRID_FROM || 'NOT SET');
 }
 
 // Email sending function - SendGrid only
@@ -67,6 +72,9 @@ const sendEmail = async (mailOptions) => {
       console.error('❌ SendGrid FAILED!');
       console.error('📧 Error:', error.message);
       console.error('📧 Response:', error.response?.body);
+      
+      // Return error result instead of falling through to console log
+      return { success: false, method: 'SendGrid', error: error.message };
     }
   } else {
     console.log('📧 SendGrid API key not available');
@@ -504,6 +512,65 @@ app.get('/api/test-diving-image', (req, res) => {
       divingExists: fs.existsSync(path.join(imagesDir, 'diving')),
       buildImagesExists: fs.existsSync(buildImagesPath),
       publicImagesExists: fs.existsSync(publicImagesPath)
+    });
+  }
+});
+
+// SendGrid specific test endpoint
+app.get('/api/test-sendgrid', async (req, res) => {
+  console.log('🧪 === SENDGRID SPECIFIC TEST ===');
+  
+  if (!config.email.sendgrid.apiKey) {
+    return res.json({
+      success: false,
+      message: 'SendGrid API key not configured',
+      sendgridConfigured: false,
+      environmentCheck: {
+        SENDGRID_API_KEY: process.env.SENDGRID_API_KEY ? 'SET' : 'NOT SET',
+        SENDGRID_FROM: process.env.SENDGRID_FROM || 'NOT SET'
+      }
+    });
+  }
+  
+  const testMailOptions = {
+    from: config.email.sendgrid.from,
+    to: config.email.adminEmail,
+    subject: 'SendGrid Test - Sea Waves Aqua Center',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #1e40af;">SendGrid Test Successful!</h2>
+        <p>This is a test email to verify SendGrid configuration.</p>
+        <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+        <p><strong>From:</strong> ${config.email.sendgrid.from}</p>
+        <p><strong>To:</strong> ${config.email.adminEmail}</p>
+        <p><strong>Service:</strong> SendGrid API</p>
+      </div>
+    `
+  };
+  
+  try {
+    console.log('🧪 Testing SendGrid directly...');
+    const result = await sendEmail(testMailOptions);
+    
+    res.json({
+      success: result.success,
+      message: result.success ? 'SendGrid test completed successfully' : 'SendGrid test failed',
+      service: result.method,
+      details: result,
+      sendgridConfigured: true,
+      fromEmail: config.email.sendgrid.from,
+      adminEmail: config.email.adminEmail
+    });
+    
+  } catch (error) {
+    console.error('❌ SendGrid test failed:', error.message);
+    res.json({
+      success: false,
+      message: 'SendGrid test failed',
+      error: error.message,
+      sendgridConfigured: true,
+      fromEmail: config.email.sendgrid.from,
+      adminEmail: config.email.adminEmail
     });
   }
 });
