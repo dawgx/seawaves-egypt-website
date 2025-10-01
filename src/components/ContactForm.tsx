@@ -54,8 +54,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
     setSubmitStatus('idle');
 
     // Send to backend API (same service)
-    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+    const apiUrl = process.env.REACT_APP_API_URL || (window.location.origin.includes('localhost') ? 'http://localhost:3000' : '');
     console.log('🌐 API URL:', apiUrl);
+    console.log('🌐 Window origin:', window.location.origin);
     
     try {
       const response = await fetch(`${apiUrl}/api/contact`, {
