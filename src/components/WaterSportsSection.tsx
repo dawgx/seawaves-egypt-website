@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Zap, Banana, Sofa, Anchor } from 'lucide-react';
+import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Zap, Circle, Square, Anchor } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const WaterSportsSection: React.FC = () => {
@@ -22,7 +22,7 @@ const WaterSportsSection: React.FC = () => {
       title: 'Banana Boat',
       price: '€10',
       schedule: 'Everyday (9:00-16:00)',
-      icon: <Banana className="h-8 w-8" />,
+      icon: <Circle className="h-8 w-8" />,
       description: 'Take your family or friends to have some fun on the water. Our boat takes up to 8 riders at a time. Banana ride takes about 15-20 minutes.',
       features: ['Up to 8 Riders', '15-20 Minutes', 'Family Fun', 'Life Jackets Included'],
       color: 'from-yellow-500 to-orange-500',
@@ -33,7 +33,7 @@ const WaterSportsSection: React.FC = () => {
       title: 'Sofa Boat',
       price: '€10',
       schedule: 'Everyday (9:00-16:00)',
-      icon: <Sofa className="h-8 w-8" />,
+      icon: <Square className="h-8 w-8" />,
       description: 'This amazing sofa ride is a must for everybody. This is definitely going to be the craziest sofa you will ever sit on.',
       features: ['Crazy Experience', 'Inflatable Sofa', 'Jet Ski Pulled', 'Safe & Fun'],
       color: 'from-purple-500 to-pink-500',
