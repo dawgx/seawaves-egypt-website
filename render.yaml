@@ -5,7 +5,7 @@ services:
     env: node
     region: oregon
     plan: free
-    buildCommand: npm install && npm run render-postbuild
+    buildCommand: npm install && npm run build && node copy-public.js
     startCommand: node server.js
     healthCheckPath: /api/health
     autoDeploy: true
