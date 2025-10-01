@@ -11,13 +11,22 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Email configuration
+// Email configuration with enhanced settings for cloud deployment
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: config.email.service,
+  host: config.email.host,
+  port: config.email.port,
+  secure: config.email.secure,
   auth: {
     user: config.email.user,
     pass: config.email.pass
-  }
+  },
+  tls: {
+    rejectUnauthorized: false
+  },
+  connectionTimeout: 60000, // 60 seconds
+  greetingTimeout: 30000, // 30 seconds
+  socketTimeout: 60000 // 60 seconds
 });
 
 // API Routes
@@ -102,60 +111,89 @@ app.post('/api/contact', async (req, res) => {
       `
     };
 
-    // Send email
-    await transporter.sendMail(mailOptions);
+    // Try to send emails with better error handling
+    let emailSent = false;
+    let emailError = null;
 
-    // Send confirmation email to customer
-    const confirmationMailOptions = {
-      from: config.email.user,
-      to: email,
-      subject: 'Thank you for your inquiry - Sea Waves Aqua Center',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
-            <p style="margin: 5px 0 0 0; opacity: 0.9;">Thank you for your inquiry!</p>
-          </div>
-          
-          <div style="padding: 30px; background: #f8fafc;">
-            <h2 style="color: #1e40af; margin-top: 0;">Hello ${fullName}!</h2>
-            
-            <p style="color: #374151; line-height: 1.6;">
-              Thank you for your interest in <strong>${activityName}</strong>! We've received your inquiry and our team will get back to you within 24 hours.
-            </p>
-            
-            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 20px 0;">
-              <h3 style="color: #1e40af; margin-top: 0;">What happens next?</h3>
-              <ul style="color: #374151; line-height: 1.6;">
-                <li>Our adventure expert Ahmed will review your inquiry</li>
-                <li>We'll contact you to discuss your preferences</li>
-                <li>We'll provide you with detailed information and pricing</li>
-                <li>We'll help you plan your perfect Red Sea adventure!</li>
-              </ul>
+    try {
+      // Send email to admin
+      await transporter.sendMail(mailOptions);
+      emailSent = true;
+      console.log('Admin email sent successfully');
+    } catch (error) {
+      console.error('Failed to send admin email:', error.message);
+      emailError = error;
+    }
+
+    // Try to send confirmation email to customer
+    try {
+      const confirmationMailOptions = {
+        from: config.email.user,
+        to: email,
+        subject: 'Thank you for your inquiry - Sea Waves Aqua Center',
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
+              <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
+              <p style="margin: 5px 0 0 0; opacity: 0.9;">Thank you for your inquiry!</p>
             </div>
             
-            <div style="background: #dbeafe; padding: 15px; border-radius: 8px; margin: 20px 0;">
-              <p style="margin: 0; color: #1e40af;">
-                <strong>Need immediate assistance?</strong><br>
-                📞 Call us: +20 106 11 11 368<br>
-                📧 Email: settlethailand@gmail.com
+            <div style="padding: 30px; background: #f8fafc;">
+              <h2 style="color: #1e40af; margin-top: 0;">Hello ${fullName}!</h2>
+              
+              <p style="color: #374151; line-height: 1.6;">
+                Thank you for your interest in <strong>${activityName}</strong>! We've received your inquiry and our team will get back to you within 24 hours.
               </p>
+              
+              <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 20px 0;">
+                <h3 style="color: #1e40af; margin-top: 0;">What happens next?</h3>
+                <ul style="color: #374151; line-height: 1.6;">
+                  <li>Our adventure expert Ahmed will review your inquiry</li>
+                  <li>We'll contact you to discuss your preferences</li>
+                  <li>We'll provide you with detailed information and pricing</li>
+                  <li>We'll help you plan your perfect Red Sea adventure!</li>
+                </ul>
+              </div>
+              
+              <div style="background: #dbeafe; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 0; color: #1e40af;">
+                  <strong>Need immediate assistance?</strong><br>
+                  📞 Call us: +20 106 11 11 368<br>
+                  📧 Email: settlethailand@gmail.com
+                </p>
+              </div>
+            </div>
+            
+            <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
+              <p style="margin: 0;">Sea Waves Aqua Center - Red Sea Adventures</p>
+              <p style="margin: 5px 0 0 0; opacity: 0.8;">Experience the magic of the Red Sea</p>
             </div>
           </div>
-          
-          <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
-            <p style="margin: 0;">Sea Waves Aqua Center - Red Sea Adventures</p>
-            <p style="margin: 5px 0 0 0; opacity: 0.8;">Experience the magic of the Red Sea</p>
-          </div>
-        </div>
-      `
-    };
+        `
+      };
 
-    await transporter.sendMail(confirmationMailOptions);
+      await transporter.sendMail(confirmationMailOptions);
+      console.log('Confirmation email sent successfully');
+    } catch (error) {
+      console.error('Failed to send confirmation email:', error.message);
+    }
 
+    // Log the inquiry for manual follow-up if email fails
+    if (!emailSent) {
+      console.log('=== INQUIRY RECEIVED (Email failed) ===');
+      console.log('Name:', fullName);
+      console.log('Email:', email);
+      console.log('Phone:', phone);
+      console.log('Activity:', activityName);
+      console.log('Message:', message);
+      console.log('=====================================');
+    }
+
+    // Always return success to user, but log the actual status
     res.json({ 
       success: true, 
-      message: 'Email sent successfully!' 
+      message: emailSent ? 'Email sent successfully!' : 'Inquiry received! We will contact you soon.',
+      emailStatus: emailSent ? 'sent' : 'logged'
     });
 
   } catch (error) {
