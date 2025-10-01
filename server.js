@@ -154,7 +154,7 @@ app.post('/api/contact', async (req, res) => {
 
     // Email content
     const mailOptions = {
-      from: config.email.user,
+      from: config.email.sendgrid.from || config.email.gmail.user,
       to: config.email.adminEmail,
       subject: `New Inquiry for ${activityName} - Sea Waves Aqua Center`,
       html: `
@@ -226,7 +226,7 @@ app.post('/api/contact', async (req, res) => {
     
     // Send confirmation email to customer
     const confirmationMailOptions = {
-      from: config.email.user,
+      from: config.email.sendgrid.from || config.email.gmail.user,
       to: email,
       subject: 'Thank you for your inquiry - Sea Waves Aqua Center',
       html: `
@@ -333,7 +333,9 @@ app.get('/api/test-email', async (req, res) => {
       service: result.method,
       details: result,
       sendgridAvailable: !!config.email.sendgrid.apiKey,
-      gmailAvailable: !!config.email.gmail.user
+      gmailAvailable: !!config.email.gmail.user,
+      adminEmail: config.email.adminEmail,
+      fromEmail: config.email.sendgrid.from || config.email.gmail.user
     });
     
   } catch (error) {
@@ -343,7 +345,185 @@ app.get('/api/test-email', async (req, res) => {
       message: 'Email test failed',
       error: error.message,
       sendgridAvailable: !!config.email.sendgrid.apiKey,
+      gmailAvailable: !!config.email.gmail.user,
+      adminEmail: config.email.adminEmail,
+      fromEmail: config.email.sendgrid.from || config.email.gmail.user
+    });
+  }
+});
+
+// Debug endpoint to check email configuration
+app.get('/api/debug-email', (req, res) => {
+  res.json({
+    sendgrid: {
+      apiKey: config.email.sendgrid.apiKey ? 'SET' : 'NOT SET',
+      from: config.email.sendgrid.from,
+      fromName: config.email.sendgrid.fromName
+    },
+    gmail: {
+      user: config.email.gmail.user,
+      pass: config.email.gmail.pass ? 'SET' : 'NOT SET'
+    },
+    adminEmail: config.email.adminEmail,
+    defaultService: config.email.defaultService,
+    environment: {
+      NODE_ENV: process.env.NODE_ENV,
+      SENDGRID_API_KEY: process.env.SENDGRID_API_KEY ? 'SET' : 'NOT SET',
+      SENDGRID_FROM: process.env.SENDGRID_FROM
+    }
+  });
+});
+
+// Debug endpoint to check image serving
+app.get('/api/debug-images', (req, res) => {
+  const fs = require('fs');
+  const imagesPath = path.join(__dirname, 'public', 'images');
+  
+  try {
+    const imageFiles = [];
+    
+    function scanDirectory(dir, relativePath = '') {
+      const items = fs.readdirSync(dir);
+      items.forEach(item => {
+        const fullPath = path.join(dir, item);
+        const relativeItemPath = path.join(relativePath, item);
+        
+        if (fs.statSync(fullPath).isDirectory()) {
+          scanDirectory(fullPath, relativeItemPath);
+        } else {
+          const ext = path.extname(item).toLowerCase();
+          if (['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif'].includes(ext)) {
+            imageFiles.push({
+              path: `/images/${relativeItemPath.replace(/\\/g, '/')}`,
+              name: item,
+              size: fs.statSync(fullPath).size,
+              extension: ext
+            });
+          }
+        }
+      });
+    }
+    
+    scanDirectory(imagesPath);
+    
+    res.json({
+      imagesPath: imagesPath,
+      publicPath: path.join(__dirname, 'public'),
+      buildPath: path.join(__dirname, 'build'),
+      totalImages: imageFiles.length,
+      sampleImages: imageFiles.slice(0, 10),
+      directories: fs.readdirSync(imagesPath).filter(item => 
+        fs.statSync(path.join(imagesPath, item)).isDirectory()
+      )
+    });
+  } catch (error) {
+    res.json({
+      error: error.message,
+      imagesPath: imagesPath,
+      exists: fs.existsSync(imagesPath)
+    });
+  }
+});
+
+// Test image serving
+app.get('/api/test-image', (req, res) => {
+  const testImagePath = path.join(__dirname, 'public', 'images', 'founderimage.jpg');
+  const fs = require('fs');
+  
+  if (fs.existsSync(testImagePath)) {
+    res.setHeader('Content-Type', 'image/jpeg');
+    res.setHeader('Cache-Control', 'public, max-age=31536000');
+    res.sendFile(testImagePath);
+  } else {
+    res.status(404).json({
+      error: 'Test image not found',
+      path: testImagePath,
+      exists: fs.existsSync(testImagePath),
+      publicExists: fs.existsSync(path.join(__dirname, 'public')),
+      imagesExists: fs.existsSync(path.join(__dirname, 'public', 'images'))
+    });
+  }
+});
+
+// Test admin email specifically
+app.get('/api/test-admin-email', async (req, res) => {
+  console.log('🧪 === ADMIN EMAIL TEST ===');
+  console.log('🧪 Testing email to admin:', config.email.adminEmail);
+  
+  const adminTestMailOptions = {
+    from: config.email.sendgrid.from || config.email.gmail.user,
+    to: config.email.adminEmail,
+    subject: 'ADMIN TEST - Sea Waves Aqua Center Inquiry',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
+          <p style="margin: 5px 0 0 0; opacity: 0.9;">ADMIN TEST EMAIL</p>
+        </div>
+        
+        <div style="padding: 30px; background: #f8fafc;">
+          <h2 style="color: #1e40af; margin-top: 0;">This is a test email to verify admin email delivery</h2>
+          
+          <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h3 style="color: #374151; margin-top: 0;">Test Details</h3>
+            
+            <div style="margin-bottom: 15px;">
+              <strong style="color: #1e40af;">Timestamp:</strong> ${new Date().toISOString()}
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <strong style="color: #1e40af;">From:</strong> ${config.email.sendgrid.from || config.email.gmail.user}
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <strong style="color: #1e40af;">To:</strong> ${config.email.adminEmail}
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <strong style="color: #1e40af;">Service:</strong> SendGrid (primary) / Gmail SMTP (fallback)
+            </div>
+          </div>
+          
+          <div style="margin-top: 20px; padding: 15px; background: #dbeafe; border-left: 4px solid #3b82f6; border-radius: 4px;">
+            <p style="margin: 0; color: #1e40af; font-weight: 500;">
+              ✅ If you receive this email, admin email delivery is working correctly!
+            </p>
+          </div>
+        </div>
+        
+        <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
+          <p style="margin: 0;">Sea Waves Aqua Center - Admin Email Test</p>
+          <p style="margin: 5px 0 0 0; opacity: 0.8;">This is a test email to verify admin delivery</p>
+        </div>
+      </div>
+    `
+  };
+  
+  try {
+    console.log('🧪 Sending admin test email...');
+    const result = await sendEmail(adminTestMailOptions);
+    
+    console.log('🧪 Admin email test result:', result);
+    
+    res.json({
+      success: result.success,
+      message: result.success ? 'Admin email test sent successfully' : 'Admin email test failed',
+      service: result.method,
+      details: result,
+      adminEmail: config.email.adminEmail,
+      fromEmail: config.email.sendgrid.from || config.email.gmail.user,
+      sendgridAvailable: !!config.email.sendgrid.apiKey,
       gmailAvailable: !!config.email.gmail.user
+    });
+    
+  } catch (error) {
+    console.error('❌ Admin email test failed:', error.message);
+    res.json({
+      success: false,
+      message: 'Admin email test failed',
+      error: error.message,
+      adminEmail: config.email.adminEmail,
+      fromEmail: config.email.sendgrid.from || config.email.gmail.user
     });
   }
 });
@@ -351,8 +531,29 @@ app.get('/api/test-email', async (req, res) => {
 // Serve static files from the React app build directory
 app.use(express.static(path.join(__dirname, 'build')));
 
-// Serve images from public directory
-app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
+// Serve images from public directory with proper headers
+app.use('/images', express.static(path.join(__dirname, 'public', 'images'), {
+  setHeaders: (res, path) => {
+    // Set proper cache headers for images
+    res.setHeader('Cache-Control', 'public, max-age=31536000'); // 1 year
+    res.setHeader('Content-Type', getContentType(path));
+  }
+}));
+
+// Helper function to get content type based on file extension
+function getContentType(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  const contentTypes = {
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.webp': 'image/webp',
+    '.avif': 'image/avif',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml'
+  };
+  return contentTypes[ext] || 'application/octet-stream';
+}
 
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {

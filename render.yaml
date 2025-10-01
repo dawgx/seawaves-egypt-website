@@ -1,14 +1,28 @@
 services:
-  # Full-Stack Service (React App + API)
+  # Sea Waves Aqua Center - Full-Stack Service (React App + API)
   - type: web
-    name: sea-waves-website
+    name: sea-waves-aqua-center
     env: node
+    region: oregon
+    plan: free
     buildCommand: npm install && npm run build
     startCommand: node server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    pullRequestPreviewsEnabled: true
     envVars:
-      - key: EMAIL_USER
-        value: settlethailand@gmail.com
-      - key: EMAIL_PASS
-        value: xjeincwfnyvlcezi
+      # SendGrid Configuration (Primary Email Service)
+      # Set these in Render dashboard Environment tab:
+      # SENDGRID_API_KEY=your_api_key_here
+      # SENDGRID_FROM=settlethailand@gmail.com
+      
+      # Gmail SMTP Configuration (Backup Email Service)
+      # Set these in Render dashboard Environment tab:
+      # EMAIL_USER=settlethailand@gmail.com
+      # EMAIL_PASS=your_gmail_app_password
+      
+      # Server Configuration
+      - key: NODE_ENV
+        value: production
       - key: EMAIL_SERVICE
-        value: "gmail"
+        value: sendgrid
