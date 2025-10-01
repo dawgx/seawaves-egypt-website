@@ -1,20 +1,10 @@
 services:
-  # Frontend Service (React App)
+  # Full-Stack Service (React App + API)
   - type: web
-    name: sea-waves-frontend
+    name: sea-waves-website
     env: node
     buildCommand: npm install && npm run build
     startCommand: node server.js
-    envVars:
-      - key: REACT_APP_API_URL
-        value: https://seawaves-backend.onrender.com
-
-  # Backend Service (Node.js API)
-  - type: web
-    name: sea-waves-backend
-    env: node
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && node server.js
     envVars:
       - key: EMAIL_USER
         value: settlethailand@gmail.com
