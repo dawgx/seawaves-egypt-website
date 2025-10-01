@@ -3,6 +3,7 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 const sgMail = require('@sendgrid/mail');
 const path = require('path');
+const fs = require('fs');
 const config = require('./backend/config.js');
 
 const app = express();
