@@ -58,7 +58,8 @@ const SpeedBoatsSection: React.FC = () => {
         </div>
 
         {/* Speed Boat Program */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div className="flex justify-center mb-16">
+          <div className="w-full max-w-md">
           {speedBoatPrograms.map((program) => (
             <div key={program.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
               {/* Gradient Header */}
@@ -113,6 +114,7 @@ const SpeedBoatsSection: React.FC = () => {
               </div>
             </div>
           ))}
+          </div>
         </div>
 
         {/* Boat Types Section */}
