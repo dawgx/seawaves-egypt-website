@@ -306,6 +306,39 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
+// Simple directory check endpoint
+app.get('/api/check-dirs', (req, res) => {
+  const fs = require('fs');
+  const buildDir = path.join(__dirname, 'build');
+  const publicDir = path.join(__dirname, 'public');
+  const buildImagesDir = path.join(__dirname, 'build', 'images');
+  const publicImagesDir = path.join(__dirname, 'public', 'images');
+  
+  res.json({
+    __dirname: __dirname,
+    buildDir: {
+      path: buildDir,
+      exists: fs.existsSync(buildDir),
+      contents: fs.existsSync(buildDir) ? fs.readdirSync(buildDir) : []
+    },
+    publicDir: {
+      path: publicDir,
+      exists: fs.existsSync(publicDir),
+      contents: fs.existsSync(publicDir) ? fs.readdirSync(publicDir) : []
+    },
+    buildImagesDir: {
+      path: buildImagesDir,
+      exists: fs.existsSync(buildImagesDir),
+      contents: fs.existsSync(buildImagesDir) ? fs.readdirSync(buildImagesDir) : []
+    },
+    publicImagesDir: {
+      path: publicImagesDir,
+      exists: fs.existsSync(publicImagesDir),
+      contents: fs.existsSync(publicImagesDir) ? fs.readdirSync(publicImagesDir) : []
+    }
+  });
+});
+
 // Email service test endpoint (SendGrid + Gmail SMTP)
 app.get('/api/test-email', async (req, res) => {
   console.log('🧪 === EMAIL SERVICE TEST ===');
@@ -382,6 +415,12 @@ app.get('/api/debug-images', (req, res) => {
   const publicImagesPath = path.join(__dirname, 'public', 'images');
   const buildImagesPath = path.join(__dirname, 'build', 'images');
   const imagesPath = fs.existsSync(buildImagesPath) ? buildImagesPath : publicImagesPath;
+  
+  console.log('🔍 DEBUG: Image path detection:');
+  console.log('🔍 __dirname:', __dirname);
+  console.log('🔍 publicImagesPath:', publicImagesPath, 'exists:', fs.existsSync(publicImagesPath));
+  console.log('🔍 buildImagesPath:', buildImagesPath, 'exists:', fs.existsSync(buildImagesPath));
+  console.log('🔍 selected imagesPath:', imagesPath);
   
   try {
     const imageFiles = [];
