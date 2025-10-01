@@ -16,6 +16,11 @@ function copyDir(src, dest) {
     if (entry.isDirectory()) {
       copyDir(srcPath, destPath);
     } else {
+      // Don't overwrite index.html - it's already built by React
+      if (entry.name === 'index.html') {
+        console.log('📄 Skipping index.html - keeping React build version');
+        continue;
+      }
       fs.copyFileSync(srcPath, destPath);
     }
   }
