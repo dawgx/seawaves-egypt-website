@@ -5,6 +5,13 @@ import { useLanguage } from '../contexts/LanguageContext';
 const WaterSportsSection: React.FC = () => {
   const { t } = useLanguage();
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const waterSportsPrograms = [
     {
       id: 'parasailing',
@@ -119,7 +126,10 @@ const WaterSportsSection: React.FC = () => {
                   )}
 
                   {/* Book Button */}
-                  <button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105">
+                  <button 
+                    onClick={scrollToContact}
+                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105"
+                  >
                     Book Now
                   </button>
                 </div>
@@ -186,7 +196,10 @@ const WaterSportsSection: React.FC = () => {
                   )}
 
                   {/* Book Button */}
-                  <button className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-red-600 hover:to-orange-600 transition-all duration-200 transform hover:scale-105">
+                  <button 
+                    onClick={scrollToContact}
+                    className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-red-600 hover:to-orange-600 transition-all duration-200 transform hover:scale-105"
+                  >
                     Book Now
                   </button>
                 </div>

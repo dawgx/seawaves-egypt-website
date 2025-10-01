@@ -5,6 +5,13 @@ import { useLanguage } from '../contexts/LanguageContext';
 const DivingSection: React.FC = () => {
   const { t } = useLanguage();
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const divingPrograms = [
     {
       id: 'full-day',
@@ -124,7 +131,10 @@ const DivingSection: React.FC = () => {
                 </div>
 
                 {/* Book Button */}
-                <button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105">
+                <button 
+                  onClick={scrollToContact}
+                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105"
+                >
                   Book Now
                 </button>
               </div>
@@ -160,7 +170,10 @@ const DivingSection: React.FC = () => {
                   {course.level}
                 </div>
               </div>
-              <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-200">
+              <button 
+                onClick={scrollToContact}
+                className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-200"
+              >
                 Learn More
               </button>
             </div>
@@ -186,7 +199,10 @@ const DivingSection: React.FC = () => {
                 <span className="text-xl font-bold text-purple-600">{dive.price}</span>
               </div>
               <p className="text-gray-600 mb-4 text-sm">{dive.description}</p>
-              <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200">
+              <button 
+                onClick={scrollToContact}
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200"
+              >
                 Book Now
               </button>
             </div>

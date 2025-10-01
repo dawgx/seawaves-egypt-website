@@ -5,6 +5,13 @@ import { useLanguage } from '../contexts/LanguageContext';
 const BoatTripsSection: React.FC = () => {
   const { t } = useLanguage();
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const boatPrograms = [
     {
       id: 'private-trips',
@@ -131,7 +138,10 @@ const BoatTripsSection: React.FC = () => {
                 )}
 
                 {/* Book Button */}
-                <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-cyan-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105">
+                <button 
+                  onClick={scrollToContact}
+                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-cyan-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105"
+                >
                   {program.contact ? 'Contact Us' : 'Book Now'}
                 </button>
               </div>

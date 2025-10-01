@@ -5,6 +5,13 @@ import { useLanguage } from '../contexts/LanguageContext';
 const IslandTripsSection: React.FC = () => {
   const { t } = useLanguage();
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const islandPrograms = [
     {
       id: 'orange-bay',
@@ -107,7 +114,10 @@ const IslandTripsSection: React.FC = () => {
                 )}
 
                 {/* Book Button */}
-                <button className="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105">
+                <button 
+                  onClick={scrollToContact}
+                  className="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105"
+                >
                   Book Now
                 </button>
               </div>
