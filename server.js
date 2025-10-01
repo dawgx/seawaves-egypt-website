@@ -4,6 +4,17 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 const config = require('./backend/config.js');
 
+// Import SendGrid if available
+let sgMail = null;
+try {
+  sgMail = require('@sendgrid/mail');
+  if (config.email.sendgridApiKey) {
+    sgMail.setApiKey(config.email.sendgridApiKey);
+  }
+} catch (error) {
+  console.log('SendGrid not available:', error.message);
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -28,6 +39,46 @@ const transporter = nodemailer.createTransport({
   greetingTimeout: 30000, // 30 seconds
   socketTimeout: 60000 // 60 seconds
 });
+
+// Smart email sending function with multiple fallbacks
+const sendEmail = async (mailOptions) => {
+  // Method 1: Try SendGrid first (best for cloud)
+  if (config.email.useSendGrid && sgMail && config.email.sendgridApiKey) {
+    try {
+      console.log('Attempting to send via SendGrid...');
+      const msg = {
+        to: mailOptions.to,
+        from: config.email.user,
+        subject: mailOptions.subject,
+        html: mailOptions.html
+      };
+      await sgMail.send(msg);
+      console.log('Email sent successfully via SendGrid');
+      return { success: true, method: 'SendGrid' };
+    } catch (error) {
+      console.error('SendGrid failed:', error.message);
+    }
+  }
+
+  // Method 2: Try Gmail SMTP (works locally, often fails on cloud)
+  try {
+    console.log('Attempting to send via Gmail SMTP...');
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully via Gmail SMTP');
+    return { success: true, method: 'Gmail SMTP' };
+  } catch (error) {
+    console.error('Gmail SMTP failed:', error.message);
+  }
+
+  // Method 3: Log to console (fallback)
+  console.log('=== EMAIL FALLBACK - All email methods failed ===');
+  console.log('To:', mailOptions.to);
+  console.log('Subject:', mailOptions.subject);
+  console.log('Content preview:', mailOptions.html.substring(0, 200) + '...');
+  console.log('===============================================');
+  
+  return { success: false, method: 'console-log' };
+};
 
 // API Routes
 app.post('/api/contact', async (req, res) => {
@@ -111,89 +162,74 @@ app.post('/api/contact', async (req, res) => {
       `
     };
 
-    // Try to send emails with better error handling
-    let emailSent = false;
-    let emailError = null;
-
-    try {
-      // Send email to admin
-      await transporter.sendMail(mailOptions);
-      emailSent = true;
-      console.log('Admin email sent successfully');
-    } catch (error) {
-      console.error('Failed to send admin email:', error.message);
-      emailError = error;
-    }
-
-    // Try to send confirmation email to customer
-    try {
-      const confirmationMailOptions = {
-        from: config.email.user,
-        to: email,
-        subject: 'Thank you for your inquiry - Sea Waves Aqua Center',
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
-              <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
-              <p style="margin: 5px 0 0 0; opacity: 0.9;">Thank you for your inquiry!</p>
+    // Send admin email using smart email function
+    const adminEmailResult = await sendEmail(mailOptions);
+    
+    // Send confirmation email to customer
+    const confirmationMailOptions = {
+      from: config.email.user,
+      to: email,
+      subject: 'Thank you for your inquiry - Sea Waves Aqua Center',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
+            <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9;">Thank you for your inquiry!</p>
+          </div>
+          
+          <div style="padding: 30px; background: #f8fafc;">
+            <h2 style="color: #1e40af; margin-top: 0;">Hello ${fullName}!</h2>
+            
+            <p style="color: #374151; line-height: 1.6;">
+              Thank you for your interest in <strong>${activityName}</strong>! We've received your inquiry and our team will get back to you within 24 hours.
+            </p>
+            
+            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 20px 0;">
+              <h3 style="color: #1e40af; margin-top: 0;">What happens next?</h3>
+              <ul style="color: #374151; line-height: 1.6;">
+                <li>Our adventure expert Ahmed will review your inquiry</li>
+                <li>We'll contact you to discuss your preferences</li>
+                <li>We'll provide you with detailed information and pricing</li>
+                <li>We'll help you plan your perfect Red Sea adventure!</li>
+              </ul>
             </div>
             
-            <div style="padding: 30px; background: #f8fafc;">
-              <h2 style="color: #1e40af; margin-top: 0;">Hello ${fullName}!</h2>
-              
-              <p style="color: #374151; line-height: 1.6;">
-                Thank you for your interest in <strong>${activityName}</strong>! We've received your inquiry and our team will get back to you within 24 hours.
+            <div style="background: #dbeafe; padding: 15px; border-radius: 8px; margin: 20px 0;">
+              <p style="margin: 0; color: #1e40af;">
+                <strong>Need immediate assistance?</strong><br>
+                📞 Call us: +20 106 11 11 368<br>
+                📧 Email: settlethailand@gmail.com
               </p>
-              
-              <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 20px 0;">
-                <h3 style="color: #1e40af; margin-top: 0;">What happens next?</h3>
-                <ul style="color: #374151; line-height: 1.6;">
-                  <li>Our adventure expert Ahmed will review your inquiry</li>
-                  <li>We'll contact you to discuss your preferences</li>
-                  <li>We'll provide you with detailed information and pricing</li>
-                  <li>We'll help you plan your perfect Red Sea adventure!</li>
-                </ul>
-              </div>
-              
-              <div style="background: #dbeafe; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                <p style="margin: 0; color: #1e40af;">
-                  <strong>Need immediate assistance?</strong><br>
-                  📞 Call us: +20 106 11 11 368<br>
-                  📧 Email: settlethailand@gmail.com
-                </p>
-              </div>
-            </div>
-            
-            <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
-              <p style="margin: 0;">Sea Waves Aqua Center - Red Sea Adventures</p>
-              <p style="margin: 5px 0 0 0; opacity: 0.8;">Experience the magic of the Red Sea</p>
             </div>
           </div>
-        `
-      };
+          
+          <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
+            <p style="margin: 0;">Sea Waves Aqua Center - Red Sea Adventures</p>
+            <p style="margin: 5px 0 0 0; opacity: 0.8;">Experience the magic of the Red Sea</p>
+          </div>
+        </div>
+      `
+    };
 
-      await transporter.sendMail(confirmationMailOptions);
-      console.log('Confirmation email sent successfully');
-    } catch (error) {
-      console.error('Failed to send confirmation email:', error.message);
-    }
+    const confirmationEmailResult = await sendEmail(confirmationMailOptions);
 
-    // Log the inquiry for manual follow-up if email fails
-    if (!emailSent) {
-      console.log('=== INQUIRY RECEIVED (Email failed) ===');
-      console.log('Name:', fullName);
-      console.log('Email:', email);
-      console.log('Phone:', phone);
-      console.log('Activity:', activityName);
-      console.log('Message:', message);
-      console.log('=====================================');
-    }
+    // Log inquiry details for manual follow-up
+    console.log('=== INQUIRY RECEIVED ===');
+    console.log('Name:', fullName);
+    console.log('Email:', email);
+    console.log('Phone:', phone);
+    console.log('Activity:', activityName);
+    console.log('Message:', message);
+    console.log('Admin email status:', adminEmailResult.success ? 'Sent' : 'Failed');
+    console.log('Confirmation email status:', confirmationEmailResult.success ? 'Sent' : 'Failed');
+    console.log('========================');
 
-    // Always return success to user, but log the actual status
+    // Always return success to user
     res.json({ 
       success: true, 
-      message: emailSent ? 'Email sent successfully!' : 'Inquiry received! We will contact you soon.',
-      emailStatus: emailSent ? 'sent' : 'logged'
+      message: adminEmailResult.success ? 'Email sent successfully!' : 'Inquiry received! We will contact you soon.',
+      emailStatus: adminEmailResult.success ? 'sent' : 'logged',
+      method: adminEmailResult.method || 'console-log'
     });
 
   } catch (error) {
