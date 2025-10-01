@@ -671,7 +671,27 @@ console.log('📁 Setting up static file serving from:', buildDir);
 console.log('📁 Build directory exists:', fs.existsSync(buildDir));
 if (fs.existsSync(buildDir)) {
   console.log('📁 Build directory contents:', fs.readdirSync(buildDir));
+  const staticDir = path.join(buildDir, 'static');
+  if (fs.existsSync(staticDir)) {
+    console.log('📁 Static directory contents:', fs.readdirSync(staticDir));
+    const jsDir = path.join(staticDir, 'js');
+    const cssDir = path.join(staticDir, 'css');
+    if (fs.existsSync(jsDir)) {
+      console.log('📁 JS files:', fs.readdirSync(jsDir));
+    }
+    if (fs.existsSync(cssDir)) {
+      console.log('📁 CSS files:', fs.readdirSync(cssDir));
+    }
+  }
 }
+// Add logging middleware for static files
+app.use((req, res, next) => {
+  if (req.url.startsWith('/static/') || req.url.endsWith('.js') || req.url.endsWith('.css')) {
+    console.log('📄 Static file request:', req.url);
+  }
+  next();
+});
+
 app.use(express.static(buildDir));
 
 // Serve images from build directory (production) or public directory (development)
