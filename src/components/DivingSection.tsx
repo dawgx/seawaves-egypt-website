@@ -259,6 +259,102 @@ const DivingSection: React.FC = () => {
           </p>
         </div>
       </div>
+
+      {/* Diving Gallery */}
+      <div className="mt-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Diving Gallery</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Explore the stunning underwater world of the Red Sea through our diving experiences
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <img 
+              src="/images/diving/12.webp" 
+              alt="Red Sea diving experience"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="font-semibold">Red Sea Corals</h3>
+                <p className="text-sm opacity-90">Vibrant coral formations</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <img 
+              src="/images/diving/beautiful-coral-scuba-diver.webp" 
+              alt="Scuba diver exploring coral reef"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="font-semibold">Underwater Adventure</h3>
+                <p className="text-sm opacity-90">Professional diving experience</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <img 
+              src="/images/diving/divers-fukui-point-bunaken.jpg" 
+              alt="Divers exploring underwater"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="font-semibold">Dive Team</h3>
+                <p className="text-sm opacity-90">Group diving experience</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <img 
+              src="/images/diving/intro-1738601436.jpg" 
+              alt="Underwater marine life"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="font-semibold">Marine Life</h3>
+                <p className="text-sm opacity-90">Rich underwater ecosystem</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <img 
+              src="/images/diving/large.jpg" 
+              alt="Diving equipment and preparation"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="font-semibold">Dive Preparation</h3>
+                <p className="text-sm opacity-90">Professional equipment setup</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <img 
+              src="/images/diving/scuba-divers-colorful-reef-swim-thru.jpg" 
+              alt="Scuba divers swimming through reef"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="font-semibold">Reef Exploration</h3>
+                <p className="text-sm opacity-90">Swimming through coral formations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
