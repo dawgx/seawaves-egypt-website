@@ -23,6 +23,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  // Debug component mount
+  React.useEffect(() => {
+    console.log('🔧 ContactForm component mounted');
+    console.log('🔧 Activity name:', activityName);
+  }, [activityName]);
+
   const {
     register,
     handleSubmit,
@@ -88,6 +94,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
       setIsSubmitting(false);
     }
   };
+
+  console.log('🔧 ContactForm render - submitStatus:', submitStatus, 'isSubmitting:', isSubmitting);
 
   return (
     <div className="bg-gray-50 rounded-xl p-6 md:p-8">
@@ -240,6 +248,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
         <button
           type="submit"
           disabled={isSubmitting}
+          onClick={() => {
+            console.log('🖱️ Submit button clicked!');
+            console.log('🖱️ isSubmitting:', isSubmitting);
+          }}
           className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-200 flex items-center justify-center ${
             isSubmitting
               ? 'bg-gray-400 cursor-not-allowed'
