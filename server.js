@@ -335,7 +335,7 @@ app.get('/api/test-email', async (req, res) => {
   console.log('🧪 === EMAIL SERVICE TEST ===');
   
   const testMailOptions = {
-    from: config.email.sendgrid.from || config.email.gmail.user,
+      from: config.email.sendgrid.from,
     to: config.email.adminEmail,
     subject: 'Email Service Test - Sea Waves Aqua Center',
     html: `
@@ -358,9 +358,9 @@ app.get('/api/test-email', async (req, res) => {
       service: result.method,
       details: result,
       sendgridAvailable: !!config.email.sendgrid.apiKey,
-      gmailAvailable: !!config.email.gmail.user,
+      gmailAvailable: false,
       adminEmail: config.email.adminEmail,
-      fromEmail: config.email.sendgrid.from || config.email.gmail.user
+      fromEmail: config.email.sendgrid.from
     });
     
   } catch (error) {
@@ -370,9 +370,9 @@ app.get('/api/test-email', async (req, res) => {
       message: 'Email test failed',
       error: error.message,
       sendgridAvailable: !!config.email.sendgrid.apiKey,
-      gmailAvailable: !!config.email.gmail.user,
+      gmailAvailable: false,
       adminEmail: config.email.adminEmail,
-      fromEmail: config.email.sendgrid.from || config.email.gmail.user
+      fromEmail: config.email.sendgrid.from
     });
   }
 });
@@ -385,12 +385,7 @@ app.get('/api/debug-email', (req, res) => {
       from: config.email.sendgrid.from,
       fromName: config.email.sendgrid.fromName
     },
-    gmail: {
-      user: config.email.gmail.user,
-      pass: config.email.gmail.pass ? 'SET' : 'NOT SET'
-    },
     adminEmail: config.email.adminEmail,
-    defaultService: config.email.defaultService,
     environment: {
       NODE_ENV: process.env.NODE_ENV,
       SENDGRID_API_KEY: process.env.SENDGRID_API_KEY ? 'SET' : 'NOT SET',
@@ -519,7 +514,7 @@ app.get('/api/test-admin-email', async (req, res) => {
   console.log('🧪 Testing email to admin:', config.email.adminEmail);
   
   const adminTestMailOptions = {
-    from: config.email.sendgrid.from || config.email.gmail.user,
+      from: config.email.sendgrid.from,
     to: config.email.adminEmail,
     subject: 'ADMIN TEST - Sea Waves Aqua Center Inquiry',
     html: `
@@ -540,7 +535,7 @@ app.get('/api/test-admin-email', async (req, res) => {
             </div>
             
             <div style="margin-bottom: 15px;">
-              <strong style="color: #1e40af;">From:</strong> ${config.email.sendgrid.from || config.email.gmail.user}
+              <strong style="color: #1e40af;">From:</strong> ${config.email.sendgrid.from}
             </div>
             
             <div style="margin-bottom: 15px;">
@@ -579,9 +574,9 @@ app.get('/api/test-admin-email', async (req, res) => {
       service: result.method,
       details: result,
       adminEmail: config.email.adminEmail,
-      fromEmail: config.email.sendgrid.from || config.email.gmail.user,
+      fromEmail: config.email.sendgrid.from,
       sendgridAvailable: !!config.email.sendgrid.apiKey,
-      gmailAvailable: !!config.email.gmail.user
+      gmailAvailable: false
     });
     
   } catch (error) {
@@ -591,7 +586,7 @@ app.get('/api/test-admin-email', async (req, res) => {
       message: 'Admin email test failed',
       error: error.message,
       adminEmail: config.email.adminEmail,
-      fromEmail: config.email.sendgrid.from || config.email.gmail.user
+      fromEmail: config.email.sendgrid.from
     });
   }
 });
