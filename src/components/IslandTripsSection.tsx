@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Island, Anchor } from 'lucide-react';
+import { Clock, MapPin, Star, Waves, Sun, Users, Shield, MapPin as Island, Anchor } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const IslandTripsSection: React.FC = () => {
