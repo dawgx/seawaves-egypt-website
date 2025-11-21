@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const sgMail = require('@sendgrid/mail');
+const twilio = require('twilio');
 const path = require('path');
 const fs = require('fs');
 const config = require('./backend/config.js');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Add error handling for uncaught exceptions
 process.on('uncaughtException', (error) => {
@@ -35,6 +36,70 @@ if (config.email.sendgrid.apiKey) {
   console.log('📧 SENDGRID_API_KEY:', process.env.SENDGRID_API_KEY ? 'SET' : 'NOT SET');
   console.log('📧 SENDGRID_FROM:', process.env.SENDGRID_FROM || 'NOT SET');
 }
+
+// Initialize Twilio WhatsApp
+let twilioClient = null;
+console.log('🔍 === TWILIO INITIALIZATION DEBUG ===');
+console.log('🔍 Checking Twilio config...');
+console.log('🔍 apiKeySid:', config.whatsapp.twilio.apiKeySid ? `${config.whatsapp.twilio.apiKeySid.substring(0, 10)}...` : 'NOT SET');
+console.log('🔍 apiKeySecret:', config.whatsapp.twilio.apiKeySecret ? `${config.whatsapp.twilio.apiKeySecret.substring(0, 10)}...` : 'NOT SET');
+console.log('🔍 accountSid:', config.whatsapp.twilio.accountSid ? `${config.whatsapp.twilio.accountSid.substring(0, 10)}...` : 'NOT SET');
+console.log('🔍 fromNumber:', config.whatsapp.twilio.fromNumber);
+console.log('🔍 toNumber:', config.whatsapp.twilio.toNumber);
+
+// Check if using API Key (starts with SK) or Account SID (starts with AC)
+const isApiKey = config.whatsapp.twilio.apiKeySid && config.whatsapp.twilio.apiKeySid.startsWith('SK');
+const hasAccountSid = config.whatsapp.twilio.accountSid && config.whatsapp.twilio.accountSid.startsWith('AC');
+
+console.log('🔍 isApiKey:', isApiKey);
+console.log('🔍 hasAccountSid:', hasAccountSid);
+console.log('🔍 apiKeySecret exists:', !!config.whatsapp.twilio.apiKeySecret);
+console.log('🔍 All conditions met:', isApiKey && config.whatsapp.twilio.apiKeySecret && hasAccountSid);
+
+if (isApiKey && config.whatsapp.twilio.apiKeySecret && hasAccountSid) {
+  // Using API Key - need Account SID as additional option
+  try {
+    console.log('🔍 Initializing Twilio with API Key...');
+    twilioClient = twilio(config.whatsapp.twilio.apiKeySid, config.whatsapp.twilio.apiKeySecret, {
+      accountSid: config.whatsapp.twilio.accountSid
+    });
+    console.log('✅ Twilio WhatsApp initialized successfully (using API Key)');
+    console.log('📱 Twilio From:', config.whatsapp.twilio.fromNumber);
+    console.log('📱 Twilio To:', config.whatsapp.twilio.toNumber);
+    console.log('🔍 Twilio client type:', typeof twilioClient);
+  } catch (error) {
+    console.error('❌ Error initializing Twilio client with API Key:', error.message);
+    console.error('❌ Error details:', error);
+  }
+} else if (hasAccountSid && config.whatsapp.twilio.apiKeySecret) {
+  // Using Account SID directly (legacy method)
+  try {
+    console.log('🔍 Initializing Twilio with Account SID...');
+    twilioClient = twilio(config.whatsapp.twilio.accountSid, config.whatsapp.twilio.apiKeySecret);
+    console.log('✅ Twilio WhatsApp initialized successfully (using Account SID)');
+    console.log('📱 Twilio From:', config.whatsapp.twilio.fromNumber);
+    console.log('📱 Twilio To:', config.whatsapp.twilio.toNumber);
+    console.log('🔍 Twilio client type:', typeof twilioClient);
+  } catch (error) {
+    console.error('❌ Error initializing Twilio client with Account SID:', error.message);
+    console.error('❌ Error details:', error);
+  }
+} else {
+  console.log('⚠️  Twilio credentials not found or incomplete - WhatsApp messages will be logged to console only');
+  console.log('🔍 Debugging why initialization failed:');
+  console.log('  - apiKeySid exists:', !!config.whatsapp.twilio.apiKeySid);
+  console.log('  - apiKeySid starts with SK:', config.whatsapp.twilio.apiKeySid?.startsWith('SK'));
+  console.log('  - apiKeySecret exists:', !!config.whatsapp.twilio.apiKeySecret);
+  console.log('  - accountSid exists:', !!config.whatsapp.twilio.accountSid);
+  console.log('  - accountSid starts with AC:', config.whatsapp.twilio.accountSid?.startsWith('AC'));
+  console.log('📱 Environment variables check:');
+  console.log('📱 TWILIO_ACCOUNT_SID:', process.env.TWILIO_ACCOUNT_SID ? 'SET' : 'NOT SET');
+  console.log('📱 TWILIO_AUTH_TOKEN:', process.env.TWILIO_AUTH_TOKEN ? 'SET' : 'NOT SET');
+  console.log('📱 TWILIO_WHATSAPP_FROM:', process.env.TWILIO_WHATSAPP_FROM || 'NOT SET');
+  console.log('📱 TWILIO_WHATSAPP_TO:', process.env.TWILIO_WHATSAPP_TO || 'NOT SET');
+}
+console.log('🔍 Final twilioClient status:', twilioClient ? 'INITIALIZED' : 'NULL');
+console.log('🔍 === END TWILIO INIT DEBUG ===\n');
 
 // Email sending function - SendGrid only
 const sendEmail = async (mailOptions) => {
@@ -90,24 +155,106 @@ const sendEmail = async (mailOptions) => {
   }
 };
 
+// WhatsApp sending function - Twilio
+const sendWhatsApp = async (messageText) => {
+  console.log('\n🔍 === WHATSAPP SENDING DEBUG START ===');
+  console.log('📱 === WHATSAPP SENDING ATTEMPT ===');
+  console.log('🔍 Twilio client exists:', !!twilioClient);
+  console.log('🔍 Twilio client type:', typeof twilioClient);
+  console.log('📱 To:', config.whatsapp.twilio.toNumber);
+  console.log('📱 From:', config.whatsapp.twilio.fromNumber);
+  console.log('📱 Message length:', messageText.length);
+  console.log('📱 Message preview:', messageText.substring(0, 100) + '...');
+  
+  if (twilioClient) {
+    try {
+      console.log('🔍 Attempting to create message with Twilio...');
+      console.log('🔍 Account SID:', config.whatsapp.twilio.accountSid ? `${config.whatsapp.twilio.accountSid.substring(0, 10)}...` : 'MISSING');
+      console.log('🔍 Auth Token:', config.whatsapp.twilio.authToken ? `${config.whatsapp.twilio.authToken.substring(0, 10)}...` : 'MISSING');
+      
+      const startTime = Date.now();
+      const messagePayload = {
+        from: config.whatsapp.twilio.fromNumber,
+        to: config.whatsapp.twilio.toNumber,
+        body: messageText
+      };
+      
+      console.log('🔍 Message payload:', JSON.stringify(messagePayload, null, 2));
+      console.log('📱 Attempting Twilio WhatsApp API...');
+      
+      const message = await twilioClient.messages.create(messagePayload);
+      
+      const endTime = Date.now();
+      
+      console.log('✅ Twilio WhatsApp SUCCESS!');
+      console.log('📱 Message SID:', message.sid);
+      console.log('📱 Status:', message.status);
+      console.log('📱 Time taken:', (endTime - startTime) + 'ms');
+      console.log('📱 Full message response:', JSON.stringify(message, null, 2));
+      console.log('📱 ================================');
+      console.log('🔍 === WHATSAPP SENDING DEBUG END ===\n');
+      
+      return { success: true, method: 'Twilio', sid: message.sid, status: message.status };
+    } catch (error) {
+      console.error('❌ Twilio WhatsApp FAILED!');
+      console.error('📱 Error Message:', error.message);
+      console.error('📱 Error Code:', error.code);
+      console.error('📱 Error Status:', error.status);
+      console.error('📱 Error Details:', error.moreInfo || 'No additional info');
+      console.error('📱 Full Error:', JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
+      console.error('📱 ================================');
+      console.error('🔍 === WHATSAPP SENDING DEBUG END (ERROR) ===\n');
+      
+      return { success: false, method: 'Twilio', error: error.message, code: error.code, status: error.status };
+    }
+  } else {
+    console.log('❌ Twilio client not available');
+    console.log('🔍 Twilio client is null or undefined');
+    console.log('📱 === FALLBACK TO CONSOLE LOG ===');
+    console.log('📱 To:', config.whatsapp.twilio.toNumber);
+    console.log('📱 Message:', messageText);
+    console.log('📱 ================================');
+    console.log('🔍 === WHATSAPP SENDING DEBUG END (NO CLIENT) ===\n');
+    
+    return { success: false, method: 'console-log' };
+  }
+};
+
 // API Routes
 app.post('/api/contact', async (req, res) => {
+  console.log('\n🔍 ============================================');
+  console.log('🔍 === CONTACT FORM SUBMISSION DEBUG START ===');
+  console.log('🔍 ============================================');
   console.log('📧 === CONTACT FORM SUBMISSION ===');
-  console.log('📧 Request body:', req.body);
+  console.log('🔍 Request method:', req.method);
+  console.log('🔍 Request URL:', req.url);
+  console.log('🔍 Request headers:', JSON.stringify(req.headers, null, 2));
+  console.log('📧 Request body:', JSON.stringify(req.body, null, 2));
   
   try {
+    console.log('🔍 Extracting form data...');
     const { fullName, email, phone, preferredDate, numberOfPeople, message, activityName } = req.body;
+    
+    console.log('🔍 Extracted values:');
+    console.log('  - fullName:', fullName);
+    console.log('  - email:', email);
+    console.log('  - phone:', phone);
+    console.log('  - preferredDate:', preferredDate);
+    console.log('  - numberOfPeople:', numberOfPeople);
+    console.log('  - message:', message);
+    console.log('  - activityName:', activityName);
 
     // Validate required fields
     if (!fullName || !email || !phone) {
       console.log('❌ Missing required fields:', { fullName: !!fullName, email: !!email, phone: !!phone });
+      console.log('🔍 === CONTACT FORM SUBMISSION DEBUG END (VALIDATION FAILED) ===\n');
       return res.status(400).json({ 
         success: false, 
         message: 'Missing required fields' 
       });
     }
 
-    console.log('📧 Form validation passed');
+    console.log('✅ Form validation passed');
     console.log('📧 SendGrid config check:', {
       apiKey: config.email.sendgrid.apiKey ? 'SET' : 'NOT SET',
       from: config.email.sendgrid.from,
@@ -238,6 +385,19 @@ app.post('/api/contact', async (req, res) => {
     const confirmationEmailResult = await sendEmail(confirmationMailOptions);
     console.log('📧 Confirmation email result:', confirmationEmailResult);
 
+    // Send WhatsApp notification to admin
+    console.log('📱 Attempting to send WhatsApp notification...');
+    const whatsappMessage = `🔔 New Inquiry - Sea Waves Aqua Center
+
+Activity: ${activityName}
+Name: ${fullName}
+Email: ${email}
+Phone: ${phone}
+${preferredDate ? `Preferred Date: ${new Date(preferredDate).toLocaleDateString()}\n` : ''}${numberOfPeople ? `Number of People: ${numberOfPeople}\n` : ''}${message ? `Message: ${message}` : ''}`;
+    
+    const whatsappResult = await sendWhatsApp(whatsappMessage);
+    console.log('📱 WhatsApp result:', whatsappResult);
+
     // Log inquiry details for manual follow-up
     console.log('=== INQUIRY RECEIVED ===');
     console.log('Name:', fullName);
@@ -247,32 +407,91 @@ app.post('/api/contact', async (req, res) => {
     console.log('Message:', message);
     console.log('Admin email status:', adminEmailResult.success ? 'Sent' : 'Failed');
     console.log('Confirmation email status:', confirmationEmailResult.success ? 'Sent' : 'Failed');
+    console.log('WhatsApp status:', whatsappResult.success ? 'Sent' : 'Failed');
     console.log('========================');
 
-    // Return success only if admin email was sent successfully
-    if (adminEmailResult.success) {
-      res.json({ 
-        success: true, 
-        message: 'Email sent successfully!',
-        emailStatus: 'sent',
-        method: adminEmailResult.method
-      });
-    } else {
-      res.status(500).json({ 
-        success: false, 
-        message: 'Failed to send email. Please try again or contact us directly.',
-        emailStatus: 'failed',
-        method: adminEmailResult.method || 'console-log'
-      });
-    }
+    // Return success - form was received and logged even if notifications fail
+    // This ensures the customer knows their inquiry was received
+    const response = { 
+      success: true, 
+      message: 'Inquiry submitted successfully! We will contact you soon.',
+      emailStatus: adminEmailResult.success ? 'sent' : 'failed',
+      whatsappStatus: whatsappResult.success ? 'sent' : 'failed',
+      emailMethod: adminEmailResult.method,
+      whatsappMethod: whatsappResult.method,
+      note: (!adminEmailResult.success && !whatsappResult.success) 
+        ? 'Notifications failed but inquiry was logged. Please contact us directly if urgent.' 
+        : undefined
+    };
+    
+    console.log('🔍 Response being sent:', JSON.stringify(response, null, 2));
+    console.log('🔍 === CONTACT FORM SUBMISSION DEBUG END (SUCCESS) ===');
+    console.log('🔍 ============================================\n');
+    
+    res.json(response);
 
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('\n🔍 === CONTACT FORM SUBMISSION DEBUG END (EXCEPTION) ===');
+    console.error('❌ Error in contact form submission:', error);
+    console.error('❌ Error message:', error.message);
+    console.error('❌ Error stack:', error.stack);
+    console.error('❌ Full error:', JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
+    console.error('🔍 ============================================\n');
+    
     res.status(500).json({ 
       success: false, 
-      message: 'Failed to send email. Please try again.' 
+      message: 'Failed to send email. Please try again.',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
+});
+
+// Debug endpoint to test Twilio configuration
+app.get('/api/debug-twilio', (req, res) => {
+  console.log('\n🔍 === TWILIO DEBUG ENDPOINT ===');
+  const debugInfo = {
+    twilioClientExists: !!twilioClient,
+    twilioClientType: typeof twilioClient,
+    config: {
+      apiKeySid: config.whatsapp.twilio.apiKeySid ? `${config.whatsapp.twilio.apiKeySid.substring(0, 10)}...` : 'NOT SET',
+      apiKeySecret: config.whatsapp.twilio.apiKeySecret ? `${config.whatsapp.twilio.apiKeySecret.substring(0, 10)}...` : 'NOT SET',
+      accountSid: config.whatsapp.twilio.accountSid ? `${config.whatsapp.twilio.accountSid.substring(0, 10)}...` : 'NOT SET',
+      fromNumber: config.whatsapp.twilio.fromNumber,
+      toNumber: config.whatsapp.twilio.toNumber
+    },
+    checks: {
+      isApiKey: config.whatsapp.twilio.apiKeySid?.startsWith('SK'),
+      hasAccountSid: config.whatsapp.twilio.accountSid?.startsWith('AC'),
+      hasApiKeySecret: !!config.whatsapp.twilio.apiKeySecret,
+      allConditionsMet: config.whatsapp.twilio.apiKeySid?.startsWith('SK') && 
+                        config.whatsapp.twilio.apiKeySecret && 
+                        config.whatsapp.twilio.accountSid?.startsWith('AC')
+    },
+    environment: {
+      TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID ? 'SET' : 'NOT SET',
+      TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN ? 'SET' : 'NOT SET',
+      TWILIO_WHATSAPP_FROM: process.env.TWILIO_WHATSAPP_FROM || 'NOT SET',
+      TWILIO_WHATSAPP_TO: process.env.TWILIO_WHATSAPP_TO || 'NOT SET'
+    }
+  };
+  console.log('🔍 Debug info:', JSON.stringify(debugInfo, null, 2));
+  console.log('🔍 === END TWILIO DEBUG ENDPOINT ===\n');
+  res.json(debugInfo);
+});
+
+// Test endpoint to send a test WhatsApp message
+app.get('/api/test-whatsapp', async (req, res) => {
+  console.log('\n🔍 === TEST WHATSAPP ENDPOINT ===');
+  const testMessage = '🧪 Test message from Sea Waves Aqua Center - ' + new Date().toISOString();
+  console.log('🔍 Sending test message:', testMessage);
+  
+  const result = await sendWhatsApp(testMessage);
+  
+  res.json({
+    success: result.success,
+    message: result.success ? 'Test WhatsApp message sent!' : 'Test WhatsApp message failed',
+    details: result
+  });
 });
 
 // Health check endpoint

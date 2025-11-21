@@ -49,7 +49,7 @@ const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, isOpen, onClo
           </div>
 
           {/* Content */}
-          <div className="p-6 max-h-[80vh] overflow-y-auto">
+          <div className="p-6 max-h-[80vh] overflow-y-auto" id="activity-detail-content">
             {/* Activity Specific Sections */}
             {activity.id === 'diving' ? (
               <DivingSection />
@@ -149,7 +149,9 @@ const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, isOpen, onClo
             )}
 
             {/* Contact Form */}
-            <ContactForm activityName={translatedActivity.name} />
+            <div id="contact-form-modal">
+              <ContactForm activityName={translatedActivity.name} />
+            </div>
           </div>
         </div>
       </div>

@@ -14,7 +14,7 @@ start "Frontend Server" cmd /k "npm start"
 echo.
 echo Both servers are starting...
 echo Backend: http://localhost:5000
-echo Frontend: http://localhost:3000
+echo Frontend: http://localhost:3001
 echo.
 echo Make sure you have set EMAIL_PASS environment variable!
 echo Check EMAIL_SETUP_INSTRUCTIONS.md for details.

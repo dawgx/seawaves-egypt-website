@@ -22,23 +22,66 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [fullActivityName, setFullActivityName] = useState(activityName);
+
+  // Function to update activity name from localStorage
+  const updateActivityName = React.useCallback(() => {
+    const selectedProgram = localStorage.getItem('selectedProgram');
+    if (selectedProgram) {
+      const fullName = `${activityName} - ${selectedProgram}`;
+      setFullActivityName(fullName);
+      console.log('🔧 Selected program found:', selectedProgram);
+      console.log('🔧 Full activity name:', fullName);
+    } else {
+      setFullActivityName(activityName);
+    }
+  }, [activityName]);
+
+  // Check for selected program from localStorage and update activity name
+  React.useEffect(() => {
+    updateActivityName();
+  }, [activityName, updateActivityName]);
+
+  // Listen for program selection changes
+  React.useEffect(() => {
+    const handleProgramSelected = () => {
+      updateActivityName();
+    };
+
+    // Listen for custom event when program is selected
+    window.addEventListener('programSelected', handleProgramSelected);
+    
+    // Also listen for storage changes (in case localStorage is updated from another tab/window)
+    window.addEventListener('storage', handleProgramSelected);
+
+    return () => {
+      window.removeEventListener('programSelected', handleProgramSelected);
+      window.removeEventListener('storage', handleProgramSelected);
+    };
+  }, [updateActivityName]);
 
   // Debug component mount
   React.useEffect(() => {
     console.log('🔧 ContactForm component mounted');
-    console.log('🔧 Activity name:', activityName);
-  }, [activityName]);
+    console.log('🔧 Activity name:', fullActivityName);
+  }, [fullActivityName]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
+    setValue
   } = useForm<ContactFormData>({
     defaultValues: {
-      activityName
+      activityName: fullActivityName
     }
   });
+
+  // Update form value when fullActivityName changes
+  React.useEffect(() => {
+    setValue('activityName', fullActivityName);
+  }, [fullActivityName, setValue]);
 
   // Debug form errors
   React.useEffect(() => {
@@ -53,8 +96,20 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
+    // Check for selected program and update activityName
+    const selectedProgram = localStorage.getItem('selectedProgram');
+    const finalActivityName = selectedProgram ? `${activityName} - ${selectedProgram}` : activityName;
+    
+    // Update data with the full activity name
+    const formData = {
+      ...data,
+      activityName: finalActivityName
+    };
+    
+    console.log('📝 Final activity name:', finalActivityName);
+
     // Send to backend API (same service)
-    const apiUrl = process.env.REACT_APP_API_URL || (window.location.origin.includes('localhost') ? 'http://localhost:3000' : '');
+    const apiUrl = process.env.REACT_APP_API_URL || (window.location.origin.includes('localhost') ? 'http://localhost:3001' : '');
     console.log('🌐 API URL:', apiUrl);
     console.log('🌐 Window origin:', window.location.origin);
     
@@ -64,7 +119,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -77,6 +132,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
       if (result.success) {
         console.log('✅ Form submission successful');
         setSubmitStatus('success');
+        // Clear selected program from localStorage after successful submission
+        localStorage.removeItem('selectedProgram');
         reset();
       } else {
         console.log('❌ Form submission failed:', result.message);
@@ -101,7 +158,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
   return (
     <div className="bg-gray-50 rounded-xl p-6 md:p-8">
       <h3 className="text-2xl font-bold text-gray-800 mb-2">
-        {t('contact.interestedIn')} {activityName}? {t('contact.contactUs')}!
+        {t('contact.interestedIn')} {fullActivityName}? {t('contact.contactUs')}!
       </h3>
       <p className="text-gray-600 mb-6">
         {t('contact.formDescription')}
@@ -134,6 +191,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
         console.log('📋 Form submit event triggered');
         handleSubmit(onSubmit)(e);
       }} className="space-y-6">
+        {/* Hidden input to ensure activityName is sent with form */}
+        <input type="hidden" {...register('activityName')} value={fullActivityName} />
         {/* Full Name */}
         <div>
           <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">

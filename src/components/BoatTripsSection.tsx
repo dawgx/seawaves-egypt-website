@@ -5,10 +5,31 @@ import { useLanguage } from '../contexts/LanguageContext';
 const BoatTripsSection: React.FC = () => {
   const { t } = useLanguage();
 
-  const scrollToContact = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+  const scrollToContact = (programTitle?: string) => {
+    // Store selected program in localStorage if provided
+    if (programTitle) {
+      localStorage.setItem('selectedProgram', programTitle);
+      // Dispatch custom event to notify ContactForm
+      window.dispatchEvent(new CustomEvent('programSelected'));
+    }
+    
+    // Check if we're inside a modal (activity detail panel)
+    const modalContent = document.getElementById('activity-detail-content');
+    const contactFormInModal = document.getElementById('contact-form-modal');
+    
+    if (modalContent && contactFormInModal) {
+      // Scroll within the modal container
+      const contactFormTop = contactFormInModal.offsetTop;
+      modalContent.scrollTo({
+        top: contactFormTop - 20, // Add small offset
+        behavior: 'smooth'
+      });
+    } else {
+      // Scroll on main page
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -139,7 +160,7 @@ const BoatTripsSection: React.FC = () => {
 
                 {/* Book Button */}
                 <button 
-                  onClick={scrollToContact}
+                  onClick={() => scrollToContact(program.title)}
                   className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-cyan-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105"
                 >
                   {program.contact ? 'Contact Us' : 'Book Now'}
