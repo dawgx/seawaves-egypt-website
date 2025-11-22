@@ -1,4 +1,4 @@
-# SendGrid Setup Guide for Sea Waves Aqua Center
+# SendGrid Setup Guide for Sea Waves
 
 ## 🚀 Quick Setup Steps
 
@@ -21,7 +21,7 @@
 1. Go to **Settings** → **Sender Authentication**
 2. Click **"Verify a Single Sender"**
 3. Fill in:
-   - **From Name**: Sea Waves Aqua Center
+   - **From Name**: Sea Waves
    - **From Email**: settlethailand@gmail.com
    - **Reply To**: settlethailand@gmail.com
    - **Company Address**: Your business address

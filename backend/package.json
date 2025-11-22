@@ -1,7 +1,7 @@
 {
   "name": "sea-waves-backend",
   "version": "1.0.0",
-  "description": "Backend server for Sea Waves Aqua Center contact form",
+  "description": "Backend server for Sea Waves contact form",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -16,7 +16,7 @@
     "nodemon": "^3.0.1"
   },
   "keywords": ["email", "contact-form", "sea-waves"],
-  "author": "Sea Waves Aqua Center",
+  "author": "Sea Waves",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"

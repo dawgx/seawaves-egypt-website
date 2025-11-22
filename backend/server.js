@@ -37,11 +37,11 @@ app.post('/api/contact', async (req, res) => {
     const mailOptions = {
       from: config.email.user,
       to: config.email.adminEmail, // Founder's email
-      subject: `New Inquiry for ${activityName} - Sea Waves Aqua Center`,
+      subject: `New Inquiry for ${activityName} - Sea Waves`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
+            <h1 style="margin: 0; font-size: 24px;">Sea Waves</h1>
             <p style="margin: 5px 0 0 0; opacity: 0.9;">New Customer Inquiry</p>
           </div>
           
@@ -95,7 +95,7 @@ app.post('/api/contact', async (req, res) => {
           </div>
           
           <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
-            <p style="margin: 0;">Sea Waves Aqua Center - Red Sea Adventures</p>
+            <p style="margin: 0;">Sea Waves - Red Sea Adventures</p>
             <p style="margin: 5px 0 0 0; opacity: 0.8;">This email was sent from your website contact form</p>
           </div>
         </div>
@@ -109,11 +109,11 @@ app.post('/api/contact', async (req, res) => {
     const confirmationMailOptions = {
       from: config.email.user,
       to: email,
-      subject: 'Thank you for your inquiry - Sea Waves Aqua Center',
+      subject: 'Thank you for your inquiry - Sea Waves',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
+            <h1 style="margin: 0; font-size: 24px;">Sea Waves</h1>
             <p style="margin: 5px 0 0 0; opacity: 0.9;">Thank you for your inquiry!</p>
           </div>
           
@@ -144,7 +144,7 @@ app.post('/api/contact', async (req, res) => {
           </div>
           
           <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
-            <p style="margin: 0;">Sea Waves Aqua Center - Red Sea Adventures</p>
+            <p style="margin: 0;">Sea Waves - Red Sea Adventures</p>
             <p style="margin: 5px 0 0 0; opacity: 0.8;">Experience the magic of the Red Sea</p>
           </div>
         </div>

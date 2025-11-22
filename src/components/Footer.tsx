@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
               <Waves className="h-8 w-8 text-ocean-blue" />
               <div>
                 <h3 className="text-2xl font-bold">Sea Waves</h3>
-                <p className="text-gray-400">Aqua Center</p>
+                <p className="text-gray-400">Sea Waves</p>
               </div>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
               <div className="flex items-start text-gray-300">
                 <MapPin className="h-5 w-5 mr-3 mt-1" />
                 <div>
-                  <p>Sea Waves Aqua Center</p>
+                  <p>Sea Waves</p>
                   <p>Hurghada, Red Sea</p>
                   <p>Egypt</p>
                 </div>
@@ -118,7 +118,7 @@ const Footer: React.FC = () => {
 
             {/* Copyright */}
             <div className="text-gray-400 text-center md:text-right">
-              <p>&copy; {currentYear} Sea Waves Aqua Center. {t('footer.rights')}</p>
+              <p>&copy; {currentYear} Sea Waves. {t('footer.rights')}</p>
               <p className="text-sm mt-1">{t('footer.madeWith')}</p>
             </div>
           </div>

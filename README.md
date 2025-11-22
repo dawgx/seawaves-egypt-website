@@ -1,6 +1,6 @@
-# Sea Waves Aqua Center Website
+# Sea Waves Website
 
-A modern, responsive website for Sea Waves Aqua Center - a beach activities company in Hurghada, Egypt.
+A modern, responsive website for Sea Waves - a beach activities company in Hurghada, Egypt.
 
 ## Features
 
@@ -163,4 +163,4 @@ To deploy the website:
 
 ## License
 
-© 2024 Sea Waves Aqua Center. All rights reserved.
+© 2024 Sea Waves. All rights reserved.

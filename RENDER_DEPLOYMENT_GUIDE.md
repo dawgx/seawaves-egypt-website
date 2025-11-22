@@ -1,4 +1,4 @@
-# 🚀 Render Deployment Guide - Sea Waves Aqua Center
+# 🚀 Render Deployment Guide - Sea Waves
 
 ## **Complete Render Service Setup**
 
@@ -94,4 +94,4 @@ GET https://your-app-name.onrender.com/api/test-email
 
 ---
 
-**Your Sea Waves Aqua Center website is ready for production! 🐠🌊**
+**Your Sea Waves website is ready for production! 🐠🌊**

@@ -41,10 +41,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <Waves className="h-8 w-8 text-ocean-blue" />
-            <div>
-              <h1 className="text-xl font-bold text-gray-800">Sea Waves</h1>
-              <p className="text-sm text-gray-600">Aqua Center</p>
-            </div>
+            <h1 className="text-xl font-bold text-gray-800">Sea Waves</h1>
           </div>
 
           {/* Desktop Navigation */}

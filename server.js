@@ -170,7 +170,7 @@ const sendWhatsApp = async (messageText) => {
     try {
       console.log('🔍 Attempting to create message with Twilio...');
       console.log('🔍 Account SID:', config.whatsapp.twilio.accountSid ? `${config.whatsapp.twilio.accountSid.substring(0, 10)}...` : 'MISSING');
-      console.log('🔍 Auth Token:', config.whatsapp.twilio.authToken ? `${config.whatsapp.twilio.authToken.substring(0, 10)}...` : 'MISSING');
+      console.log('🔍 Auth Token:', config.whatsapp.twilio.apiKeySecret ? `${config.whatsapp.twilio.apiKeySecret.substring(0, 10)}...` : 'MISSING');
       
       const startTime = Date.now();
       const messagePayload = {
@@ -265,11 +265,11 @@ app.post('/api/contact', async (req, res) => {
     const mailOptions = {
       from: config.email.sendgrid.from,
       to: config.email.adminEmail,
-      subject: `New Inquiry for ${activityName} - Sea Waves Aqua Center`,
+      subject: `New Inquiry for ${activityName} - Sea Waves`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
+            <h1 style="margin: 0; font-size: 24px;">Sea Waves</h1>
             <p style="margin: 5px 0 0 0; opacity: 0.9;">New Customer Inquiry</p>
           </div>
           
@@ -323,7 +323,7 @@ app.post('/api/contact', async (req, res) => {
           </div>
           
           <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
-            <p style="margin: 0;">Sea Waves Aqua Center - Red Sea Adventures</p>
+            <p style="margin: 0;">Sea Waves - Red Sea Adventures</p>
             <p style="margin: 5px 0 0 0; opacity: 0.8;">This email was sent from your website contact form</p>
           </div>
         </div>
@@ -340,11 +340,11 @@ app.post('/api/contact', async (req, res) => {
     const confirmationMailOptions = {
       from: config.email.sendgrid.from,
       to: email,
-      subject: 'Thank you for your inquiry - Sea Waves Aqua Center',
+      subject: 'Thank you for your inquiry - Sea Waves',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
+            <h1 style="margin: 0; font-size: 24px;">Sea Waves</h1>
             <p style="margin: 5px 0 0 0; opacity: 0.9;">Thank you for your inquiry!</p>
           </div>
           
@@ -375,7 +375,7 @@ app.post('/api/contact', async (req, res) => {
           </div>
           
           <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
-            <p style="margin: 0;">Sea Waves Aqua Center - Red Sea Adventures</p>
+            <p style="margin: 0;">Sea Waves - Red Sea Adventures</p>
             <p style="margin: 5px 0 0 0; opacity: 0.8;">Experience the magic of the Red Sea</p>
           </div>
         </div>
@@ -387,7 +387,7 @@ app.post('/api/contact', async (req, res) => {
 
     // Send WhatsApp notification to admin
     console.log('📱 Attempting to send WhatsApp notification...');
-    const whatsappMessage = `🔔 New Inquiry - Sea Waves Aqua Center
+    const whatsappMessage = `🔔 New Inquiry - Sea Waves
 
 Activity: ${activityName}
 Name: ${fullName}
@@ -482,7 +482,7 @@ app.get('/api/debug-twilio', (req, res) => {
 // Test endpoint to send a test WhatsApp message
 app.get('/api/test-whatsapp', async (req, res) => {
   console.log('\n🔍 === TEST WHATSAPP ENDPOINT ===');
-  const testMessage = '🧪 Test message from Sea Waves Aqua Center - ' + new Date().toISOString();
+  const testMessage = '🧪 Test message from Sea Waves - ' + new Date().toISOString();
   console.log('🔍 Sending test message:', testMessage);
   
   const result = await sendWhatsApp(testMessage);
@@ -588,13 +588,13 @@ app.get('/api/test-email', async (req, res) => {
   const testMailOptions = {
       from: config.email.sendgrid.from,
     to: config.email.adminEmail,
-    subject: 'Email Service Test - Sea Waves Aqua Center',
+    subject: 'Email Service Test - Sea Waves',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1e40af;">Email Service Test Successful!</h2>
         <p>This is a test email to verify email configuration.</p>
         <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
-        <p><strong>Server:</strong> Sea Waves Aqua Center</p>
+        <p><strong>Server:</strong> Sea Waves</p>
         <p><strong>Service:</strong> SendGrid (primary) / Gmail SMTP (fallback)</p>
       </div>
     `
@@ -778,7 +778,7 @@ app.get('/api/test-sendgrid', async (req, res) => {
   const testMailOptions = {
     from: config.email.sendgrid.from,
     to: config.email.adminEmail,
-    subject: 'SendGrid Test - Sea Waves Aqua Center',
+    subject: 'SendGrid Test - Sea Waves',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1e40af;">SendGrid Test Successful!</h2>
@@ -826,11 +826,11 @@ app.get('/api/test-admin-email', async (req, res) => {
   const adminTestMailOptions = {
       from: config.email.sendgrid.from,
     to: config.email.adminEmail,
-    subject: 'ADMIN TEST - Sea Waves Aqua Center Inquiry',
+    subject: 'ADMIN TEST - Sea Waves Inquiry',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
-          <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
+          <h1 style="margin: 0; font-size: 24px;">Sea Waves</h1>
           <p style="margin: 5px 0 0 0; opacity: 0.9;">ADMIN TEST EMAIL</p>
         </div>
         
@@ -865,7 +865,7 @@ app.get('/api/test-admin-email', async (req, res) => {
         </div>
         
         <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
-          <p style="margin: 0;">Sea Waves Aqua Center - Admin Email Test</p>
+          <p style="margin: 0;">Sea Waves - Admin Email Test</p>
           <p style="margin: 5px 0 0 0; opacity: 0.8;">This is a test email to verify admin delivery</p>
         </div>
       </div>

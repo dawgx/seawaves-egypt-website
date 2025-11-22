@@ -35,7 +35,7 @@ async function testEmail() {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #1e40af, #f97316); color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0; font-size: 24px;">Sea Waves Aqua Center</h1>
+            <h1 style="margin: 0; font-size: 24px;">Sea Waves</h1>
             <p style="margin: 5px 0 0 0; opacity: 0.9;">Test Email</p>
           </div>
           
@@ -50,7 +50,7 @@ async function testEmail() {
           </div>
           
           <div style="background: #374151; color: white; padding: 15px; text-align: center; font-size: 14px;">
-            <p style="margin: 0;">Sea Waves Aqua Center - Red Sea Adventures</p>
+            <p style="margin: 0;">Sea Waves - Red Sea Adventures</p>
             <p style="margin: 5px 0 0 0; opacity: 0.8;">Test email sent successfully</p>
           </div>
         </div>

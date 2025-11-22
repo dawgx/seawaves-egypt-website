@@ -35,12 +35,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       
       // Hero Section
       'hero.title': 'Sea Waves',
-      'hero.subtitle': 'Aqua Center',
+      'hero.subtitle': 'Red Sea Adventures',
       'hero.description': 'Experience the adventure in the crystal-clear waters of the Red Sea',
       'hero.button': 'Explore Activities',
       
       // About Section
-      'about.title': 'About Sea Waves Aqua Center',
+      'about.title': 'About Sea Waves',
       'about.subtitle': 'Discover our passion for the Red Sea and commitment to unforgettable experiences',
       'about.founder.name': 'Ahmed Hassan',
       'about.founder.title': 'Founder & Adventure Expert',
@@ -121,7 +121,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       'stats.security': 'Security checks on the boat and equipment',
       'stats.clients': 'Satisfied clients',
       'stats.sails': 'Sails we made since opening',
-      'stats.whyChoose': 'Why Choose Sea Waves Aqua Center?',
+      'stats.whyChoose': 'Why Choose Sea Waves?',
       'stats.guarantee': 'We Guarantee',
       'stats.views': 'Beautiful views',
       'stats.provide': 'We Provide',
@@ -136,12 +136,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       
       // Hero Section
       'hero.title': 'Sea Waves',
-      'hero.subtitle': 'Aqua Center',
+      'hero.subtitle': 'Przygody Morza Czerwonego',
       'hero.description': 'Doświadcz przygody w krystalicznie czystych wodach Morza Czerwonego',
       'hero.button': 'Zobacz Atrakcje',
       
       // About Section
-      'about.title': 'O Sea Waves Aqua Center',
+      'about.title': 'O Sea Waves',
       'about.subtitle': 'Odkryj naszą pasję do Morza Czerwonego i zaangażowanie w niezapomniane doświadczenia',
       'about.founder.name': 'Ahmed Hassan',
       'about.founder.title': 'Założyciel i Ekspert Przygód',
@@ -222,7 +222,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       'stats.security': 'Kontroli bezpieczeństwa łodzi i sprzętu',
       'stats.clients': 'Zadowolonych klientów',
       'stats.sails': 'Rejsów od otwarcia',
-      'stats.whyChoose': 'Dlaczego wybrać Sea Waves Aqua Center?',
+      'stats.whyChoose': 'Dlaczego wybrać Sea Waves?',
       'stats.guarantee': 'Gwarantujemy',
       'stats.views': 'Piękne widoki',
       'stats.provide': 'Zapewniamy',
@@ -237,12 +237,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       
       // Hero Section
       'hero.title': 'Sea Waves',
-      'hero.subtitle': 'Aqua Center',
+      'hero.subtitle': 'Rotes Meer Abenteuer',
       'hero.description': 'Erleben Sie das Abenteuer in den kristallklaren Gewässern des Roten Meeres',
       'hero.button': 'Aktivitäten erkunden',
       
       // About Section
-      'about.title': 'Über Sea Waves Aqua Center',
+      'about.title': 'Über Sea Waves',
       'about.subtitle': 'Entdecken Sie unsere Leidenschaft für das Rote Meer und unser Engagement für unvergessliche Erlebnisse',
       'about.founder.name': 'Ahmed Hassan',
       'about.founder.title': 'Gründer & Abenteuer-Experte',
@@ -323,7 +323,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       'stats.security': 'Sicherheitskontrollen des Bootes und der Ausrüstung',
       'stats.clients': 'Zufriedene Kunden',
       'stats.sails': 'Segeltouren seit der Eröffnung',
-      'stats.whyChoose': 'Warum Sea Waves Aqua Center wählen?',
+      'stats.whyChoose': 'Warum Sea Waves wählen?',
       'stats.guarantee': 'Wir garantieren',
       'stats.views': 'Wunderschöne Aussichten',
       'stats.provide': 'Wir bieten',
@@ -338,12 +338,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       
       // Hero Section
       'hero.title': 'Sea Waves',
-      'hero.subtitle': 'Aqua Center',
+      'hero.subtitle': 'Røde Hav Eventyr',
       'hero.description': 'Oplev eventyret i de krystalklare farvande i Det Røde Hav',
       'hero.button': 'Udforsk Aktiviteter',
       
       // About Section
-      'about.title': 'Om Sea Waves Aqua Center',
+      'about.title': 'Om Sea Waves',
       'about.subtitle': 'Opdag vores passion for Det Røde Hav og engagement for uforglemmelige oplevelser',
       'about.founder.name': 'Ahmed Hassan',
       'about.founder.title': 'Grundlægger & Eventyr Ekspert',
@@ -424,7 +424,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       'stats.security': 'Sikkerhedskontroller af båd og udstyr',
       'stats.clients': 'Tilfredse kunder',
       'stats.sails': 'Sejlture siden åbningen',
-      'stats.whyChoose': 'Hvorfor vælge Sea Waves Aqua Center?',
+      'stats.whyChoose': 'Hvorfor vælge Sea Waves?',
       'stats.guarantee': 'Vi garanterer',
       'stats.views': 'Smukke udsigter',
       'stats.provide': 'Vi tilbyder',
@@ -439,12 +439,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       
       // Hero Section
       'hero.title': 'Sea Waves',
-      'hero.subtitle': 'Aqua Center',
+      'hero.subtitle': 'Rode Zee Avonturen',
       'hero.description': 'Beleef het avontuur in de kristalheldere wateren van de Rode Zee',
       'hero.button': 'Verken Activiteiten',
       
       // About Section
-      'about.title': 'Over Sea Waves Aqua Center',
+      'about.title': 'Over Sea Waves',
       'about.subtitle': 'Ontdek onze passie voor de Rode Zee en toewijding aan onvergetelijke ervaringen',
       'about.founder.name': 'Ahmed Hassan',
       'about.founder.title': 'Oprichter & Avontuur Expert',
@@ -525,7 +525,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       'stats.security': 'Veiligheidscontroles van boot en uitrusting',
       'stats.clients': 'Tevreden klanten',
       'stats.sails': 'Zeiltochten sinds opening',
-      'stats.whyChoose': 'Waarom Sea Waves Aqua Center kiezen?',
+      'stats.whyChoose': 'Waarom Sea Waves kiezen?',
       'stats.guarantee': 'Wij garanderen',
       'stats.views': 'Prachtige uitzichten',
       'stats.provide': 'Wij bieden',
@@ -540,12 +540,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       
       // Hero Section
       'hero.title': 'Sea Waves',
-      'hero.subtitle': 'Aqua Center',
+      'hero.subtitle': 'Приключения Красного моря',
       'hero.description': 'Испытайте приключения в кристально чистых водах Красного моря',
       'hero.button': 'Исследовать Активности',
       
       // About Section
-      'about.title': 'О Sea Waves Aqua Center',
+      'about.title': 'О Sea Waves',
       'about.subtitle': 'Откройте нашу страсть к Красному морю и приверженность незабываемым впечатлениям',
       'about.founder.name': 'Ахмед Хасан',
       'about.founder.title': 'Основатель и Эксперт Приключений',
@@ -626,7 +626,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       'stats.security': 'Проверок безопасности лодки и оборудования',
       'stats.clients': 'Довольных клиентов',
       'stats.sails': 'Плаваний с момента открытия',
-      'stats.whyChoose': 'Почему выбрать Sea Waves Aqua Center?',
+      'stats.whyChoose': 'Почему выбрать Sea Waves?',
       'stats.guarantee': 'Мы гарантируем',
       'stats.views': 'Красивые виды',
       'stats.provide': 'Мы предоставляем',

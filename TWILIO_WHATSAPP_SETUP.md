@@ -102,7 +102,7 @@ npm install
 When a customer submits an inquiry, you'll receive a WhatsApp message like this:
 
 ```
-🔔 New Inquiry - Sea Waves Aqua Center
+🔔 New Inquiry - Sea Waves
 
 Activity: Diving - Full Day Trips
 Name: John Doe

@@ -6,7 +6,7 @@
 1. Go to [github.com](https://github.com)
 2. Click "New repository"
 3. Name: `sea-waves-website`
-4. Description: `Sea Waves Aqua Center - Red Sea Adventures Website`
+4. Description: `Sea Waves - Red Sea Adventures Website`
 5. Make it **Public** (required for free hosting)
 6. Don't initialize with README (we already have files)
 7. Click "Create repository"

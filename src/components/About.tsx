@@ -26,7 +26,7 @@ const About: React.FC = () => {
               <div className="w-20 h-20 rounded-full overflow-hidden mr-6 shadow-lg">
                 <img 
                   src={founderImage} 
-                  alt="Ahmed Hassan - Founder of Sea Waves Aqua Center"
+                  alt="Ahmed Hassan - Founder of Sea Waves"
                   className="w-full h-full object-cover"
                 />
               </div>

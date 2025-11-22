@@ -1,5 +1,5 @@
 services:
-  # Sea Waves Aqua Center - Full-Stack Service (React App + API)
+  # Sea Waves - Full-Stack Service (React App + API)
   - type: web
     name: sea-waves-aqua-center
     env: node
