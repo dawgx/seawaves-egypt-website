@@ -20,7 +20,7 @@ module.exports = {
       // Account SID - prioritize environment variable
       accountSid: process.env.TWILIO_ACCOUNT_SID || 'AC970c23c1d9ec86c43c45d6ace8a4c307',
       // Auth Token - prioritize environment variable (can use TWILIO_AUTH_TOKEN or TWILIO_API_KEY_SECRET)
-      apiKeySecret: process.env.TWILIO_AUTH_TOKEN || process.env.TWILIO_API_KEY_SECRET || '3d0a45402e388980001048604e353c90',
+      apiKeySecret: process.env.TWILIO_AUTH_TOKEN || process.env.TWILIO_API_KEY_SECRET || '82d0269e68894de81801cd2b8ff53c14',
       // From number - prioritize environment variable
       fromNumber: process.env.TWILIO_WHATSAPP_FROM || process.env.TWILIO_FROM_NUMBER || 'whatsapp:+14155238886',
       // To number - prioritize environment variable
