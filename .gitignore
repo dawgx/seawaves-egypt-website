@@ -7,9 +7,6 @@ backend/node_modules/
 .env.local
 .env.production
 
-# Config files with secrets (use environment variables instead)
-backend/config.js
-
 # Build outputs
 build/
 dist/
