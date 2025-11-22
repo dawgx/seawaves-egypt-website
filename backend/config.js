@@ -13,12 +13,11 @@ module.exports = {
   whatsapp: {
     // Twilio WhatsApp configuration
     twilio: {
-      // API Key method (if you have SK... credentials)
-      apiKeySid: 'SKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', // Replace with your API Key SID (starts with SK)
-      apiKeySecret: 'your_api_key_secret_here', // Replace with your API Key Secret
+      // API Key method (if you have SK... credentials) - NOT USING, using Auth Token instead
+      apiKeySid: '', // Leave empty to disable API Key method, use Auth Token instead
       accountSid: 'AC970c23c1d9ec86c43c45d6ace8a4c307', // Your Account SID
-      // OR use Auth Token method (if you don't have API Key):
-      // authToken: 'your_auth_token_here', // Uncomment and use this instead of apiKeySid/apiKeySecret
+      // Auth Token method - using apiKeySecret field as Auth Token (the code uses it this way)
+      apiKeySecret: '3d0a45402e388980001048604e353c90', // Replace with your Twilio Auth Token (get it from Twilio Console > Account > API Keys & Tokens)
       fromNumber: 'whatsapp:+14155238886', // Twilio Sandbox number
       toNumber: 'whatsapp:+962798350069' // Your WhatsApp number
     }
