@@ -6,6 +6,10 @@ backend/node_modules/
 .env
 .env.local
 .env.production
+backend/.env
+
+# Config files with secrets (use environment variables instead)
+backend/config.js
 
 # Build outputs
 build/
