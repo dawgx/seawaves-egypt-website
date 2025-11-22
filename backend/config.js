@@ -24,7 +24,7 @@ module.exports = {
       // From number - prioritize environment variable
       fromNumber: process.env.TWILIO_WHATSAPP_FROM || process.env.TWILIO_FROM_NUMBER || 'whatsapp:+14155238886',
       // To number - prioritize environment variable
-      toNumber: process.env.TWILIO_WHATSAPP_TO || process.env.TWILIO_TO_NUMBER || 'whatsapp:+962798350069'
+      toNumber: process.env.TWILIO_WHATSAPP_TO || process.env.TWILIO_TO_NUMBER || 'whatsapp:+201061111368'
     }
   },
   server: {
