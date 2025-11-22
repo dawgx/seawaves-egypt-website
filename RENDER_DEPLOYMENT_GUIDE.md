@@ -39,6 +39,12 @@ SENDGRID_FROM=settlethailand@gmail.com
 EMAIL_USER=settlethailand@gmail.com
 EMAIL_PASS=your_gmail_app_password_here
 
+# Twilio WhatsApp Configuration (REQUIRED for WhatsApp notifications)
+TWILIO_ACCOUNT_SID=AC970c23c1d9ec86c43c45d6ace8a4c307
+TWILIO_AUTH_TOKEN=your_twilio_auth_token_here
+TWILIO_WHATSAPP_FROM=whatsapp:+14155238886
+TWILIO_WHATSAPP_TO=whatsapp:+962798350069
+
 # Server Configuration
 NODE_ENV=production
 EMAIL_SERVICE=sendgrid
@@ -77,6 +83,8 @@ GET https://your-app-name.onrender.com/api/test-email
 - [ ] Email test endpoint works
 - [ ] Contact form sends emails
 - [ ] SendGrid integration active
+- [ ] Twilio environment variables set correctly
+- [ ] WhatsApp notifications working (check logs)
 - [ ] Custom domain configured (optional)
 - [ ] SSL certificate active
 - [ ] Monitoring logs show success
@@ -89,8 +97,22 @@ GET https://your-app-name.onrender.com/api/test-email
 | `SENDGRID_FROM` | settlethailand@gmail.com | Sender email |
 | `EMAIL_USER` | settlethailand@gmail.com | Gmail backup |
 | `EMAIL_PASS` | Your Gmail app password | Gmail backup |
+| `TWILIO_ACCOUNT_SID` | AC... (from Twilio Console) | Twilio Account SID |
+| `TWILIO_AUTH_TOKEN` | Your Twilio Auth Token | Twilio authentication |
+| `TWILIO_WHATSAPP_FROM` | whatsapp:+14155238886 | Twilio WhatsApp sender |
+| `TWILIO_WHATSAPP_TO` | whatsapp:+962798350069 | Your WhatsApp number |
 | `NODE_ENV` | production | Server environment |
 | `EMAIL_SERVICE` | sendgrid | Email service preference |
+
+## **⚠️ Important: Getting Your Twilio Auth Token**
+
+1. **Log in to [Twilio Console](https://console.twilio.com)**
+2. **Go to Account → API Keys & Tokens**
+3. **Click "View" next to Auth Token** (it's hidden by default)
+4. **Copy the Auth Token** - this is what you need for `TWILIO_AUTH_TOKEN`
+5. **Make sure your Account SID** (starts with `AC...`) matches what's in your config
+
+**Note:** The Auth Token is different from API Key Secret. Use the **Auth Token** for `TWILIO_AUTH_TOKEN`.
 
 ---
 
