@@ -8,9 +8,6 @@ backend/node_modules/
 .env.production
 backend/.env
 
-# Config files with secrets (use environment variables instead)
-backend/config.js
-
 # Build outputs
 build/
 dist/
