@@ -37,7 +37,7 @@ const SpeedBoatsSection: React.FC = () => {
     {
       id: 'speed-boats',
       title: 'Speed Boats',
-      price: '€40 per person (min 3 people)',
+      price: '€60 per person (min 3 people)',
       schedule: 'Everyday from 8:30 till 12:30',
       icon: <Zap className="h-8 w-8" />,
       description: 'Enjoy our Fast Boats and explore the Beauty of the Red Sea. Book now and have a wonderful experience with our trips. Enjoy the crystal clear water of the Red Sea with the maximum speed.',

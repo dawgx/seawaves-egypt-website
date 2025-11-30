@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Anchor, Fish, Sunset, Eye, Ship } from 'lucide-react';
+import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Anchor, Fish, Sunset, Eye } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const BoatTripsSection: React.FC = () => {
@@ -81,20 +81,9 @@ const BoatTripsSection: React.FC = () => {
       note: 'There is snorkeling equipment onboard for your use if required. Hotel pickup and drop off is available from most Hurghada hotels.'
     },
     {
-      id: 'submarine',
-      title: 'Submarine Trip',
-      price: '€40',
-      schedule: 'Everyday (9:00-13:00)',
-      icon: <Ship className="h-8 w-8" />,
-      description: 'In a submarine boat you will enjoy watching all kinds of Red Sea marine life: beautiful coral reefs, colorful fish and descend to depths of up to 22 meters.',
-      features: ['22m Depth', 'Marine Life Viewing', 'Coral Reefs', 'Underwater Adventure'],
-      color: 'from-indigo-500 to-purple-500',
-      note: 'Experience the underwater world without getting wet!'
-    },
-    {
       id: 'glass-boat',
       title: 'Glass Boat',
-      price: '€20',
+      price: '€25',
       schedule: 'Everyday (10:00-13:00 and 13:00-16:00)',
       icon: <Eye className="h-8 w-8" />,
       description: 'Watch the wonderful coral reefs and variety of the colorful fish during this three hours trip. Admire the beautiful views will all your family or friends without need of jumping to the water.',

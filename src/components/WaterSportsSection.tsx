@@ -48,7 +48,7 @@ const WaterSportsSection: React.FC = () => {
     {
       id: 'banana-boat',
       title: 'Banana Boat',
-      price: '€10',
+      price: '€15',
       schedule: 'Everyday (9:00-16:00)',
       icon: <Circle className="h-8 w-8" />,
       description: 'Take your family or friends to have some fun on the water. Our boat takes up to 8 riders at a time. Banana ride takes about 15-20 minutes.',
@@ -59,7 +59,7 @@ const WaterSportsSection: React.FC = () => {
     {
       id: 'sofa-boat',
       title: 'Sofa Boat',
-      price: '€10',
+      price: '€15',
       schedule: 'Everyday (9:00-16:00)',
       icon: <Square className="h-8 w-8" />,
       description: 'This amazing sofa ride is a must for everybody. This is definitely going to be the craziest sofa you will ever sit on.',
@@ -73,7 +73,7 @@ const WaterSportsSection: React.FC = () => {
     {
       id: 'speed-boats',
       title: 'Speed Boats',
-      price: '€40 per person (minimum 3pax)',
+      price: '€60 per person (minimum 3pax)',
       schedule: 'Everyday from 8:30 till 12:30',
       icon: <Anchor className="h-8 w-8" />,
       description: 'Enjoy our Fast Boats and explore the Beauty of the Red Sea. Book now and have a wonderful experience with our trips. Enjoy the crystal clear water of the Red Sea with the maximum speed.',
