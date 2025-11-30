@@ -49,7 +49,7 @@ const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, isOpen, onClo
           </div>
 
           {/* Content */}
-          <div className="p-6 max-h-[80vh] overflow-y-auto" id="activity-detail-content">
+          <div className={`p-6 max-h-[80vh] overflow-y-auto ${activity.id === 'speed-boats' ? 'pt-8' : ''}`} id="activity-detail-content">
             {/* Activity Specific Sections */}
             {activity.id === 'diving' ? (
               <DivingSection />

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
-import logoImage from '../assets/images/images.jpeg';
 
 const Header: React.FC = () => {
   const { t } = useLanguage();
@@ -39,15 +38,6 @@ const Header: React.FC = () => {
     }`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <img 
-              src={logoImage} 
-              alt="Sea Waves Logo" 
-              className="h-10 w-auto object-contain"
-            />
-          </div>
-
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
