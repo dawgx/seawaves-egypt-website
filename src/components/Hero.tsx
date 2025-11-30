@@ -23,11 +23,29 @@ const Hero: React.FC = () => {
       />
       
       {/* Content */}
-      <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto md:pt-20">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 fade-in">
           {t('hero.title')}
-          <span className="block text-3xl md:text-5xl font-light mt-2">{t('hero.subtitle')}</span>
         </h1>
+        
+        {/* Video Embed */}
+        <div className="my-6 fade-in max-w-3xl mx-auto">
+          <video
+            className="w-full h-auto rounded-lg shadow-2xl"
+            controls
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src="/introduction.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        
+        <h2 className="text-3xl md:text-5xl font-light mb-6 fade-in">
+          {t('hero.subtitle')}
+        </h2>
         
         <p className="text-xl md:text-2xl mb-8 fade-in opacity-90 max-w-2xl mx-auto">
           {t('hero.description')}
@@ -35,14 +53,14 @@ const Hero: React.FC = () => {
         
         <button
           onClick={scrollToActivities}
-          className="bg-coral-orange hover:bg-orange-600 text-white font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg fade-in"
+          className="bg-coral-orange hover:bg-orange-600 text-white font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg fade-in mb-16 md:mb-24"
         >
           {t('hero.button')}
         </button>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+      <div className="absolute bottom-4 md:bottom-8 left-0 right-0 flex justify-center items-center text-white animate-bounce z-10">
         <ChevronDown className="h-8 w-8" />
       </div>
 

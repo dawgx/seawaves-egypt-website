@@ -8,13 +8,13 @@ const Stats: React.FC = () => {
   const stats = [
     {
       icon: Utensils,
-      number: '9',
+      number: '12',
       label: t('stats.food'),
       color: 'text-coral-orange'
     },
     {
       icon: Calendar,
-      number: '15',
+      number: '20',
       label: t('stats.experience'),
       color: 'text-ocean-blue'
     },
@@ -26,13 +26,13 @@ const Stats: React.FC = () => {
     },
     {
       icon: Users,
-      number: '45,000',
+      number: '2.5M',
       label: t('stats.clients'),
       color: 'text-purple-600'
     },
     {
       icon: Award,
-      number: '30,000',
+      number: '750K',
       label: t('stats.sails'),
       color: 'text-indigo-600'
     }

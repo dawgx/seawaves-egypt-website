@@ -38,6 +38,14 @@ const Header: React.FC = () => {
     }`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
+          {/* Mobile Menu Button - Left side on mobile */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 text-gray-700 hover:text-ocean-blue transition-colors"
+          >
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
@@ -51,18 +59,9 @@ const Header: React.FC = () => {
             ))}
           </nav>
 
-          {/* Language Switcher & Mobile Menu Button */}
-          <div className="flex items-center space-x-4">
-            {/* Language Switcher */}
+          {/* Language Switcher - Right side */}
+          <div className="flex items-center">
             <LanguageSwitcher />
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 text-gray-700 hover:text-ocean-blue transition-colors"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
           </div>
         </div>
 

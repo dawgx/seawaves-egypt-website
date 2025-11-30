@@ -9,7 +9,7 @@ module.exports = {
     },
     
     // Admin email
-    adminEmail: process.env.ADMIN_EMAIL || 'settlethailand@gmail.com'
+    adminEmail: process.env.ADMIN_EMAIL || 'info@seawaves-egypt.com'
   },
   whatsapp: {
     // Twilio WhatsApp configuration

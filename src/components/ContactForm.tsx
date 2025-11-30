@@ -155,10 +155,16 @@ const ContactForm: React.FC<ContactFormProps> = ({ activityName, showDateAndPeop
 
   console.log('🔧 ContactForm render - submitStatus:', submitStatus, 'isSubmitting:', isSubmitting);
 
+  // Check if this is a general inquiry or specific activity
+  const isGeneralInquiry = activityName === 'General Inquiry';
+
   return (
     <div className="bg-gray-50 rounded-xl p-6 md:p-8">
       <h3 className="text-2xl font-bold text-gray-800 mb-2">
-        {t('contact.interestedIn')} {fullActivityName}? {t('contact.contactUs')}!
+        {isGeneralInquiry 
+          ? t('contact.contactUsBelow')
+          : `${t('contact.interestedIn')} ${fullActivityName}? ${t('contact.contactUs')}!`
+        }
       </h3>
       <p className="text-gray-600 mb-6">
         {t('contact.formDescription')}

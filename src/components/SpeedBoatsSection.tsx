@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Zap, Anchor, Fish } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const SpeedBoatsSection: React.FC = () => {
   const { t } = useLanguage();
+  const [isInModal, setIsInModal] = useState(false);
+  
+  // Check if we're in a modal context
+  useEffect(() => {
+    const checkModal = () => {
+      setIsInModal(document.getElementById('activity-detail-content') !== null);
+    };
+    checkModal();
+    // Check again after a short delay to ensure DOM is ready
+    const timeout = setTimeout(checkModal, 100);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const scrollToContact = (programTitle?: string) => {
     // Store selected program in localStorage if provided
@@ -72,9 +84,10 @@ const SpeedBoatsSection: React.FC = () => {
   ];
 
   return (
-    <div className="pt-8 pb-16 bg-gradient-to-b from-red-50 to-white">
+    <div className={`${isInModal ? 'pt-4' : 'pt-8'} pb-16 bg-gradient-to-b from-red-50 to-white`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        {/* Header - Hide when in modal */}
+        {!isInModal && (
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-800 mb-6">
             Speed Boats
@@ -84,12 +97,13 @@ const SpeedBoatsSection: React.FC = () => {
             Explore the Red Sea at maximum speed with crystal clear waters and unforgettable experiences.
           </p>
         </div>
+        )}
 
         {/* Speed Boat Program */}
-        <div className="flex justify-center mb-16">
+        <div className={`flex justify-center ${isInModal ? 'mb-8' : 'mb-16'}`}>
           <div className="w-full max-w-md">
           {speedBoatPrograms.map((program) => (
-            <div key={program.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden mt-4">
+            <div key={program.id} className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden ${isInModal ? 'mt-0' : 'mt-4'}`}>
               {/* Gradient Header */}
               <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
                 <div className="absolute inset-0 bg-black/20"></div>
