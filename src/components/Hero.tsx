@@ -38,7 +38,10 @@ const Hero: React.FC = () => {
             loop
             playsInline
           >
-            <source src="/introduction.mp4" type="video/mp4" />
+            <source 
+              src={process.env.REACT_APP_VIDEO_URL || "/introduction.mp4"} 
+              type="video/mp4" 
+            />
             Your browser does not support the video tag.
           </video>
         </div>

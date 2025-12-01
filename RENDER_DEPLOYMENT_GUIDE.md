@@ -48,6 +48,11 @@ TWILIO_WHATSAPP_TO=whatsapp:+962798350069
 # Server Configuration
 NODE_ENV=production
 EMAIL_SERVICE=sendgrid
+
+# Video URL (Optional - if hosting video on CDN)
+# If not set, will try to load from /introduction.mp4
+# Example: REACT_APP_VIDEO_URL=https://your-cdn.com/videos/introduction.mp4
+REACT_APP_VIDEO_URL=
 ```
 
 ### **Step 5: Advanced Settings**
@@ -75,6 +80,41 @@ GET https://your-app-name.onrender.com/api/test-email
 2. **Fill out the contact form**
 3. **Submit and check logs**
 4. **Verify emails are sent**
+
+## **Video File Setup**
+
+The `introduction.mp4` video file (651 MB) is too large for GitHub and is excluded from the repository. You have two options:
+
+### **Option 1: Host Video on CDN (Recommended)**
+
+1. **Upload video to a CDN service:**
+   - [Cloudinary](https://cloudinary.com) (free tier available)
+   - [AWS S3](https://aws.amazon.com/s3/)
+   - [Google Cloud Storage](https://cloud.google.com/storage)
+   - [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)
+
+2. **Get the public URL** of your uploaded video
+
+3. **Add to Render Environment Variables:**
+   ```
+   REACT_APP_VIDEO_URL=https://your-cdn-url.com/introduction.mp4
+   ```
+
+4. **Redeploy** your service on Render
+
+### **Option 2: Upload Video Directly to Render**
+
+1. **SSH into your Render service** (if available)
+2. **Upload the video file** to the `public` folder
+3. **Restart the service**
+
+### **Option 3: Use Video Hosting Service**
+
+1. Upload video to [YouTube](https://youtube.com) or [Vimeo](https://vimeo.com)
+2. Get the embed URL
+3. Update the Hero component to use an iframe instead of video tag
+
+**Note:** The video will work locally but won't appear on Render until you set up one of these options.
 
 ## **Success Checklist**
 
