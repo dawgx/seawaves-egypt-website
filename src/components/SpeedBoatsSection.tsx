@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Zap, Anchor, Fish } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const SpeedBoatsSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isInModal, setIsInModal] = useState(false);
   
   // Check if we're in a modal context
@@ -45,21 +45,26 @@ const SpeedBoatsSection: React.FC = () => {
     }
   };
 
-  const speedBoatPrograms = [
+  const speedBoatPrograms = useMemo(() => [
     {
       id: 'speed-boats',
-      title: 'Speed Boats',
+      title: t('speedBoats.program.title'),
       price: '€60 per person (min 3 people)',
       schedule: 'Everyday from 8:30 till 12:30',
       icon: <Zap className="h-8 w-8" />,
-      description: 'Enjoy our Fast Boats and explore the Beauty of the Red Sea. Book now and have a wonderful experience with our trips. Enjoy the crystal clear water of the Red Sea with the maximum speed.',
-      features: ['Fast Boats', 'Crystal Clear Water', 'Maximum Speed', 'Private Tours'],
+      description: t('speedBoats.program.description'),
+      features: [
+        t('speedBoats.program.feature1'),
+        t('speedBoats.program.feature2'),
+        t('speedBoats.program.feature3'),
+        t('speedBoats.program.feature4')
+      ],
       color: 'from-red-500 to-orange-500',
       image: '/images/activities/activity-24.jpg',
-      note: 'Amazing and action packed adventure. Dolphin Spotting, Snorkeling, Islands, all in one Private Tour is waiting for you! We have 4 boats with different motor speeds: 140 hp, 200 hp, 250 hp, 500 hp. Boats are selected depending on the number of people.',
-      special: 'Choose One Of Our Popular Tours Or Plan Your Own!'
+      note: t('speedBoats.program.note'),
+      special: t('speedBoats.program.special')
     }
-  ];
+  ], [t, language]);
 
   const boatTypes = [
     {
@@ -91,11 +96,10 @@ const SpeedBoatsSection: React.FC = () => {
         {!isInModal && (
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-800 mb-6">
-            Speed Boats
+            {t('speedBoats.title')}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Experience the ultimate thrill with our high-speed boat adventures! 
-            Explore the Red Sea at maximum speed with crystal clear waters and unforgettable experiences.
+            {t('speedBoats.subtitle')}
           </p>
         </div>
         )}
@@ -157,7 +161,7 @@ const SpeedBoatsSection: React.FC = () => {
                     onClick={() => scrollToContact(program.title)}
                     className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-red-600 hover:to-orange-600 transition-all duration-200 transform hover:scale-105"
                   >
-                    Book Now
+                    {t('activity.bookNow')}
                   </button>
               </div>
             </div>

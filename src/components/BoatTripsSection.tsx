@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Anchor, Fish, Sunset, Eye } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const BoatTripsSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const scrollToContact = (programTitle?: string) => {
     // Store selected program in localStorage if provided
@@ -33,70 +33,95 @@ const BoatTripsSection: React.FC = () => {
     }
   };
 
-  const boatPrograms = [
+  const boatPrograms = useMemo(() => [
     {
       id: 'private-trips',
-      title: 'Private Trips',
+      title: t('boatTrips.private.title'),
       price: 'Contact Us',
       schedule: '8:00 – 15:00',
       icon: <Users className="h-8 w-8" />,
-      description: 'Our company offers various boats for private charters to cater for small or big groups. The most popular are the boat charters for families who want to have a day at sea where they can enjoy the sea without being with the crowds!',
-      features: ['Private Charter', 'Family Groups', 'Special Events', 'Customized Service'],
+      description: t('boatTrips.private.description'),
+      features: [
+        t('boatTrips.private.feature1'),
+        t('boatTrips.private.feature2'),
+        t('boatTrips.private.feature3'),
+        t('boatTrips.private.feature4')
+      ],
       color: 'from-purple-500 to-pink-500',
       image: '/images/activities/activity-13.jpg',
-      note: 'We can also arrange on request Birthday Parties, Bachelor parties, Wedding Parties, Staff Parties etc… during the day or night. Tell us what you need and we are here to please you.',
+      note: t('boatTrips.private.note'),
       contact: true
     },
     {
       id: 'fishing',
-      title: 'Fishing',
+      title: t('boatTrips.fishing.title'),
       price: 'Contact Us',
       schedule: '10:00-13:00 or 14:00-17:00',
       icon: <Fish className="h-8 w-8" />,
-      description: 'Do you like fishing? Don\'t miss this amazing excursion. You will fish in the open sea and in case of catching an eatable fish, our chief will prepare it on the boat for you.',
-      features: ['Open Sea Fishing', 'Fresh Fish Cooking', 'Fully Equipped Boat', 'Lunch & Drinks'],
+      description: t('boatTrips.fishing.description'),
+      features: [
+        t('boatTrips.fishing.feature1'),
+        t('boatTrips.fishing.feature2'),
+        t('boatTrips.fishing.feature3'),
+        t('boatTrips.fishing.feature4')
+      ],
       color: 'from-blue-500 to-cyan-500',
       image: '/images/activities/activity-14.jpg',
-      note: 'If you are not in the mood to fish, you can just take a sunbath on the deck or go for snorkeling. The boat is fully equipped for fishing.',
+      note: t('boatTrips.fishing.note'),
       contact: true
     },
     {
       id: 'sunset-trip',
-      title: 'Sunset Trip',
+      title: t('boatTrips.sunset.title'),
       price: '€30',
       schedule: 'Just in summer season',
       icon: <Sunset className="h-8 w-8" />,
-      description: 'This trip is a unique end of the day spent on the Red Sea! Enjoy watching the beautiful sunset from a comfortable boat and make the unforgettable memories.',
-      features: ['Sunset Views', 'Comfortable Boat', 'Unforgettable Memories', 'Summer Season'],
+      description: t('boatTrips.sunset.description'),
+      features: [
+        t('boatTrips.sunset.feature1'),
+        t('boatTrips.sunset.feature2'),
+        t('boatTrips.sunset.feature3'),
+        t('boatTrips.sunset.feature4')
+      ],
       color: 'from-orange-500 to-red-500',
       image: '/images/activities/activity-15.jpg',
-      note: 'Perfect for romantic evenings and special moments on the Red Sea.'
+      note: t('boatTrips.sunset.note')
     },
     {
       id: 'snorkeling',
-      title: 'Snorkeling',
+      title: t('boatTrips.snorkeling.title'),
       price: '€30',
       schedule: '8:00 – 15:00',
       icon: <Waves className="h-8 w-8" />,
-      description: 'Exploring with us the underwater world of the Red Sea. This snorkeling trip will take you to the spectacular sites where you can choose to jump into the water or simply lay on the deck and work on your tan.',
-      features: ['Underwater Exploration', 'Snorkeling Equipment', 'Hotel Pickup', 'Lunch & Drinks'],
+      description: t('boatTrips.snorkeling.description'),
+      features: [
+        t('boatTrips.snorkeling.feature1'),
+        t('boatTrips.snorkeling.feature2'),
+        t('boatTrips.snorkeling.feature3'),
+        t('boatTrips.snorkeling.feature4')
+      ],
       color: 'from-teal-500 to-green-500',
       image: '/images/activities/activity-16.jpg',
-      note: 'There is snorkeling equipment onboard for your use if required. Hotel pickup and drop off is available from most Hurghada hotels.'
+      note: t('boatTrips.snorkeling.note')
     },
     {
       id: 'glass-boat',
-      title: 'Glass Boat',
+      title: t('boatTrips.glassBoat.title'),
       price: '€25',
       schedule: 'Everyday (10:00-13:00 and 13:00-16:00)',
       icon: <Eye className="h-8 w-8" />,
-      description: 'Watch the wonderful coral reefs and variety of the colorful fish during this three hours trip. Admire the beautiful views will all your family or friends without need of jumping to the water.',
-      features: ['3 Hours Trip', 'Glass Bottom View', 'Family Friendly', 'No Swimming Required'],
+      description: t('boatTrips.glassBoat.description'),
+      features: [
+        t('boatTrips.glassBoat.feature1'),
+        t('boatTrips.glassBoat.feature2'),
+        t('boatTrips.glassBoat.feature3'),
+        t('boatTrips.glassBoat.feature4')
+      ],
       color: 'from-cyan-500 to-blue-500',
       image: '/images/activities/activity-17.jpg',
-      note: 'Perfect for families with children and those who prefer to stay dry while enjoying the underwater world.'
+      note: t('boatTrips.glassBoat.note')
     }
-  ];
+  ], [t, language]);
 
   return (
     <div className="py-16 bg-gradient-to-b from-cyan-50 to-white">
@@ -104,11 +129,10 @@ const BoatTripsSection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-800 mb-6">
-            Boat Trips
+            {t('boatTrips.title')}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover the Red Sea from the comfort of our boats! From private charters to fishing adventures, 
-            sunset cruises to underwater exploration - we have the perfect boat trip for everyone.
+            {t('boatTrips.subtitle')}
           </p>
         </div>
 
@@ -159,7 +183,7 @@ const BoatTripsSection: React.FC = () => {
                   onClick={() => scrollToContact(program.title)}
                   className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-cyan-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105"
                 >
-                  {program.contact ? 'Contact Us' : 'Book Now'}
+                  {program.contact ? t('contact.contactUs') : t('activity.bookNow')}
                 </button>
               </div>
             </div>

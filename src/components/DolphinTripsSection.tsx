@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Heart } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const DolphinTripsSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const scrollToContact = (programTitle?: string) => {
     // Store selected program in localStorage if provided
@@ -33,32 +33,42 @@ const DolphinTripsSection: React.FC = () => {
     }
   };
 
-  const dolphinPrograms = [
+  const dolphinPrograms = useMemo(() => [
     {
       id: 'regular-dolphin',
-      title: 'Dolphin House',
+      title: t('dolphin.regular.title'),
       price: '€45',
       schedule: 'Everyday',
       icon: <Heart className="h-8 w-8" />,
-      description: 'Unforgettable experience of seeing the dolphins – the most amazing sea creatures– in their natural habitat. If you are lucky, you might even have a chance to swim with them!',
-      features: ['Snorkeling', 'Lunch Included', 'Sunbathing Deck', '90% Dolphin Sightings'],
+      description: t('dolphin.regular.description'),
+      features: [
+        t('dolphin.regular.feature1'),
+        t('dolphin.regular.feature2'),
+        t('dolphin.regular.feature3'),
+        t('dolphin.regular.feature4')
+      ],
       color: 'from-blue-500 to-cyan-500',
       image: '/images/activities/activity-22.jpg',
-      note: 'Please note: dolphins of the Dolphin House Hurghada may or may not come close to the boats. Usually we give about 90% that you will see them during your trip.'
+      note: t('dolphin.regular.note')
     },
     {
       id: 'vip-dolphin',
-      title: 'VIP Dolphin House',
+      title: t('dolphin.vip.title'),
       price: '€60',
       schedule: 'Monday – Thursday',
       icon: <Star className="h-8 w-8" />,
-      description: 'This trip will start 1 hour earlier with breakfast. Unforgettable experience of seeing the dolphins – the most amazing sea creatures– in their natural habitat.',
-      features: ['Early Start', 'Breakfast Included', 'VIP Experience', 'Guaranteed Adventure'],
+      description: t('dolphin.vip.description'),
+      features: [
+        t('dolphin.vip.feature1'),
+        t('dolphin.vip.feature2'),
+        t('dolphin.vip.feature3'),
+        t('dolphin.vip.feature4')
+      ],
       color: 'from-purple-500 to-pink-500',
       image: '/images/activities/activity-23.jpg',
-      note: 'We promise you – it will be one of the most amazing adventures you\'ll ever have!'
+      note: t('dolphin.vip.note')
     }
-  ];
+  ], [t, language]);
 
   return (
     <div className="py-16 bg-gradient-to-b from-blue-50 to-white">
@@ -66,11 +76,10 @@ const DolphinTripsSection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-800 mb-6">
-            Dolphin House Trips
+            {t('dolphin.title')}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Experience the magic of swimming with dolphins in their natural habitat. 
-            Our dolphin trips offer unforgettable encounters with these amazing sea creatures.
+            {t('dolphin.subtitle')}
           </p>
         </div>
 
@@ -121,7 +130,7 @@ const DolphinTripsSection: React.FC = () => {
                   onClick={() => scrollToContact(program.title)}
                   className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105"
                 >
-                  Book Now
+                  {t('activity.bookNow')}
                 </button>
               </div>
             </div>

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Zap, Circle, Square, Anchor } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const WaterSportsSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const scrollToContact = (programTitle?: string) => {
     // Store selected program in localStorage if provided
@@ -33,60 +33,80 @@ const WaterSportsSection: React.FC = () => {
     }
   };
 
-  const waterSportsPrograms = [
+  const waterSportsPrograms = useMemo(() => [
     {
       id: 'parasailing',
-      title: 'Parasailing',
+      title: t('waterSports.parasailing.title'),
       price: '€35 (single) / €60 (double)',
       schedule: 'Everyday (11:00-17:00)',
       icon: <Zap className="h-8 w-8" />,
-      description: 'Parasailing has become the most popular water sport activity on the Red Sea coast. It combines the thrills of acceleration and altitude with the scenic views of Hurghada.',
-      features: ['No Skills Required', 'Scenic Views', 'Experienced Crew', 'Safety First'],
+      description: t('waterSports.parasailing.description'),
+      features: [
+        t('waterSports.parasailing.feature1'),
+        t('waterSports.parasailing.feature2'),
+        t('waterSports.parasailing.feature3'),
+        t('waterSports.parasailing.feature4')
+      ],
       color: 'from-blue-500 to-cyan-500',
       image: '/images/activities/activity-18.jpg',
-      note: 'This sport doesn\'t require any skills or training. Just sit back, relax and enjoy your flight. Our friendly and experienced Captain and crew will do all the work to ensure your comfort and safety.'
+      note: t('waterSports.parasailing.note')
     },
     {
       id: 'banana-boat',
-      title: 'Banana Boat',
+      title: t('waterSports.banana.title'),
       price: '€15',
       schedule: 'Everyday (9:00-16:00)',
       icon: <Circle className="h-8 w-8" />,
-      description: 'Take your family or friends to have some fun on the water. Our boat takes up to 8 riders at a time. Banana ride takes about 15-20 minutes.',
-      features: ['Up to 8 Riders', '15-20 Minutes', 'Family Fun', 'Life Jackets Included'],
+      description: t('waterSports.banana.description'),
+      features: [
+        t('waterSports.banana.feature1'),
+        t('waterSports.banana.feature2'),
+        t('waterSports.banana.feature3'),
+        t('waterSports.banana.feature4')
+      ],
       color: 'from-yellow-500 to-orange-500',
       image: '/images/activities/activity-19.jpg',
-      note: 'Safety is our priority and we do our best to accommodate everyone – all participants wear life jackets. Children under 18 will need a parent or guardian to sign a participation waiver (age 5 and up are welcome to participate).'
+      note: t('waterSports.banana.note')
     },
     {
       id: 'sofa-boat',
-      title: 'Sofa Boat',
+      title: t('waterSports.sofa.title'),
       price: '€15',
       schedule: 'Everyday (9:00-16:00)',
       icon: <Square className="h-8 w-8" />,
-      description: 'This amazing sofa ride is a must for everybody. This is definitely going to be the craziest sofa you will ever sit on.',
-      features: ['Crazy Experience', 'Inflatable Sofa', 'Jet Ski Pulled', 'Safe & Fun'],
+      description: t('waterSports.sofa.description'),
+      features: [
+        t('waterSports.sofa.feature1'),
+        t('waterSports.sofa.feature2'),
+        t('waterSports.sofa.feature3'),
+        t('waterSports.sofa.feature4')
+      ],
       color: 'from-purple-500 to-pink-500',
       image: '/images/activities/activity-20.jpg',
-      note: 'You will be sitting on an inflatable sofa boat and pulled behind the jet skis. This ride is completely safe – all participants wear life jackets.'
+      note: t('waterSports.sofa.note')
     }
-  ];
+  ], [t, language]);
 
-  const speedBoatPrograms = [
+  const speedBoatPrograms = useMemo(() => [
     {
       id: 'speed-boats',
-      title: 'Speed Boats',
+      title: t('waterSports.speedBoats.title'),
       price: '€60 per person (minimum 3pax)',
       schedule: 'Everyday from 8:30 till 12:30',
       icon: <Anchor className="h-8 w-8" />,
-      description: 'Enjoy our Fast Boats and explore the Beauty of the Red Sea. Book now and have a wonderful experience with our trips. Enjoy the crystal clear water of the Red Sea with the maximum speed.',
-      features: ['Fast Boats', 'Crystal Clear Water', 'Maximum Speed', 'Private Tours'],
+      description: t('waterSports.speedBoats.description'),
+      features: [
+        t('waterSports.speedBoats.feature1'),
+        t('waterSports.speedBoats.feature2'),
+        t('waterSports.speedBoats.feature3'),
+        t('waterSports.speedBoats.feature4')
+      ],
       color: 'from-red-500 to-orange-500',
       image: '/images/activities/activity-21.jpg',
-      note: 'Amazing and action packed adventure. Dolphin Spotting, Snorkeling, Islands, all in one Private Tour is waiting for you! We have 4 boat with different motor speed 140 hp, 200 hp, 250 hp, 500 hp. Boats are selected depending on the number of the people.',
-      special: 'Choose One Of Our Popular Tours Or Plan Your Own!'
+      note: t('waterSports.speedBoats.note'),
+      special: t('waterSports.speedBoats.special')
     }
-  ];
+  ], [t, language]);
 
   return (
     <div className="py-16 bg-gradient-to-b from-blue-50 to-white">
@@ -94,20 +114,19 @@ const WaterSportsSection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-800 mb-6">
-            Water Sports & Speed Boats
+            {t('waterSports.title')}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Experience the thrill of the Red Sea with our exciting water sports activities and high-speed boat adventures. 
-            From parasailing to speed boats, we have the perfect adventure for everyone!
+            {t('waterSports.subtitle')}
           </p>
         </div>
 
         {/* Water Sports Section */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Water Sports</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">{t('waterSports.sectionTitle')}</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Get your adrenaline pumping with our exciting water sports activities
+              {t('waterSports.sectionSubtitle')}
             </p>
           </div>
 
@@ -157,7 +176,7 @@ const WaterSportsSection: React.FC = () => {
                     onClick={() => scrollToContact(program.title)}
                     className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105"
                   >
-                    Book Now
+                    {t('activity.bookNow')}
                   </button>
                 </div>
               </div>
@@ -168,7 +187,7 @@ const WaterSportsSection: React.FC = () => {
         {/* Speed Boats Section */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Speed Boats</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">{t('waterSports.speedBoats.title')}</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Experience the thrill of high-speed adventures on the Red Sea
             </p>
@@ -229,7 +248,7 @@ const WaterSportsSection: React.FC = () => {
                     onClick={() => scrollToContact(program.title)}
                     className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-red-600 hover:to-orange-600 transition-all duration-200 transform hover:scale-105"
                   >
-                    Book Now
+                    {t('activity.bookNow')}
                   </button>
                 </div>
               </div>

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Clock, MapPin, Star, Waves, Sun, Users, Shield, Anchor } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const IslandTripsSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const scrollToContact = (programTitle?: string) => {
     // Store selected program in localStorage if provided
@@ -33,56 +33,76 @@ const IslandTripsSection: React.FC = () => {
     }
   };
 
-  const islandPrograms = [
+  const islandPrograms = useMemo(() => [
     {
       id: 'orange-bay',
-      title: 'Orange Bay Island',
+      title: t('island.orangeBay.title'),
       price: '€40',
       schedule: '8:00 – 15:00 Private side (with shade) – Everyday',
       icon: <MapPin className="h-8 w-8" />,
-      description: 'You will experience the flair of Caribbean beach. Relaxation at one of the most fantastic island in the Red Sea and 2 coral reef stops where you can experience the beauty of the underwater world.',
-      features: ['Caribbean Beach Feel', '2 Coral Reef Stops', 'Equipment Included', 'Lunch & Drinks'],
+      description: t('island.orangeBay.description'),
+      features: [
+        t('island.orangeBay.feature1'),
+        t('island.orangeBay.feature2'),
+        t('island.orangeBay.feature3'),
+        t('island.orangeBay.feature4')
+      ],
       color: 'from-orange-500 to-yellow-500',
       image: '/images/activities/activity-25.jpg',
-      note: 'Let yourself be enchanted and enjoy a wonderful day with us. Price includes equipment, lunch and drinks.'
+      note: t('island.orangeBay.note')
     },
     {
       id: 'vip-orange-bay',
-      title: 'VIP Orange Bay Island',
+      title: t('island.vipOrangeBay.title'),
       price: '€50',
       schedule: '7:00 – 15:00 Private side (with shade) – Saturday – Tuesday',
       icon: <Star className="h-8 w-8" />,
-      description: 'You will experience the flair of Caribbean beach. Relaxation at one of the most fantastic island in the Red Sea and 2 coral reef stops where you can experience the beauty of the underwater world.',
-      features: ['Early Start (7:00)', 'VIP Experience', '2 Coral Reef Stops', 'Premium Service'],
+      description: t('island.vipOrangeBay.description'),
+      features: [
+        t('island.vipOrangeBay.feature1'),
+        t('island.vipOrangeBay.feature2'),
+        t('island.vipOrangeBay.feature3'),
+        t('island.vipOrangeBay.feature4')
+      ],
       color: 'from-purple-500 to-pink-500',
       image: '/images/activities/activity-26.jpg',
-      note: 'Let yourself be enchanted and enjoy a wonderful day with us. Price includes equipment, lunch and drinks.'
+      note: t('island.vipOrangeBay.note')
     },
     {
       id: 'giftun-island',
-      title: 'Giftun Island',
+      title: t('island.giftun.title'),
       price: '€35',
       schedule: '8:00 – 16:00 Private side (without shade) – Everyday',
       icon: <Waves className="h-8 w-8" />,
-      description: 'Feel Caribbean vibes and snorkel at one of the most wonderful island in the Red Sea. We are going to 2 more coral stops where you can experience the colors of the corals and fishes and the underwater world.',
-      features: ['Caribbean Vibes', '2 Coral Stops', 'Snorkeling Experience', 'Full Day Trip'],
+      description: t('island.giftun.description'),
+      features: [
+        t('island.giftun.feature1'),
+        t('island.giftun.feature2'),
+        t('island.giftun.feature3'),
+        t('island.giftun.feature4')
+      ],
       color: 'from-blue-500 to-cyan-500',
       image: '/images/activities/activity-27.jpg',
-      note: 'Let yourself be enchanted and enjoy a wonderful day with us. Including equipment, lunch and drinks.'
+      note: t('island.giftun.note')
     },
     {
       id: 'super-giftun',
-      title: 'Super Giftun Island',
+      title: t('island.superGiftun.title'),
       price: '€40',
       schedule: '8:00 – 16:00 Private side (without shade) – Sunday – Wednesday',
       icon: <Anchor className="h-8 w-8" />,
-      description: 'Feel Caribbean vibes and snorkel at one of the most wonderful island in the Red Sea. We are going to 2 more coral stops where you can experience the colors of the corals and fishes and the underwater world.',
-      features: ['Water Sports Included', '2 Coral Stops', 'Caribbean Vibes', 'Enhanced Experience'],
+      description: t('island.superGiftun.description'),
+      features: [
+        t('island.superGiftun.feature1'),
+        t('island.superGiftun.feature2'),
+        t('island.superGiftun.feature3'),
+        t('island.superGiftun.feature4')
+      ],
       color: 'from-green-500 to-teal-500',
       image: '/images/activities/activity-28.jpg',
-      note: 'This trip have also water sport in the offer. Including equipment, lunch and drinks.'
+      note: t('island.superGiftun.note')
     }
-  ];
+  ], [t, language]);
 
   return (
     <div className="py-16 bg-gradient-to-b from-green-50 to-white">
@@ -90,11 +110,10 @@ const IslandTripsSection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-800 mb-6">
-            Island Trips
+            {t('island.title')}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Experience the Caribbean flair in the Red Sea! Discover beautiful islands, 
-            pristine beaches, and vibrant coral reefs on our unforgettable island adventures.
+            {t('island.subtitle')}
           </p>
         </div>
 
@@ -145,7 +164,7 @@ const IslandTripsSection: React.FC = () => {
                   onClick={() => scrollToContact(program.title)}
                   className="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105"
                 >
-                  Book Now
+                  {t('activity.bookNow')}
                 </button>
               </div>
             </div>

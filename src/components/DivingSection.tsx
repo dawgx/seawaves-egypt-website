@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Clock, MapPin, Star, Waves, Sun, Moon, Anchor, BookOpen, Users, Shield } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const DivingSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const scrollToContact = (programTitle?: string) => {
     // Store selected program in localStorage if provided
@@ -33,63 +33,88 @@ const DivingSection: React.FC = () => {
     }
   };
 
-  const divingPrograms = [
+  const divingPrograms = useMemo(() => [
     {
       id: 'full-day',
-      title: 'Full Day Trips',
+      title: t('diving.fullDay.title'),
       price: '€48',
       duration: '8:30 AM - 4:00 PM',
       icon: <Waves className="h-8 w-8" />,
-      description: 'Comfortable and luxurious dive boats departing from our private marina. Choose between 2 dives or join our half-day trips.',
-      features: ['2 Dives', 'Luxury Boat', 'Professional Guide', 'Equipment Included'],
+      description: t('diving.fullDay.description'),
+      features: [
+        t('diving.fullDay.feature1'),
+        t('diving.fullDay.feature2'),
+        t('diving.fullDay.feature3'),
+        t('diving.fullDay.feature4')
+      ],
       color: 'from-blue-500 to-cyan-500',
       image: '/images/activities/activity-01.jpg'
     },
     {
       id: 'half-day',
-      title: 'Half Day Trips',
+      title: t('diving.halfDay.title'),
       price: '€35',
       duration: 'Morning: 9:30-12:30 | Afternoon: 1:30-4:30',
       icon: <Sun className="h-8 w-8" />,
-      description: 'Perfect for those who want great dives without spending all day on board!',
-      features: ['1 Dive', 'Flexible Timing', 'Hurghada Reefs', 'Quick Return'],
+      description: t('diving.halfDay.description'),
+      features: [
+        t('diving.halfDay.feature1'),
+        t('diving.halfDay.feature2'),
+        t('diving.halfDay.feature3'),
+        t('diving.halfDay.feature4')
+      ],
       color: 'from-orange-500 to-yellow-500',
       image: '/images/activities/activity-02.jpg'
     },
     {
       id: 'sunset',
-      title: 'Sunset Diving',
+      title: t('diving.sunset.title'),
       price: '€35',
       duration: '3:00 PM - 5:00 PM (Seasonal)',
       icon: <Sun className="h-8 w-8" />,
-      description: 'Experience the Red Sea at its most beautiful with sunset dives. Empty dive spots and golden to red sunlight.',
-      features: ['Golden Hour', 'Empty Spots', 'Calm Waters', 'Photography'],
+      description: t('diving.sunset.description'),
+      features: [
+        t('diving.sunset.feature1'),
+        t('diving.sunset.feature2'),
+        t('diving.sunset.feature3'),
+        t('diving.sunset.feature4')
+      ],
       color: 'from-purple-500 to-pink-500',
       image: '/images/activities/activity-03.jpg'
     },
     {
       id: 'night',
-      title: 'Night Diving',
+      title: t('diving.night.title'),
       price: '€35',
       duration: 'Evening',
       icon: <Moon className="h-8 w-8" />,
-      description: 'Discover a completely different underwater world! Watch fish sleep and corals feed at night.',
-      features: ['Underwater Torch', 'Night Feeding', 'Different Colors', 'Expert Guide'],
+      description: t('diving.night.description'),
+      features: [
+        t('diving.night.feature1'),
+        t('diving.night.feature2'),
+        t('diving.night.feature3'),
+        t('diving.night.feature4')
+      ],
       color: 'from-indigo-500 to-purple-500',
       image: '/images/activities/activity-04.jpg'
     },
     {
       id: 'wreck',
-      title: 'Wreck Diving',
+      title: t('diving.wreck.title'),
       price: '€220',
       duration: 'Early Morning - 4:00 PM',
       icon: <Anchor className="h-8 w-8" />,
-      description: 'Explore beautiful wrecks including El Mina, Balena, Abu Nuhas, and Salem Express.',
-      features: ['3 Dives', 'Dolphin Encounters', 'Historic Wrecks', 'Full Day'],
+      description: t('diving.wreck.description'),
+      features: [
+        t('diving.wreck.feature1'),
+        t('diving.wreck.feature2'),
+        t('diving.wreck.feature3'),
+        t('diving.wreck.feature4')
+      ],
       color: 'from-gray-600 to-gray-800',
       image: '/images/activities/activity-05.jpg'
     }
-  ];
+  ], [t, language]);
 
   const courses = [
     { name: 'Scuba Diving Course', price: '€205', level: 'Beginner' },
@@ -115,17 +140,16 @@ const DivingSection: React.FC = () => {
           <Waves className="h-10 w-10 text-white" />
         </div>
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-          Professional Diving Experiences
+          {t('diving.title')}
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Discover the underwater world of the Red Sea with our comprehensive diving programs. 
-          From full-day trips to specialized courses, we offer everything for divers of all levels.
+          {t('diving.subtitle')}
         </p>
       </div>
 
       {/* Diving Programs Grid */}
       <div className="mb-16">
-        <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Diving Programs</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">{t('diving.programs.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {divingPrograms.map((program) => (
             <div key={program.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
@@ -163,7 +187,7 @@ const DivingSection: React.FC = () => {
                   onClick={() => scrollToContact(program.title)}
                   className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105"
                 >
-                  Book Now
+                  {t('activity.bookNow')}
                 </button>
               </div>
             </div>
