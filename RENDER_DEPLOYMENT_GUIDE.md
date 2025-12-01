@@ -49,8 +49,16 @@ TWILIO_WHATSAPP_TO=whatsapp:+962798350069
 NODE_ENV=production
 EMAIL_SERVICE=sendgrid
 
-# Video URL (Optional - if hosting video on CDN)
-# If not set, will try to load from /introduction.mp4
+# Video Configuration (Choose ONE option)
+# Option 1: YouTube Video ID (Recommended - easiest and free)
+# Get the video ID from YouTube URL: https://www.youtube.com/watch?v=VIDEO_ID_HERE
+REACT_APP_YOUTUBE_VIDEO_ID=
+
+# Option 2: Vimeo Video ID
+# Get the video ID from Vimeo URL: https://vimeo.com/VIDEO_ID_HERE
+REACT_APP_VIMEO_VIDEO_ID=
+
+# Option 3: Direct Video URL (if hosting on CDN)
 # Example: REACT_APP_VIDEO_URL=https://your-cdn.com/videos/introduction.mp4
 REACT_APP_VIDEO_URL=
 ```
@@ -83,15 +91,31 @@ GET https://your-app-name.onrender.com/api/test-email
 
 ## **Video File Setup**
 
-The `introduction.mp4` video file (651 MB) is too large for GitHub and is excluded from the repository. You have two options:
+The `introduction.mp4` video file (651 MB) is too large for GitHub and is excluded from the repository. Here are your options:
 
-### **Option 1: Host Video on CDN (Recommended)**
+### **Option 1: Compress the Video (Recommended First Step)**
 
-1. **Upload video to a CDN service:**
-   - [Cloudinary](https://cloudinary.com) (free tier available)
-   - [AWS S3](https://aws.amazon.com/s3/)
-   - [Google Cloud Storage](https://cloud.google.com/storage)
-   - [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)
+Compress the video to reduce file size before hosting:
+
+**Using FFmpeg (Command Line):**
+```bash
+ffmpeg -i introduction.mp4 -vcodec h264 -acodec mp2 -crf 28 -preset slow compressed_introduction.mp4
+```
+
+**Using Online Tools:**
+- [HandBrake](https://handbrake.fr/) (Free, open-source)
+- [CloudConvert](https://cloudconvert.com/mp4-compressor) (Online)
+- [FreeConvert](https://www.freeconvert.com/mp4-compressor) (Online)
+
+**Target:** Try to get it under 100MB for Cloudinary, or at least smaller for faster loading.
+
+### **Option 2: Host Video on CDN (For Large Files)**
+
+1. **Upload video to a CDN service that supports large files:**
+   - [AWS S3](https://aws.amazon.com/s3/) + CloudFront (supports large files, pay-as-you-go)
+   - [Google Cloud Storage](https://cloud.google.com/storage) (supports large files)
+   - [Bunny CDN](https://bunny.net) (affordable, supports large files)
+   - [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.html) (cheap storage)
 
 2. **Get the public URL** of your uploaded video
 
@@ -102,17 +126,38 @@ The `introduction.mp4` video file (651 MB) is too large for GitHub and is exclud
 
 4. **Redeploy** your service on Render
 
-### **Option 2: Upload Video Directly to Render**
+### **Option 3: Use YouTube or Vimeo (Easiest - Recommended!)**
 
-1. **SSH into your Render service** (if available)
-2. **Upload the video file** to the `public` folder
-3. **Restart the service**
+**For YouTube:**
+1. **Upload video to [YouTube](https://youtube.com)** (unlimited, free)
+   - You can set it to "Unlisted" if you don't want it public
+2. **Get the Video ID** from the URL:
+   - URL: `https://www.youtube.com/watch?v=dQw4w9WgXcQ`
+   - Video ID: `dQw4w9WgXcQ`
+3. **Add to Render Environment Variables:**
+   ```
+   REACT_APP_YOUTUBE_VIDEO_ID=dQw4w9WgXcQ
+   ```
+4. **Redeploy** your service
 
-### **Option 3: Use Video Hosting Service**
+**For Vimeo:**
+1. **Upload video to [Vimeo](https://vimeo.com)** (free tier available)
+2. **Get the Video ID** from the URL:
+   - URL: `https://vimeo.com/123456789`
+   - Video ID: `123456789`
+3. **Add to Render Environment Variables:**
+   ```
+   REACT_APP_VIMEO_VIDEO_ID=123456789
+   ```
+4. **Redeploy** your service
 
-1. Upload video to [YouTube](https://youtube.com) or [Vimeo](https://vimeo.com)
-2. Get the embed URL
-3. Update the Hero component to use an iframe instead of video tag
+**Note:** The component automatically detects which service you're using based on the environment variable you set.
+
+### **Option 4: Upload Directly to Render (Temporary Solution)**
+
+1. **Use Render's file upload** (if available in dashboard)
+2. **Or use Render Shell** to upload via SCP/SFTP
+3. **Place file in** `public/introduction.mp4` after deployment
 
 **Note:** The video will work locally but won't appear on Render until you set up one of these options.
 
