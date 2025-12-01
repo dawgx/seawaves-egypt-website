@@ -126,13 +126,13 @@ const BoatTripsSection: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
                   <div className="text-lg font-bold text-gray-800">{program.contact ? 'Contact Us' : program.price}</div>
-                  <div className="text-xs text-gray-600">{program.schedule}</div>
                 </div>
               </div>
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-3">{program.title}</h3>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">{program.title}</h3>
+                <p className="text-sm text-gray-500 mb-3">{program.schedule}</p>
                 <p className="text-gray-600 mb-4">{program.description}</p>
                 
                 {/* Features */}
