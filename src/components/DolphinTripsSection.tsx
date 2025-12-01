@@ -43,6 +43,7 @@ const DolphinTripsSection: React.FC = () => {
       description: 'Unforgettable experience of seeing the dolphins – the most amazing sea creatures– in their natural habitat. If you are lucky, you might even have a chance to swim with them!',
       features: ['Snorkeling', 'Lunch Included', 'Sunbathing Deck', '90% Dolphin Sightings'],
       color: 'from-blue-500 to-cyan-500',
+      image: '/images/activities/activity-22.jpg',
       note: 'Please note: dolphins of the Dolphin House Hurghada may or may not come close to the boats. Usually we give about 90% that you will see them during your trip.'
     },
     {
@@ -54,6 +55,7 @@ const DolphinTripsSection: React.FC = () => {
       description: 'This trip will start 1 hour earlier with breakfast. Unforgettable experience of seeing the dolphins – the most amazing sea creatures– in their natural habitat.',
       features: ['Early Start', 'Breakfast Included', 'VIP Experience', 'Guaranteed Adventure'],
       color: 'from-purple-500 to-pink-500',
+      image: '/images/activities/activity-23.jpg',
       note: 'We promise you – it will be one of the most amazing adventures you\'ll ever have!'
     }
   ];
@@ -76,15 +78,17 @@ const DolphinTripsSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {dolphinPrograms.map((program) => (
             <div key={program.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-              {/* Gradient Header */}
-              <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute top-4 left-4 text-white">
-                  {program.icon}
-                </div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <div className="text-3xl font-bold">{program.price}</div>
-                  <div className="text-sm opacity-90">{program.schedule}</div>
+              {/* Image Header */}
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={program.image} 
+                  alt={program.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
+                  <div className="text-lg font-bold text-gray-800">{program.price}</div>
+                  <div className="text-xs text-gray-600">{program.schedule}</div>
                 </div>
               </div>
 

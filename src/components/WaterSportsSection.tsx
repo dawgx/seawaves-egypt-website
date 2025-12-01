@@ -43,6 +43,7 @@ const WaterSportsSection: React.FC = () => {
       description: 'Parasailing has become the most popular water sport activity on the Red Sea coast. It combines the thrills of acceleration and altitude with the scenic views of Hurghada.',
       features: ['No Skills Required', 'Scenic Views', 'Experienced Crew', 'Safety First'],
       color: 'from-blue-500 to-cyan-500',
+      image: '/images/activities/activity-18.jpg',
       note: 'This sport doesn\'t require any skills or training. Just sit back, relax and enjoy your flight. Our friendly and experienced Captain and crew will do all the work to ensure your comfort and safety.'
     },
     {
@@ -54,6 +55,7 @@ const WaterSportsSection: React.FC = () => {
       description: 'Take your family or friends to have some fun on the water. Our boat takes up to 8 riders at a time. Banana ride takes about 15-20 minutes.',
       features: ['Up to 8 Riders', '15-20 Minutes', 'Family Fun', 'Life Jackets Included'],
       color: 'from-yellow-500 to-orange-500',
+      image: '/images/activities/activity-19.jpg',
       note: 'Safety is our priority and we do our best to accommodate everyone – all participants wear life jackets. Children under 18 will need a parent or guardian to sign a participation waiver (age 5 and up are welcome to participate).'
     },
     {
@@ -65,6 +67,7 @@ const WaterSportsSection: React.FC = () => {
       description: 'This amazing sofa ride is a must for everybody. This is definitely going to be the craziest sofa you will ever sit on.',
       features: ['Crazy Experience', 'Inflatable Sofa', 'Jet Ski Pulled', 'Safe & Fun'],
       color: 'from-purple-500 to-pink-500',
+      image: '/images/activities/activity-20.jpg',
       note: 'You will be sitting on an inflatable sofa boat and pulled behind the jet skis. This ride is completely safe – all participants wear life jackets.'
     }
   ];
@@ -79,6 +82,7 @@ const WaterSportsSection: React.FC = () => {
       description: 'Enjoy our Fast Boats and explore the Beauty of the Red Sea. Book now and have a wonderful experience with our trips. Enjoy the crystal clear water of the Red Sea with the maximum speed.',
       features: ['Fast Boats', 'Crystal Clear Water', 'Maximum Speed', 'Private Tours'],
       color: 'from-red-500 to-orange-500',
+      image: '/images/activities/activity-21.jpg',
       note: 'Amazing and action packed adventure. Dolphin Spotting, Snorkeling, Islands, all in one Private Tour is waiting for you! We have 4 boat with different motor speed 140 hp, 200 hp, 250 hp, 500 hp. Boats are selected depending on the number of the people.',
       special: 'Choose One Of Our Popular Tours Or Plan Your Own!'
     }
@@ -110,15 +114,17 @@ const WaterSportsSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {waterSportsPrograms.map((program) => (
               <div key={program.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                {/* Gradient Header */}
-                <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
-                  <div className="absolute inset-0 bg-black/20"></div>
-                  <div className="absolute top-4 right-4 text-white">
-                    {program.icon}
-                  </div>
-                  <div className="absolute bottom-4 left-4 text-white pr-16">
-                    <div className="text-2xl font-bold leading-tight">{program.price}</div>
-                    <div className="text-sm opacity-90">{program.schedule}</div>
+                {/* Image Header */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={program.image} 
+                    alt={program.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
+                    <div className="text-sm font-bold text-gray-800 leading-tight">{program.price}</div>
+                    <div className="text-xs text-gray-600">{program.schedule}</div>
                   </div>
                 </div>
 
@@ -171,15 +177,17 @@ const WaterSportsSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {speedBoatPrograms.map((program) => (
               <div key={program.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                {/* Gradient Header */}
-                <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
-                  <div className="absolute inset-0 bg-black/20"></div>
-                  <div className="absolute top-4 right-4 text-white">
-                    {program.icon}
-                  </div>
-                  <div className="absolute bottom-4 left-4 text-white pr-16">
-                    <div className="text-2xl font-bold leading-tight">{program.price}</div>
-                    <div className="text-sm opacity-90">{program.schedule}</div>
+                {/* Image Header */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={program.image} 
+                    alt={program.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
+                    <div className="text-sm font-bold text-gray-800 leading-tight">{program.price}</div>
+                    <div className="text-xs text-gray-600">{program.schedule}</div>
                   </div>
                 </div>
 

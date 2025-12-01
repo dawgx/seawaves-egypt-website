@@ -55,6 +55,7 @@ const SpeedBoatsSection: React.FC = () => {
       description: 'Enjoy our Fast Boats and explore the Beauty of the Red Sea. Book now and have a wonderful experience with our trips. Enjoy the crystal clear water of the Red Sea with the maximum speed.',
       features: ['Fast Boats', 'Crystal Clear Water', 'Maximum Speed', 'Private Tours'],
       color: 'from-red-500 to-orange-500',
+      image: '/images/activities/activity-24.jpg',
       note: 'Amazing and action packed adventure. Dolphin Spotting, Snorkeling, Islands, all in one Private Tour is waiting for you! We have 4 boats with different motor speeds: 140 hp, 200 hp, 250 hp, 500 hp. Boats are selected depending on the number of people.',
       special: 'Choose One Of Our Popular Tours Or Plan Your Own!'
     }
@@ -104,15 +105,17 @@ const SpeedBoatsSection: React.FC = () => {
           <div className="w-full max-w-md">
           {speedBoatPrograms.map((program) => (
             <div key={program.id} className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden ${isInModal ? 'mt-0' : 'mt-4'}`}>
-              {/* Gradient Header */}
-              <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute top-4 right-4 text-white">
-                  {program.icon}
-                </div>
-                <div className="absolute bottom-4 left-4 text-white pr-16">
-                  <div className="text-3xl font-bold">{program.price}</div>
-                  <div className="text-sm opacity-90">{program.schedule}</div>
+              {/* Image Header */}
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={program.image} 
+                  alt={program.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
+                  <div className="text-sm font-bold text-gray-800 leading-tight">{program.price}</div>
+                  <div className="text-xs text-gray-600">{program.schedule}</div>
                 </div>
               </div>
 

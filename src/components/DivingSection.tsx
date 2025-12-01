@@ -42,7 +42,8 @@ const DivingSection: React.FC = () => {
       icon: <Waves className="h-8 w-8" />,
       description: 'Comfortable and luxurious dive boats departing from our private marina. Choose between 2 dives or join our half-day trips.',
       features: ['2 Dives', 'Luxury Boat', 'Professional Guide', 'Equipment Included'],
-      color: 'from-blue-500 to-cyan-500'
+      color: 'from-blue-500 to-cyan-500',
+      image: '/images/activities/activity-01.jpg'
     },
     {
       id: 'half-day',
@@ -52,7 +53,8 @@ const DivingSection: React.FC = () => {
       icon: <Sun className="h-8 w-8" />,
       description: 'Perfect for those who want great dives without spending all day on board!',
       features: ['1 Dive', 'Flexible Timing', 'Hurghada Reefs', 'Quick Return'],
-      color: 'from-orange-500 to-yellow-500'
+      color: 'from-orange-500 to-yellow-500',
+      image: '/images/activities/activity-02.jpg'
     },
     {
       id: 'sunset',
@@ -62,7 +64,8 @@ const DivingSection: React.FC = () => {
       icon: <Sun className="h-8 w-8" />,
       description: 'Experience the Red Sea at its most beautiful with sunset dives. Empty dive spots and golden to red sunlight.',
       features: ['Golden Hour', 'Empty Spots', 'Calm Waters', 'Photography'],
-      color: 'from-purple-500 to-pink-500'
+      color: 'from-purple-500 to-pink-500',
+      image: '/images/activities/activity-03.jpg'
     },
     {
       id: 'night',
@@ -72,7 +75,8 @@ const DivingSection: React.FC = () => {
       icon: <Moon className="h-8 w-8" />,
       description: 'Discover a completely different underwater world! Watch fish sleep and corals feed at night.',
       features: ['Underwater Torch', 'Night Feeding', 'Different Colors', 'Expert Guide'],
-      color: 'from-indigo-500 to-purple-500'
+      color: 'from-indigo-500 to-purple-500',
+      image: '/images/activities/activity-04.jpg'
     },
     {
       id: 'wreck',
@@ -82,7 +86,8 @@ const DivingSection: React.FC = () => {
       icon: <Anchor className="h-8 w-8" />,
       description: 'Explore beautiful wrecks including El Mina, Balena, Abu Nuhas, and Salem Express.',
       features: ['3 Dives', 'Dolphin Encounters', 'Historic Wrecks', 'Full Day'],
-      color: 'from-gray-600 to-gray-800'
+      color: 'from-gray-600 to-gray-800',
+      image: '/images/activities/activity-05.jpg'
     }
   ];
 
@@ -124,15 +129,17 @@ const DivingSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {divingPrograms.map((program) => (
             <div key={program.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-              {/* Gradient Header */}
-              <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute top-4 left-4 text-white">
-                  {program.icon}
-                </div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <div className="text-3xl font-bold">{program.price}</div>
-                  <div className="text-sm opacity-90">{program.duration}</div>
+              {/* Image Header */}
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={program.image} 
+                  alt={program.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
+                  <div className="text-lg font-bold text-gray-800">{program.price}</div>
+                  <div className="text-xs text-gray-600">{program.duration}</div>
                 </div>
               </div>
 

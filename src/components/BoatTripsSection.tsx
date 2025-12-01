@@ -43,6 +43,7 @@ const BoatTripsSection: React.FC = () => {
       description: 'Our company offers various boats for private charters to cater for small or big groups. The most popular are the boat charters for families who want to have a day at sea where they can enjoy the sea without being with the crowds!',
       features: ['Private Charter', 'Family Groups', 'Special Events', 'Customized Service'],
       color: 'from-purple-500 to-pink-500',
+      image: '/images/activities/activity-13.jpg',
       note: 'We can also arrange on request Birthday Parties, Bachelor parties, Wedding Parties, Staff Parties etc… during the day or night. Tell us what you need and we are here to please you.',
       contact: true
     },
@@ -55,6 +56,7 @@ const BoatTripsSection: React.FC = () => {
       description: 'Do you like fishing? Don\'t miss this amazing excursion. You will fish in the open sea and in case of catching an eatable fish, our chief will prepare it on the boat for you.',
       features: ['Open Sea Fishing', 'Fresh Fish Cooking', 'Fully Equipped Boat', 'Lunch & Drinks'],
       color: 'from-blue-500 to-cyan-500',
+      image: '/images/activities/activity-14.jpg',
       note: 'If you are not in the mood to fish, you can just take a sunbath on the deck or go for snorkeling. The boat is fully equipped for fishing.',
       contact: true
     },
@@ -67,6 +69,7 @@ const BoatTripsSection: React.FC = () => {
       description: 'This trip is a unique end of the day spent on the Red Sea! Enjoy watching the beautiful sunset from a comfortable boat and make the unforgettable memories.',
       features: ['Sunset Views', 'Comfortable Boat', 'Unforgettable Memories', 'Summer Season'],
       color: 'from-orange-500 to-red-500',
+      image: '/images/activities/activity-15.jpg',
       note: 'Perfect for romantic evenings and special moments on the Red Sea.'
     },
     {
@@ -78,6 +81,7 @@ const BoatTripsSection: React.FC = () => {
       description: 'Exploring with us the underwater world of the Red Sea. This snorkeling trip will take you to the spectacular sites where you can choose to jump into the water or simply lay on the deck and work on your tan.',
       features: ['Underwater Exploration', 'Snorkeling Equipment', 'Hotel Pickup', 'Lunch & Drinks'],
       color: 'from-teal-500 to-green-500',
+      image: '/images/activities/activity-16.jpg',
       note: 'There is snorkeling equipment onboard for your use if required. Hotel pickup and drop off is available from most Hurghada hotels.'
     },
     {
@@ -89,6 +93,7 @@ const BoatTripsSection: React.FC = () => {
       description: 'Watch the wonderful coral reefs and variety of the colorful fish during this three hours trip. Admire the beautiful views will all your family or friends without need of jumping to the water.',
       features: ['3 Hours Trip', 'Glass Bottom View', 'Family Friendly', 'No Swimming Required'],
       color: 'from-cyan-500 to-blue-500',
+      image: '/images/activities/activity-17.jpg',
       note: 'Perfect for families with children and those who prefer to stay dry while enjoying the underwater world.'
     }
   ];
@@ -111,15 +116,17 @@ const BoatTripsSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {boatPrograms.map((program) => (
             <div key={program.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-              {/* Gradient Header */}
-              <div className={`h-32 bg-gradient-to-r ${program.color} relative`}>
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute top-4 left-4 text-white">
-                  {program.icon}
-                </div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <div className="text-3xl font-bold">{program.contact ? 'Contact Us' : program.price}</div>
-                  <div className="text-sm opacity-90">{program.schedule}</div>
+              {/* Image Header */}
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={program.image} 
+                  alt={program.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
+                  <div className="text-lg font-bold text-gray-800">{program.contact ? 'Contact Us' : program.price}</div>
+                  <div className="text-xs text-gray-600">{program.schedule}</div>
                 </div>
               </div>
 
