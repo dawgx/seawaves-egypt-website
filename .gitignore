@@ -90,8 +90,16 @@ dist
 tmp/
 temp/
 
-# Large video files
+# Large video files (but allow images)
 *.mp4
 *.mov
 *.avi
 *.mkv
+
+# Allow image files
+!*.jpg
+!*.jpeg
+!*.png
+!*.gif
+!*.webp
+!*.svg
