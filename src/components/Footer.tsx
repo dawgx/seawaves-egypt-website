@@ -40,11 +40,11 @@ const Footer: React.FC = () => {
                 +20 106 11 11 368
               </a>
               <a 
-                href="mailto:info@seawavesegypt.com"
+                href="mailto:info@seawaves-egypt.com"
                 className="flex items-center text-gray-300 hover:text-ocean-blue transition-colors"
               >
                 <Mail className="h-5 w-5 mr-3" />
-                info@seawavesegypt.com
+                info@seawaves-egypt.com
               </a>
               <div className="flex items-start text-gray-300">
                 <MapPin className="h-5 w-5 mr-3 mt-1" />
@@ -139,7 +139,7 @@ const Footer: React.FC = () => {
                 {t('footer.callNow')}
               </a>
               <a 
-                href="mailto:info@seawavesegypt.com"
+                href="mailto:info@seawaves-egypt.com"
                 className="bg-ocean-blue hover:bg-blue-600 text-white px-6 py-2 rounded-full font-semibold transition-colors"
               >
                 {t('footer.sendEmail')}
