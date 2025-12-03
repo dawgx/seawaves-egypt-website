@@ -43,7 +43,7 @@ const ContactSection: React.FC = () => {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">{t('contact.emailTitle')}</h3>
-            <p className="text-gray-600 mb-2">info@seawavesegypt.com</p>
+            <p className="text-gray-600 mb-2">info@seawaves-egypt.com</p>
             <p className="text-sm text-gray-500">{t('contact.emailDesc')}</p>
           </div>
 

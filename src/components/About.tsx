@@ -100,10 +100,10 @@ const About: React.FC = () => {
             </p>
             <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
               <a 
-                href="mailto:info@seawavesegypt.com"
+                href="mailto:info@seawaves-egypt.com"
                 className="flex items-center text-lg hover:text-coral-orange transition-colors"
               >
-                📧 info@seawavesegypt.com
+                📧 info@seawaves-egypt.com
               </a>
               <a 
                 href="tel:+201061111368"

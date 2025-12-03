@@ -111,7 +111,7 @@ src/
 ## Contact Information
 
 - **Phone**: +20 106 11 11 368
-- **Email**: info@seawavesegypt.com
+- **Email**: info@seawaves-egypt.com
 - **Location**: Hurghada, Red Sea, Egypt
 
 ## Company Stats
