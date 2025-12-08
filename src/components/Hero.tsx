@@ -29,46 +29,52 @@ const Hero: React.FC = () => {
         </h1>
         
         {/* Video Embed */}
-        {(process.env.REACT_APP_YOUTUBE_VIDEO_ID || process.env.REACT_APP_VIMEO_VIDEO_ID || process.env.REACT_APP_VIDEO_URL) && (
-          <div className="my-6 fade-in max-w-3xl mx-auto">
-            {process.env.REACT_APP_YOUTUBE_VIDEO_ID ? (
-              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full rounded-lg shadow-2xl"
-                  src={`https://www.youtube.com/embed/${process.env.REACT_APP_YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${process.env.REACT_APP_YOUTUBE_VIDEO_ID}&controls=1&modestbranding=1&rel=0`}
-                  title="Introduction Video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ) : process.env.REACT_APP_VIMEO_VIDEO_ID ? (
-              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full rounded-lg shadow-2xl"
-                  src={`https://player.vimeo.com/video/${process.env.REACT_APP_VIMEO_VIDEO_ID}?autoplay=1&muted=1&loop=1&controls=1&background=1`}
-                  title="Introduction Video"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ) : process.env.REACT_APP_VIDEO_URL ? (
-              <video
-                className="w-full h-auto rounded-lg shadow-2xl"
-                controls
-                autoPlay
-                muted
-                loop
-                playsInline
-              >
-                <source 
-                  src={process.env.REACT_APP_VIDEO_URL} 
-                  type="video/mp4" 
-                />
-                Your browser does not support the video tag.
-              </video>
-            ) : null}
-          </div>
-        )}
+        {(() => {
+          const youtubeVideoId = process.env.REACT_APP_YOUTUBE_VIDEO_ID || 'JlICLpSVLC0';
+          const vimeoVideoId = process.env.REACT_APP_VIMEO_VIDEO_ID;
+          const videoUrl = process.env.REACT_APP_VIDEO_URL;
+          
+          return (youtubeVideoId || vimeoVideoId || videoUrl) && (
+            <div className="my-6 fade-in max-w-3xl mx-auto">
+              {youtubeVideoId ? (
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full rounded-lg shadow-2xl"
+                    src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&loop=1&playlist=${youtubeVideoId}&controls=1&modestbranding=1&rel=0`}
+                    title="Introduction Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : vimeoVideoId ? (
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full rounded-lg shadow-2xl"
+                    src={`https://player.vimeo.com/video/${vimeoVideoId}?autoplay=1&muted=1&loop=1&controls=1&background=1`}
+                    title="Introduction Video"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : videoUrl ? (
+                <video
+                  className="w-full h-auto rounded-lg shadow-2xl"
+                  controls
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                >
+                  <source 
+                    src={videoUrl} 
+                    type="video/mp4" 
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              ) : null}
+            </div>
+          );
+        })()}
         
         <h2 className="text-3xl md:text-5xl font-light mb-6 fade-in">
           {t('hero.subtitle')}
